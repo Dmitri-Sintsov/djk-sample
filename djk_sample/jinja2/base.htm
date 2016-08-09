@@ -1,0 +1,20 @@
+{% extends 'base_min.htm' %}
+
+{% block top_styles %}
+<title>{{ request.view_title }}</title>
+{% endblock top_styles %}
+
+{% block mainmenu %}
+    <li><a href=""></a></li>
+{% if client_conf.userId != 0 %}
+    <li><a href="{{ url('account_email') }}">{{ _('Change E-mail') }}</a></li>
+    <li><a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a></li>
+{% else %}
+    <li><a href="{{ url('account_login') }}">{{ _('Sign In') }}</a></li>
+    <li><a href="{{ url('account_signup') }}">{{ _('Sign Up') }}</a></li>
+{% endif %}
+{% endblock mainmenu %}
+
+{% block main %}
+
+{% endblock main %}

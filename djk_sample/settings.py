@@ -40,9 +40,16 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'sites' is required by allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    # Required for socialaccount template tag library despite we do not use social login
+    'allauth.socialaccount',
     'django_jinja',
     'django_jinja.contrib._humanize',
     'django_jinja_knockout',
+    'django_jinja_knockout._allauth',
     'djk_sample',
     'club_app',
 )
@@ -57,6 +64,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'djk_sample.middleware.ContextMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 LOGGING = {
@@ -183,10 +197,14 @@ user = User.objects.create_user('questpc', email='questpc@gmail.com', password='
 user.save()
 exit()
 """
-# Login / logout.
 
-LOGIN_URL = '/login/'
-LOGOUT_URL = '/logout/'
+# For 'allauth'.
+SITE_ID = 1
+
+# Login / logout for allauth.
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_URL = '/accounts/logout/'
 
 # Pagination settings.
 OBJECTS_PER_PAGE = 3 if DEBUG else 10
