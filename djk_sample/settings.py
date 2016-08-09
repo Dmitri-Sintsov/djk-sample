@@ -1,3 +1,6 @@
+import random
+from django.utils import timezone
+
 """
 Django settings for djk_sample project.
 
@@ -37,6 +40,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_jinja',
+    'django_jinja.contrib._humanize',
+    'django_jinja_knockout',
+    'djk_sample',
+    'club_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,11 +56,57 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'djk_sample.middleware.ContextMiddleware',
 )
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django_log.sql'),
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'mail_admins'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 ROOT_URLCONF = 'djk_sample.urls'
 
 TEMPLATES = [
+    {
+        "BACKEND": "django_jinja.backend.Jinja2",
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "match_extension": ".htm",
+            "app_dirname": "jinja2",
+            'context_processors': [
+                'django.core.context_processors.i18n',
+                'djk_sample.context_processors.template_context_processor'
+            ]
+        },
+        'DIRS': [
+            os.path.join(BASE_DIR, 'ispdev', 'templates'),
+        ]
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -89,6 +143,9 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
+# Use django_jinja_knockout app.js / middleware.py to detect timezone from browser.
+USE_JS_TIMEZONE = True
+
 USE_I18N = True
 
 USE_L10N = True
@@ -100,3 +157,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+# Next setting is required so multiple Django instances running at the same host/IP with different ports
+# do not interfere each other (apollo13).
+SESSION_COOKIE_NAME = 'djk_sessionid'
+
+# As this is the test application, registration with SMTP confirmation is not supported.
+# Use:
+""" python manage.py createsuperuser """
+# or:
+"""
+python manage.py shell
+from django.contrib.auth.models import User
+user = User.objects.create_user('questpc', email='questpc@gmail.com', password='test123')
+user.save()
+exit()
+"""
+# Login / logout.
+
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
+# Pagination settings.
+OBJECTS_PER_PAGE = 3 if DEBUG else 10
+
+random.seed(timezone.now().timestamp())
