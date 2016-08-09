@@ -1,11 +1,4 @@
-Django==1.8.14
-Jinja2==2.8
-MarkupSafe==0.23
-bleach==1.4.2
-django-jinja==2.2.0
-django-jinja-knockout==0.2.0
-ensure==0.6.2
+Django>=1.8.0,<1.9
 html5lib==0.9999999
-lxml==3.6.1
-six==1.10.0
-wheel==0.29.0
+git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git@7d8904204b4d7366f6f55f123557d5f25dd5d11d
+
