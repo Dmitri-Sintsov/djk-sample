@@ -1,4 +1,5 @@
 from django.forms.models import BaseInlineFormSet, inlineformset_factory
+from django_jinja_knockout.widgets import ForeignKeyGridWidget
 from django_jinja_knockout.forms import BootstrapModelForm, FormWithInlineFormsets, set_knockout_template
 from .models import Profile, Manufacturer, Club, Equipment, Member
 
@@ -29,6 +30,12 @@ class EquipmentForm(BootstrapModelForm):
     class Meta:
         model = Equipment
         fields = '__all__'
+        widgets = {
+            'manufacturer': ForeignKeyGridWidget(grid_options={
+                'pageRoute': 'manufacturer_fk_widget_grid',
+                'dialogOptions': {'size': 'size-wide'},
+            })
+        }
 
 
 class MemberForm(BootstrapModelForm):

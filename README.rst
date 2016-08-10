@@ -1,6 +1,15 @@
+==========
+djk-sample
+==========
+
+Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sintsov/django-jinja-knockout
+
+Installation
+------------
+
 .. highlight:: shell
 
-Installation for Ubuntu 14.04 LTS::
+In Ubuntu 14.04 LTS::
 
     python3 -m venv djk_sample
     cd djk_sample
@@ -11,3 +20,4 @@ Installation for Ubuntu 14.04 LTS::
     python manage.py makemigrations club_app
     python manage.py migrate
     python manage.py runserver
+

@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.utils.sdv import join_dict_values
+from django_jinja_knockout.widgets import ForeignKeyGridWidget
 
 
 class Profile(models.Model):
@@ -23,7 +24,7 @@ class Profile(models.Model):
         ])
 
     def __str__(self):
-        return ' › '.join(self.get_str_fields.values())
+        return ' › '.join(self.get_str_fields().values())
 
 
 class Manufacturer(models.Model):
@@ -42,7 +43,7 @@ class Manufacturer(models.Model):
         return str_fields
 
     def __str__(self):
-        return ' › '.join(self.get_str_fields.values())
+        return ' › '.join(self.get_str_fields().values())
 
 
 class Club(models.Model):
@@ -77,7 +78,7 @@ class Club(models.Model):
         ])
 
     def __str__(self):
-        return ' › '.join(self.get_str_fields.values())
+        return ' › '.join(self.get_str_fields().values())
 
 
 class Equipment(models.Model):
@@ -99,8 +100,8 @@ class Equipment(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Sport club inventory'
-        verbose_name_plural = 'Sport club inventories'
+        verbose_name = 'Sport club equipment'
+        verbose_name_plural = 'Sport club equipments'
 
     def get_str_fields(self):
         str_fields = OrderedDict([
@@ -119,7 +120,7 @@ class Equipment(models.Model):
         if 'manufacturer' in str_fields:
             foreign_fields.append('manufacturer')
         join_dict_values(' / ', str_fields, foreign_fields)
-        return ' › '.join(str_fields.values())
+        return ' › '.join(str_fields().values())
 
 
 class Member(models.Model):
@@ -169,4 +170,4 @@ class Member(models.Model):
     def __str__(self):
         str_fields = self.get_str_fields()
         join_dict_values(' / ', str_fields, ['profile', 'club'])
-        return ' › '.join(str_fields.values())
+        return ' › '.join(str_fields().values())
