@@ -1,0 +1,27 @@
+{% extends 'base.htm' %}
+{% from 'bs_inline_formsets.htm' import bs_inline_formsets with context %}
+{% from 'bs_panel.htm' import bs_panel with context %}
+
+{% block main %}
+
+{% call bs_panel(
+    type='primary',
+    heading='Add sport club with optional equipment and optional members',
+) %}
+Make sure to check your input.
+{% endcall %}
+
+{% call(kwargs)
+bs_inline_formsets(related_form=form, formsets=formsets, action=url('club_create'), html={
+    'class': 'club',
+    'title': 'Create sport club',
+    'submit_text': 'Save sport club'
+}) %}
+
+{% endcall %}
+
+{% endblock main %}
+
+{% block bottom_scripts %}
+    <script src="{{ static('js/front/formsets.js') }}"></script>
+{% endblock bottom_scripts %}

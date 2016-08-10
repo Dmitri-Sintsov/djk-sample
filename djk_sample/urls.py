@@ -15,12 +15,16 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url, patterns
 # from django.contrib import admin
+from club_app.views import ClubCreate
+
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'club_app.views.main_page', name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
     url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
+    url(r'^club-create/$', ClubCreate.as_view(), name='club_create',
+        kwargs={'view_title': 'Add new club'}),
 ]
 
 js_info_dict = {

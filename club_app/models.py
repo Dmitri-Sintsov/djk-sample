@@ -31,8 +31,8 @@ class Manufacturer(models.Model):
     direct_shipping = models.BooleanField(verbose_name='Direct shipping')
 
     class Meta:
-        verbose_name = 'Manufacturer'
-        verbose_name_plural = 'Manufacturers'
+        verbose_name = 'Sport equipment manufacturer'
+        verbose_name_plural = 'Sport equipment manufacturers'
 
     def get_str_fields(self):
         str_fields = OrderedDict([
@@ -80,7 +80,7 @@ class Club(models.Model):
         return ' › '.join(self.get_str_fields.values())
 
 
-class ClubEquipment(models.Model):
+class Equipment(models.Model):
     CATEGORY_RACKET = 0
     CATEGORY_BALL = 1
     CATEGORY_SHUTTLECOCK = 2
@@ -122,7 +122,7 @@ class ClubEquipment(models.Model):
         return ' › '.join(str_fields.values())
 
 
-class ClubMember(models.Model):
+class Member(models.Model):
     SPORT_BADMINTON = 0
     SPORT_TENNIS = 1
     SPORT_TABLE_TENNIS = 2
@@ -149,8 +149,11 @@ class ClubMember(models.Model):
     plays = models.IntegerField(choices=SPORTS, default=SPORT_ANOTHER, verbose_name='Plays sport')
     role = models.IntegerField(choices=ROLES, default=ROLE_MEMBER, verbose_name='Member role')
     note = models.TextField(max_length=16384, blank=True, default='', verbose_name='Note')
-    # Allows to have only one endorsed member via True, but multiple non-endorsed members via None.
-    is_endorsed = models.NullBooleanField(default=None, verbose_name='Endorsed')
+    is_endorsed = models.BooleanField(default=False, verbose_name='Endorsed')
+
+    class Meta:
+        verbose_name = 'Sport club member'
+        verbose_name_plural = 'Sport club members'
 
     def get_str_fields(self):
         parts = OrderedDict([

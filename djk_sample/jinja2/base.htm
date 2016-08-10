@@ -8,6 +8,7 @@
 {% if client_conf.userId != 0 %}
     <li><a href="{{ url('account_email') }}">{{ _('Change E-mail') }}</a></li>
     <li><a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a></li>
+    <li><a href="{{ url('club_create') }}">{{ _('Add sport club') }}</a></li>
 {% else %}
     <li><a href="{{ url('account_login') }}">{{ _('Sign In') }}</a></li>
     <li><a href="{{ url('account_signup') }}">{{ _('Sign Up') }}</a></li>
