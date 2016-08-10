@@ -1,0 +1,15 @@
+{% extends 'base.htm' %}
+{% from 'bs_panel.htm' import bs_panel with context %}
+
+{% block main %}
+
+{% call bs_panel(
+    type='primary',
+    heading='Welcome to django-jinja-knockout sample project!',
+) %}
+
+Please browse the menu links to check the pluggable application functionality.
+
+{% endcall %}
+
+{% endblock main %}

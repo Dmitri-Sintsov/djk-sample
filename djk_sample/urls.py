@@ -19,7 +19,7 @@ from django.conf.urls import include, url, patterns
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'club_app.views.main_page', name='club_main_page',
-        kwargs={'view_title': 'Main page'}),
+        kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
     url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
 ]
 

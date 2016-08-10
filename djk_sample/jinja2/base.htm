@@ -5,7 +5,6 @@
 {% endblock top_styles %}
 
 {% block mainmenu %}
-    <li><a href=""></a></li>
 {% if client_conf.userId != 0 %}
     <li><a href="{{ url('account_email') }}">{{ _('Change E-mail') }}</a></li>
     <li><a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a></li>
@@ -14,7 +13,3 @@
     <li><a href="{{ url('account_signup') }}">{{ _('Sign Up') }}</a></li>
 {% endif %}
 {% endblock mainmenu %}
-
-{% block main %}
-
-{% endblock main %}
