@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django_jinja_knockout.views import InlineCreateView, KoGridView
+from django_jinja_knockout.views import InlineCreateView, KoGridWidget
 from .models import Manufacturer
 from .forms import ManufacturerForm, ClubFormWithInlineFormsets
 
@@ -18,9 +18,15 @@ class ClubCreate(InlineCreateView):
     form_with_inline_formsets = ClubFormWithInlineFormsets
 
 
-class ManufacturerFkWidgetGrid(KoGridView):
+class ManufacturerFkWidgetGrid(KoGridWidget):
 
     model = Manufacturer
     form = ManufacturerForm
 
     grid_fields = '__all__'
+
+    def get_actions(self):
+        actions = super().get_actions()
+        actions['glyphicon']['delete']['enabled'] = True
+        actions['built_in']['delete_confirmed']['enabled'] = True
+        return actions

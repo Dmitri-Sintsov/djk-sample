@@ -3,7 +3,6 @@ from django.db import models
 from django.utils import timezone
 from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.utils.sdv import join_dict_values
-from django_jinja_knockout.widgets import ForeignKeyGridWidget
 
 
 class Profile(models.Model):
