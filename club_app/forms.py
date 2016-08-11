@@ -33,7 +33,6 @@ class EquipmentForm(BootstrapModelForm):
         widgets = {
             'manufacturer': ForeignKeyGridWidget(grid_options={
                 'pageRoute': 'manufacturer_fk_widget_grid',
-                'dialogOptions': {'size': 'size-wide'},
             })
         }
 
@@ -43,7 +42,12 @@ class MemberForm(BootstrapModelForm):
     class Meta:
         model = Member
         fields = '__all__'
-
+        widgets = {
+            'profile': ForeignKeyGridWidget(grid_options={
+                'pageRoute': 'profile_fk_widget_grid',
+                'dialogOptions': {'size': 'size-wide'},
+            })
+        }
 
 ClubEquipmentFormSet = inlineformset_factory(
     Club, Equipment, form=EquipmentForm, extra=0, min_num=1, max_num=3, can_delete=True

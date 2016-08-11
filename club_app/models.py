@@ -23,7 +23,7 @@ class Profile(models.Model):
         ])
 
     def __str__(self):
-        return ' › '.join(self.get_str_fields().values())
+        return ' '.join([self.first_name, self.last_name])
 
 
 class Manufacturer(models.Model):

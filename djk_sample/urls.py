@@ -15,7 +15,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url, patterns
 # from django.contrib import admin
-from club_app.views import ClubCreate, ManufacturerFkWidgetGrid
+from club_app.views import ClubCreate, ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 
 
 urlpatterns = [
@@ -28,6 +28,10 @@ urlpatterns = [
     url(r'^manufacturer-fk-widget-grid(?P<action>/?\w*)/$', ManufacturerFkWidgetGrid.as_view(),
         name='manufacturer_fk_widget_grid',
         # kwargs={'ajax': True, 'permission_required': 'club_app.change_manufacturer'}),
+        kwargs={'ajax': True}),
+    url(r'^profile-fk-widget-grid(?P<action>/?\w*)/$', ProfileFkWidgetGrid.as_view(),
+        name='profile_fk_widget_grid',
+        # kwargs={'ajax': True, 'permission_required': 'club_app.change_profile'}),
         kwargs={'ajax': True}),
 ]
 
