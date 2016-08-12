@@ -152,6 +152,7 @@ class Member(models.Model):
     is_endorsed = models.BooleanField(default=False, verbose_name='Endorsed')
 
     class Meta:
+        unique_together = ('profile', 'club')
         verbose_name = 'Sport club member'
         verbose_name_plural = 'Sport club members'
 
