@@ -33,7 +33,7 @@ class EquipmentForm(BootstrapModelForm):
         model = Equipment
         fields = '__all__'
         widgets = {
-            'manufacturer': ForeignKeyGridWidget(grid_options={
+            'manufacturer': ForeignKeyGridWidget(model=Manufacturer, grid_options={
                 'pageRoute': 'manufacturer_fk_widget_grid',
             })
         }
@@ -45,7 +45,7 @@ class MemberForm(BootstrapModelForm):
         model = Member
         fields = '__all__'
         widgets = {
-            'profile': ForeignKeyGridWidget(grid_options={
+            'profile': ForeignKeyGridWidget(model=Profile, grid_options={
                 'pageRoute': 'profile_fk_widget_grid',
                 'dialogOptions': {'size': 'size-wide'},
             })
