@@ -17,6 +17,7 @@ In Ubuntu 14.04 LTS::
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
     python3 -m pip install -U -r requirements.txt
+    mkdir "$VIRTUAL_ENV/djk-sample/logs/"
     python manage.py makemigrations club_app
     python manage.py migrate
     python manage.py runserver
