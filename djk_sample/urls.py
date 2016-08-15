@@ -15,7 +15,9 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url, patterns
 # from django.contrib import admin
-from club_app.views import ClubCreate, ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
+from club_app.views import (
+    ClubCreate, ClubUpdate, ClubDetail, ManufacturerFkWidgetGrid, ProfileFkWidgetGrid, ClubList
+)
 
 
 urlpatterns = [
@@ -25,6 +27,12 @@ urlpatterns = [
     url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
     url(r'^club-create/$', ClubCreate.as_view(), name='club_create',
         kwargs={'view_title': 'Add new club'}),
+    url(r'^club-update-(?P<club_id>\d+)/$', ClubUpdate.as_view(), name='club_update',
+        kwargs={'view_title': 'Edit club "{}"'}),
+    url(r'^club-detail-(?P<club_id>\d+)/$', ClubDetail.as_view(), name='club_detail',
+        kwargs={'view_title': '{}'}),
+    url(r'^club-list/$', ClubList.as_view(), name='club_list',
+        kwargs={'view_title': 'List of sport clubs', 'allow_anonymous': True}),
     url(r'^manufacturer-fk-widget-grid(?P<action>/?\w*)/$', ManufacturerFkWidgetGrid.as_view(),
         name='manufacturer_fk_widget_grid',
         # kwargs={'ajax': True, 'permission_required': 'club_app.change_manufacturer'}),

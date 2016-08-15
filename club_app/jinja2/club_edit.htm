@@ -1,9 +1,11 @@
 {% extends 'base.htm' %}
+{% from 'bs_navs.htm' import bs_navs with context %}
 {% from 'bs_inline_formsets.htm' import bs_inline_formsets with context %}
 {% from 'bs_panel.htm' import bs_panel with context %}
 {% from 'ko_grid_body.htm' import ko_grid_body with context %}
 
 {% block main %}
+{{ bs_navs(main_navs) }}
 
 {% call bs_panel(
     type='primary',
@@ -13,11 +15,9 @@ Make sure to check your input.
 {% endcall %}
 
 {% call(kwargs)
-bs_inline_formsets(related_form=form, formsets=formsets, action=url('club_create'), html={
-    'class': 'club',
-    'title': 'Create sport club',
-    'submit_text': 'Save sport club'
-}) %}
+bs_inline_formsets(
+    related_form=form, formsets=formsets, action=view.get_form_action_url(), html=view.get_bs_form_opts()
+) %}
 
 {% endcall %}
 

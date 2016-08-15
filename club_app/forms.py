@@ -1,7 +1,7 @@
 from django.forms.models import BaseInlineFormSet
 from django_jinja_knockout.widgets import ForeignKeyGridWidget
 from django_jinja_knockout.forms import (
-    BootstrapModelForm, FormWithInlineFormsets, set_knockout_template, ko_inlineformset_factory
+    BootstrapModelForm, DisplayModelMetaclass, FormWithInlineFormsets, ko_inlineformset_factory
 )
 from .models import Profile, Manufacturer, Club, Equipment, Member
 
@@ -27,6 +27,11 @@ class ClubForm(BootstrapModelForm):
         fields = '__all__'
 
 
+class ClubDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
+
+    class Meta(ClubForm.Meta):
+        pass
+
 class EquipmentForm(BootstrapModelForm):
 
     class Meta:
@@ -37,6 +42,13 @@ class EquipmentForm(BootstrapModelForm):
                 'pageRoute': 'manufacturer_fk_widget_grid',
             })
         }
+
+
+class EquipmentDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
+
+    class Meta:
+        model = Equipment
+        fields = '__all__'
 
 
 class MemberForm(BootstrapModelForm):
@@ -58,8 +70,19 @@ class MemberForm(BootstrapModelForm):
         if role != Member.ROLE_MEMBER and Member.objects.filter(club=club, role=role).exists():
             self.add_error('role', 'Non-member roles should be unique')
 
+
+class MemberDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
+
+    class Meta:
+        model = Member
+        fields = '__all__'
+
+
 ClubEquipmentFormSet = ko_inlineformset_factory(
     Club, Equipment, form=EquipmentForm, extra=0, min_num=1, max_num=3, can_delete=True
+)
+ClubDisplayEquipmentFormSet = ko_inlineformset_factory(
+    Club, Equipment, form=EquipmentDisplayForm
 )
 
 
@@ -85,9 +108,18 @@ class ClubMemberFormSetCls(BaseInlineFormSet):
 ClubMemberFormSet = ko_inlineformset_factory(
     Club, Member, form=MemberForm, formset=ClubMemberFormSetCls, extra=0, min_num=0, max_num=10, can_delete=True
 )
+ClubDisplayMemberFormSet = ko_inlineformset_factory(
+    Club, Member, form=MemberDisplayForm
+)
 
 
 class ClubFormWithInlineFormsets(FormWithInlineFormsets):
 
     FormClass = ClubForm
     FormsetClasses = [ClubEquipmentFormSet, ClubMemberFormSet]
+
+
+class ClubDisplayFormWithInlineFormsets(FormWithInlineFormsets):
+
+    FormClass = ClubDisplayForm
+    FormsetClasses = [ClubDisplayEquipmentFormSet, ClubDisplayMemberFormSet]
