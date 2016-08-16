@@ -1,14 +1,13 @@
-from collections import OrderedDict
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html
 from django.conf import settings
 from django.shortcuts import render
 from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.views import (
-    InlineCreateView, InlineDetailView, KoGridWidget, ListSortingView, BsTabsMixin, ContextDataMixin
+    InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
-from .models import Club, Manufacturer, Profile
-from .forms import ManufacturerForm, ProfileForm, ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
+from .models import Club
+from .forms import ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
 
 
 def main_page(request):
@@ -69,7 +68,7 @@ class ClubUpdate(ClubEditMixin, InlineDetailView):
     pk_url_kwarg = 'club_id'
 
     def get_form_action_url(self):
-        return reverse('club_update', kwargs={'club_id': self.object.pk})
+        return reverse('club_update', kwargs=self.kwargs)
 
     def get_success_url(self):
         return reverse('club_detail', kwargs={'club_id': self.object.pk})
@@ -94,27 +93,6 @@ class ClubDetail(ClubNavsMixin, InlineDetailView):
             'class': 'club',
             'title': format_html('"{}"', self.object),
         }
-
-
-class ManufacturerFkWidgetGrid(KoGridWidget):
-
-    model = Manufacturer
-    form = ManufacturerForm
-    enable_deletion = True
-    grid_fields = '__all__'
-    allowed_sort_orders = '__all__'
-    allowed_filter_fields = OrderedDict([
-        ('direct_shipping', None)
-    ])
-
-
-class ProfileFkWidgetGrid(KoGridWidget):
-
-    model = Profile
-    form = ProfileForm
-    enable_deletion = True
-    grid_fields = ['first_name', 'last_name']
-    allowed_sort_orders = '__all__'
 
 
 class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):

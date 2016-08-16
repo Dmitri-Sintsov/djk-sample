@@ -67,8 +67,10 @@ class MemberForm(BootstrapModelForm):
         super().clean()
         role = self.cleaned_data.get('role')
         club = self.cleaned_data.get('club')
-        if role != Member.ROLE_MEMBER and Member.objects.filter(club=club, role=role).exists():
-            self.add_error('role', 'Non-member roles should be unique')
+        if role != Member.ROLE_MEMBER:
+            current_member = Member.objects.filter(club=club, role=role).first()
+            if current_member is not None and current_member != self.instance:
+                self.add_error('role', 'Non-member roles should be unique')
 
 
 class MemberDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):

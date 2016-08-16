@@ -110,7 +110,6 @@ class Equipment(models.Model):
             str_fields['manufacturer'] = self.manufacturer.get_str_fields()
         str_fields['inventory_name'] = self.inventory_name
         str_fields['category'] = self.get_category_display()
-        str_fields['foundation_date'] = format_local_date(self.foundation_date)
         return str_fields
 
     def __str__(self):
@@ -119,7 +118,7 @@ class Equipment(models.Model):
         if 'manufacturer' in str_fields:
             foreign_fields.append('manufacturer')
         join_dict_values(' / ', str_fields, foreign_fields)
-        return ' › '.join(str_fields().values())
+        return ' › '.join(str_fields.values())
 
 
 class Member(models.Model):
@@ -170,4 +169,4 @@ class Member(models.Model):
     def __str__(self):
         str_fields = self.get_str_fields()
         join_dict_values(' / ', str_fields, ['profile', 'club'])
-        return ' › '.join(str_fields().values())
+        return ' › '.join(str_fields.values())
