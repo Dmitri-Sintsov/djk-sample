@@ -127,3 +127,6 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
     extra_context_data = {
         'format_local_date': format_local_date
     }
+    allowed_filter_fields = {
+        'category': None,
+    }

@@ -12,12 +12,13 @@
     type='primary',
     heading=request.view_title,
 ) %}
-{# bs_breadcrumbs(filter_title['state'], filter_navs['state']) #}
-{# bs_breadcrumbs(filter_title['specialisation'], filter_navs['specialisation']) #}
+
+{{ bs_breadcrumbs(filter_title['category'], filter_navs['category']) }}
+
 {% if clubs %}
     <table class="table table-bordered table-collapse">
+    {% set row_class = cycler('info', 'success', 'active') %}
     {% for club in clubs %}
-        {% set row_class = cycler('info', 'success', 'active') %}
         {% if loop.index0 == 0 %}
         <tr>
             <th>
@@ -31,17 +32,17 @@
             </th>
         </tr>
         {% endif %}
-        <tr>
-            <td class="{{ row_class.__next__() }}" data-caption="{{ get_verbose_name(club, 'title') }}">
+        <tr class="{{ row_class.__next__() }}" >
+            <td data-caption="{{ get_verbose_name(club, 'title') }}">
                 <a href="{{ url('club_detail', club_id=club.pk) }}" title="View">{{ club.title }}</a><br />
                 {% if client_conf.userId != 0 %}
                 <a href="{{ url('club_update', club_id=club.pk) }}" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                 {% endif %}
             </td>
-            <td class="{{ row_class.__next__() }}" data-caption="{{ get_verbose_name(club, 'category') }}">
+            <td data-caption="{{ get_verbose_name(club, 'category') }}">
                 {{ club.get_category_display() }}
             </td>
-            <td class="{{ row_class.__next__() }}" data-caption="{{ get_verbose_name(club, 'foundation_date') }}">
+            <td data-caption="{{ get_verbose_name(club, 'foundation_date') }}">
                 {{ format_local_date(club.foundation_date) }}
             </td>
         </tr>
