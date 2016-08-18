@@ -14,6 +14,7 @@
     <li><a href="{{ url('account_signup') }}">{{ _('Sign Up') }}</a></li>
 {% endif %}
     <li><a href="{{ url('club_list') }}">{{ _('List of sport clubs') }}</a></li>
-    <li><a href="{{ url('club_grid_simple', action='') }}">{{ _('Simple grid') }}</a></li>
-    <li><a href="{{ url('member_grid', action='') }}">{{ _('Club members grid') }}</a></li>
+    <li><a href="{{ url('club_grid_simple', action='') }}">{{ _('Simple club grid') }}</a></li>
+    <li><a href="{{ url('member_grid', action='') }}">{{ _('Club members grid with client-side formatting') }}</a></li>
+    <li><a href="{{ url('club_grid_with_virtual_field', action='') }}">{{ _('Club grid with virtual field') }}</a></li>
 {% endblock mainmenu %}

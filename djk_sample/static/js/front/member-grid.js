@@ -14,11 +14,14 @@ App.ko.MemberGridRow = function(options) {
         switch (field) {
         case 'role':
             // Display field value as bootstrap label.
+            var types = ['success', 'info', 'primary'];
             displayValue = $('<span>', {
                 'class': 'label preformatted'
             })
             .text(displayValue)
-            .addClass(this.values[field] === 0 ? 'label-success' : 'label-info');
+            .addClass(
+                'label-' + (this.values[field] < types.length ? types[this.values[field]] : 'info')
+            );
             break;
         case 'note':
             // Display field value as bootstrap clickable popover.
