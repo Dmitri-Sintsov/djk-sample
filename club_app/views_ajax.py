@@ -66,6 +66,8 @@ class MemberGrid(KoGridView):
     @classmethod
     def get_default_grid_options(cls):
         return {
+            # Note: 'classPath' is not required for standard App.ko.Grid.
+            'classPath': 'App.ko.MemberGrid',
             'fkGridOptions': {
                 'profile': {
                     'pageRoute': 'profile_fk_widget_grid'
