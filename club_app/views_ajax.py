@@ -29,7 +29,7 @@ class MemberGrid(KoGridView):
         'profile',
         'club',
         # Will join 'category' field from related 'Club' table automatically via Django ORM.
-        # 'club__category',
+        'club__category',
         'last_visit',
         'plays',
         'role',
@@ -42,21 +42,26 @@ class MemberGrid(KoGridView):
         # 'club__category',
         'last_visit',
         'plays',
-        'role',
         'is_endorsed'
     ]
     allowed_filter_fields = OrderedDict([
         ('profile', None),
         ('club', None),
-        # ('club_category', None),
+        ('club__category', None),
         ('last_visit', None),
+        # Include only some Django model choices and disable multiple choices for 'plays' filter.
         ('plays', {
-            'type': 'choices', 'choices': Member.SPORTS_NO_ANOTHER, 'multiple_choices': False
+            'type': 'choices', 'choices': Member.BASIC_SPORTS, 'multiple_choices': False
         }),
         ('role', None),
         ('is_endorsed', None),
     ])
 
+    def get_field_verbose_name(self, field_name):
+        if field_name == 'club__category':
+            return 'Club category'
+        else:
+            return super().get_field_verbose_name(field_name)
 
     @classmethod
     def get_default_grid_options(cls):

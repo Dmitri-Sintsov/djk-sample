@@ -133,7 +133,7 @@ class Member(models.Model):
         (SPORT_TABLE_TENNIS, 'Table tennis'),
         (SPORT_SQUASH, 'Squash'),
     )
-    SPORTS = BASIC_SPORTS + (SPORT_ANOTHER, 'Another sport')
+    SPORTS = BASIC_SPORTS + ((SPORT_ANOTHER, 'Another sport'),)
     ROLE_OWNER = 0
     ROLE_FOUNDER = 1
     ROLE_MEMBER = 2
