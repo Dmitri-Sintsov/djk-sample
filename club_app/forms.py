@@ -1,8 +1,11 @@
+from django.utils.html import format_html
 from django.forms.models import BaseInlineFormSet
-from django_jinja_knockout.widgets import ForeignKeyGridWidget
+from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget
 from django_jinja_knockout.forms import (
-    BootstrapModelForm, DisplayModelMetaclass, FormWithInlineFormsets, ko_inlineformset_factory
+    BootstrapModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
+    FormWithInlineFormsets, ko_inlineformset_factory
 )
+from django_jinja_knockout.viewmodels import to_json
 from .models import Profile, Manufacturer, Club, Equipment, Member
 
 
@@ -73,11 +76,28 @@ class MemberForm(BootstrapModelForm):
                 self.add_error('role', 'Non-member roles should be unique')
 
 
-class MemberDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
+class MemberDisplayForm(WidgetInstancesMixin, metaclass=DisplayModelMetaclass):
 
     class Meta:
+
+        def get_note(self, value):
+            # self.instance.accepted_license.version
+            if self.instance is None or self.instance.note.strip() == '':
+                return 'No note'
+            return format_html(
+                '<button class="btn btn-info dialog-button" data-options=\'{}\'>Read</button>',
+                to_json({
+                    'title': '<b>Note for </b> <i>{}</i>'.format(self.instance.profile),
+                    'message': format_html('<div class="preformatted">{}</div>', self.instance.note),
+                    'method': 'alert'
+                })
+            )
+
         model = Member
         fields = '__all__'
+        widgets = {
+            'note': DisplayText(get_text_cb=get_note)
+        }
 
 
 ClubEquipmentFormSet = ko_inlineformset_factory(
