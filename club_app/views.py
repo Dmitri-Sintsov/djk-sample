@@ -2,12 +2,16 @@ from django.core.urlresolvers import reverse
 from django.utils.html import format_html
 from django.conf import settings
 from django.shortcuts import render
+
 from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.views import (
-    InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
+    FormDetailView, InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
-from .models import Club
-from .forms import ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
+
+from event_app.actions import Action
+
+from .models import Club, Equipment, Member
+from .forms import EquipmentDisplayForm, MemberDisplayForm, ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
 
 
 def main_page(request):
@@ -59,6 +63,8 @@ class ClubCreate(ClubEditMixin, InlineCreateView):
         }
 
     def get_success_url(self):
+        action = Action(self.ff.model)
+        action.do()
         return reverse('club_detail', kwargs={'club_id': self.object.pk})
 
 
@@ -108,3 +114,17 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
     allowed_filter_fields = {
         'category': None,
     }
+
+
+class EquipmentDetail(FormDetailView):
+
+    pk_url_kwarg = 'equipment_id'
+    model = Equipment
+    form_class = EquipmentDisplayForm
+
+
+class MemberDetail(FormDetailView):
+
+    pk_url_kwarg = 'member_id'
+    model = Member
+    form_class = MemberDisplayForm

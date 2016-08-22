@@ -15,15 +15,20 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url, patterns
 # from django.contrib import admin
-from club_app.views import ClubCreate, ClubUpdate, ClubDetail, ClubList
+from club_app.views import ClubCreate, ClubUpdate, ClubDetail, ClubList, EquipmentDetail, MemberDetail
 from club_app.views_ajax import (
     SimpleClubGrid, MemberGrid, ClubGridWithVirtualField,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
+from event_app.views import ActionList
 
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
+
+    # Class-based views.
+
+    # Club
     url(r'^$', 'club_app.views.main_page', name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
     url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
@@ -35,6 +40,20 @@ urlpatterns = [
         kwargs={'view_title': '{}'}),
     url(r'^club-list/$', ClubList.as_view(), name='club_list',
         kwargs={'view_title': 'List of sport clubs', 'allow_anonymous': True}),
+
+    # Action
+    url(r'^action-list/$', ActionList.as_view(), name='action_list',
+        kwargs={'view_title': 'Log of actions'}),
+
+    # Equipment
+    url(r'^equipment-detail-(?P<equipment_id>\d+)/$', EquipmentDetail.as_view(), name='equipment_detail',
+        kwargs={'view_title': '{}'}),
+
+    # Equipment
+    url(r'^member-detail-(?P<member_id>\d+)/$', MemberDetail.as_view(), name='member_detail',
+        kwargs={'view_title': '{}'}),
+
+    # Foreign key widgets.
     url(r'^manufacturer-fk-widget-grid(?P<action>/?\w*)/$', ManufacturerFkWidgetGrid.as_view(),
         name='manufacturer_fk_widget_grid',
         # kwargs={'ajax': True, 'permission_required': 'club_app.change_manufacturer'}),
@@ -43,6 +62,8 @@ urlpatterns = [
         name='profile_fk_widget_grid',
         # kwargs={'ajax': True, 'permission_required': 'club_app.change_profile'}),
         kwargs={'ajax': True}),
+
+    # AJAX grids.
     url(r'^club-grid-simple(?P<action>/?\w*)/$', SimpleClubGrid.as_view(), name='club_grid_simple',
         kwargs={'view_title': 'Simple club grid'}),
     url(r'^member-grid(?P<action>/?\w*)/$', MemberGrid.as_view(), name='member_grid',

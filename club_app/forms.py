@@ -1,11 +1,13 @@
 from django.utils.html import format_html
 from django.forms.models import BaseInlineFormSet
+
 from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget
 from django_jinja_knockout.forms import (
     BootstrapModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
     FormWithInlineFormsets, ko_inlineformset_factory
 )
 from django_jinja_knockout.viewmodels import to_json
+
 from .models import Profile, Manufacturer, Club, Equipment, Member
 
 

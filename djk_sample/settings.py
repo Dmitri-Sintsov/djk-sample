@@ -33,6 +33,12 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+DJK_APPS = (
+    'djk_sample',
+    'club_app',
+    'event_app',
+)
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,9 +56,7 @@ INSTALLED_APPS = (
     'django_jinja.contrib._humanize',
     'django_jinja_knockout',
     'django_jinja_knockout._allauth',
-    'djk_sample',
-    'club_app',
-)
+) + DJK_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -63,7 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'djk_sample.middleware.ContextMiddleware',
+    'django_jinja_knockout.middleware.ContextMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (

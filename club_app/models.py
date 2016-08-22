@@ -1,6 +1,9 @@
 from collections import OrderedDict
+
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
+
 from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.utils.sdv import join_dict_values
 
@@ -69,6 +72,9 @@ class Club(models.Model):
                 self.foundation_date = timezone.now()
         super().save(*args, **kwargs)
 
+    def get_canonical_link(self):
+        return str(self.title), reverse('club_detail', kwargs={'club_id': self.pk})
+
     def get_str_fields(self):
         return OrderedDict([
             ('title', self.title),
@@ -101,6 +107,9 @@ class Equipment(models.Model):
     class Meta:
         verbose_name = 'Sport club equipment'
         verbose_name_plural = 'Sport club equipments'
+
+    def get_canonical_link(self):
+        return str(self.inventory_name), reverse('equipment_detail', kwargs={'equipment_id': self.pk})
 
     def get_str_fields(self):
         str_fields = OrderedDict([
@@ -154,6 +163,11 @@ class Member(models.Model):
         unique_together = ('profile', 'club')
         verbose_name = 'Sport club member'
         verbose_name_plural = 'Sport club members'
+
+    def get_canonical_link(self):
+        str_fields = self.get_str_fields()
+        return ' / '.join([str_fields['profile'], str_fields['club']]), \
+               reverse('member_detail', kwargs={'member_id': self.pk})
 
     def get_str_fields(self):
         parts = OrderedDict([

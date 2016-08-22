@@ -1,0 +1,75 @@
+{% extends 'base.htm' %}
+{% from 'bs_page_header.htm' import bs_page_header with context %}
+{% from 'bs_breadcrumbs.htm' import bs_breadcrumbs with context %}
+{% from 'bs_pagination.htm' import bs_pagination with context %}
+{% from 'bs_filters.htm' import bs_filters %}
+
+{% block main %}
+
+{{ bs_page_header('Actions log') }}
+
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<ul class="nav navbar-nav">
+    <li>
+    {{ cbv.get_sort_order_link('date') }}
+    </li>
+    <li>
+    {{ cbv.get_sort_order_link(
+        sort_order='performer_id',
+        text=get_verbose_name('event_app.action', 'performer_id')
+    ) }}
+    </li>
+    <li>
+    {{ cbv.get_sort_order_link(
+        sort_order='type',
+        text=get_verbose_name('event_app.action', 'type')
+    ) }}
+    </li>
+</ul>
+</div>
+</nav>
+
+{{ bs_breadcrumbs(filter_title['type'], filter_navs['type']) }}
+{{ bs_breadcrumbs(filter_title['content_type_id'], filter_navs['content_type_id']) }}
+{% if actions %}
+    <ul class="list-group display-inline-condition">
+        {% for action in actions %}
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success">
+                <span class="label label-primary">
+                    {{ action.date|naturaltime }}
+                </span>
+                <span class="conditional-display"></span>
+                <span class="label label-info preformatted">{{ action.performer }}</span>
+                <span class="conditional-display"></span>
+                <span class="label label-success preformatted">{{ action.get_type_display() }}</span>
+            </li>
+            {% set ctl = ContentTypeLinker(action, 'content_type', 'object_id') %}
+            <li class="list-group-item">
+                {{ str(ctl.obj_type) }}:
+                {% if ctl.url is not none %}
+                    <a href="{{ ctl.url }}" title="{{ str(ctl.obj_type) }}" target="_blank">
+                {% endif %}
+                    {{ ctl.description }}
+                {% if ctl.url is not none %}
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+        {# do notification.mark_readed() #}
+        {% endfor %}
+    </ul>
+{% else %}
+<div class="jumbotron">
+    <div class="default-padding">
+        At the current moment, there is no action {{ bs_filters(filter_title, filter_display, 'of {} type') }}.
+    </div>
+</div>
+{% endif %}
+
+{% if notifications and is_paginated %}
+    {{ bs_pagination(cbv=cbv, page_obj=page_obj) }}
+{% endif %}
+
+{% endblock main %}
