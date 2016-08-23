@@ -8,15 +8,24 @@ from .models import Action
 class ActionList(ContextDataMixin, ListSortingView):
 
     model = Action
-    template_name = 'action_list.htm'
-    context_object_name = 'actions'
     paginate_by = settings.OBJECTS_PER_PAGE
-    allowed_sort_orders = '__all__'
+    grid_fields = [
+        'performer',
+        'date',
+        'action_type',
+        'content_object'
+    ]
+    allowed_sort_orders = [
+        'performer',
+        'date',
+        'action_type',
+    ]
 
     def get_allowed_filter_fields(self):
         allowed_filter_fields = {
             'action_type': None,
-            'content_type_id': self.get_contenttype_filter(
+            'content_type': self.get_contenttype_filter(
+                ('club_app', 'club'),
                 ('club_app', 'equipment'),
                 ('club_app', 'member'),
             )
