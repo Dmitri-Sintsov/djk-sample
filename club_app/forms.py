@@ -1,4 +1,5 @@
 from django.utils.html import format_html
+from django import forms
 from django.forms.models import BaseInlineFormSet
 
 from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget
@@ -30,12 +31,16 @@ class ClubForm(BootstrapModelForm):
     class Meta:
         model = Club
         fields = '__all__'
+        widgets = {
+            'category': forms.RadioSelect()
+        }
 
 
 class ClubDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta(ClubForm.Meta):
         pass
+
 
 class EquipmentForm(BootstrapModelForm):
 
@@ -45,7 +50,8 @@ class EquipmentForm(BootstrapModelForm):
         widgets = {
             'manufacturer': ForeignKeyGridWidget(model=Manufacturer, grid_options={
                 'pageRoute': 'manufacturer_fk_widget_grid',
-            })
+            }),
+            'category': forms.RadioSelect()
         }
 
 
@@ -65,7 +71,9 @@ class MemberForm(BootstrapModelForm):
             'profile': ForeignKeyGridWidget(model=Profile, grid_options={
                 'pageRoute': 'profile_fk_widget_grid',
                 'dialogOptions': {'size': 'size-wide'},
-            })
+            }),
+            'plays': forms.RadioSelect(),
+            'role': forms.RadioSelect()
         }
 
     def clean(self):

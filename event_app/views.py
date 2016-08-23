@@ -15,7 +15,7 @@ class ActionList(ContextDataMixin, ListSortingView):
 
     def get_allowed_filter_fields(self):
         allowed_filter_fields = {
-            'type': None,
+            'action_type': None,
             'content_type_id': self.get_contenttype_filter(
                 ('club_app', 'equipment'),
                 ('club_app', 'member'),

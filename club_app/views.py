@@ -8,7 +8,7 @@ from django_jinja_knockout.views import (
     FormDetailView, InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
 
-from event_app.actions import Action
+from event_app.models import Action
 
 from .models import Club, Equipment, Member
 from .forms import EquipmentDisplayForm, MemberDisplayForm, ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
@@ -63,8 +63,7 @@ class ClubCreate(ClubEditMixin, InlineCreateView):
         }
 
     def get_success_url(self):
-        action = Action(self.ff.model)
-        action.do()
+        action = Action.do(self.ff.model, Action.TYPE_CREATED)
         return reverse('club_detail', kwargs={'club_id': self.object.pk})
 
 
@@ -77,6 +76,7 @@ class ClubUpdate(ClubEditMixin, InlineDetailView):
         return reverse('club_update', kwargs=self.kwargs)
 
     def get_success_url(self):
+        action = Action.do(self.ff.model, Action.TYPE_CREATED)
         return reverse('club_detail', kwargs={'club_id': self.object.pk})
 
     def get_bs_form_opts(self):

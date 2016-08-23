@@ -22,15 +22,15 @@
     </li>
     <li>
     {{ cbv.get_sort_order_link(
-        sort_order='type',
-        text=get_verbose_name('event_app.action', 'type')
+        sort_order='action_type',
+        text=get_verbose_name('event_app.action', 'action_type')
     ) }}
     </li>
 </ul>
 </div>
 </nav>
 
-{{ bs_breadcrumbs(filter_title['type'], filter_navs['type']) }}
+{{ bs_breadcrumbs(filter_title['action_type'], filter_navs['action_type']) }}
 {{ bs_breadcrumbs(filter_title['content_type_id'], filter_navs['content_type_id']) }}
 {% if actions %}
     <ul class="list-group display-inline-condition">
@@ -43,7 +43,7 @@
                 <span class="conditional-display"></span>
                 <span class="label label-info preformatted">{{ action.performer }}</span>
                 <span class="conditional-display"></span>
-                <span class="label label-success preformatted">{{ action.get_type_display() }}</span>
+                <span class="label label-success preformatted">{{ action.get_action_type_display() }}</span>
             </li>
             {% set ctl = ContentTypeLinker(action, 'content_type', 'object_id') %}
             <li class="list-group-item">
