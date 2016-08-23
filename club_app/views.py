@@ -121,6 +121,7 @@ class EquipmentDetail(FormDetailView):
     pk_url_kwarg = 'equipment_id'
     model = Equipment
     form_class = EquipmentDisplayForm
+    format_view_title = True
 
 
 class MemberDetail(FormDetailView):
@@ -128,3 +129,4 @@ class MemberDetail(FormDetailView):
     pk_url_kwarg = 'member_id'
     model = Member
     form_class = MemberDisplayForm
+    format_view_title = True
