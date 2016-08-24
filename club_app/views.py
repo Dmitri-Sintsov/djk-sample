@@ -1,8 +1,9 @@
 from django.core.urlresolvers import reverse
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from django.conf import settings
 from django.shortcuts import render
 
+from django_jinja_knockout.middleware import ContextMiddleware
 from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.views import (
     FormDetailView, InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
@@ -104,8 +105,6 @@ class ClubDetail(ClubNavsMixin, InlineDetailView):
 class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
 
     model = Club
-    template_name = 'club_list.htm'
-    context_object_name = 'clubs'
     paginate_by = settings.OBJECTS_PER_PAGE
     allowed_sort_orders = '__all__'
     extra_context_data = {
@@ -114,6 +113,27 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
     allowed_filter_fields = {
         'category': None,
     }
+    grid_fields = [
+        'title',
+        'category',
+        'foundation_date'
+    ]
+
+    def get_display_value(self, obj, field):
+        if field == 'title':
+            links = [format_html(
+                '<div><a href="{}">{}</a></div>',
+                reverse('club_detail', kwargs={'club_id': obj.pk}),
+                obj.title
+            )]
+            if ContextMiddleware.get_request().user.is_authenticated():
+                links.append(format_html(
+                    '<div><a href="{}"><span class="glyphicon glyphicon-edit"></span></a></div>',
+                    reverse('club_update', kwargs={'club_id': obj.pk}))
+                )
+            return mark_safe(''.join(links))
+        else:
+            return super().get_display_value(obj, field)
 
 
 class EquipmentDetail(FormDetailView):

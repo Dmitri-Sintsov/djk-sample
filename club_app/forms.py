@@ -39,7 +39,9 @@ class ClubForm(BootstrapModelForm):
 class ClubDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta(ClubForm.Meta):
-        pass
+        widgets = {
+            'category': DisplayText()
+        }
 
 
 class EquipmentForm(BootstrapModelForm):
