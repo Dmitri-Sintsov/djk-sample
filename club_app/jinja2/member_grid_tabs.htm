@@ -8,15 +8,18 @@
         grid_options={
             'pageRoute': view.request.url_name,
         },
+        template_options={
+            'vscroll': True
+        },
         dom_attrs={
             'id': 'member_grid'
         },
         override_template=True,
     ) %}
 
-    <div{{ flatatt(kwargs.dom_attrs) }} data-component-options='{{ kwargs._grid_options|escapejs(True) }}'>
+    <div{{ flatatt(kwargs.dom_attrs) }} data-component-options='{{ kwargs._grid_options|escapejs }}'>
     <a name="{{ kwargs.fragment_name }}"></a>
-        <div data-template-id="member_ko_grid_body" data-template-args='{{ _template_options|escapejs(True) }}'>
+        <div data-template-id="member_ko_grid_body" data-template-args='{{ kwargs._template_options|escapejs }}'>
         </div>
     </div>
 
@@ -49,7 +52,12 @@
                 <div data-template-id="member_ko_grid_nav"></div>
                 <!-- /ko -->
                 <div data-template-id="ko_grid_table"></div>
-                <button data-bind="click: onChangeEndorsementButtonClick.bind($data)" type="button" class="btn btn-warning">Change endorsement</button>
+                <div class="default-padding">
+                    <button
+                            data-bind="click: onChangeEndorsementButtonClick.bind($data)" type="button" class="btn btn-warning">
+                        Change endorsement
+                    </button>
+                </div>
             </div>
             <div data-template-id="ko_grid_pagination"></div>
         </div>
