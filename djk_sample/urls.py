@@ -17,7 +17,8 @@ from django.conf.urls import include, url, patterns
 # from django.contrib import admin
 from club_app.views import ClubCreate, ClubUpdate, ClubDetail, ClubList, EquipmentDetail, MemberDetail
 from club_app.views_ajax import (
-    SimpleClubGrid, MemberGrid, MemberGridTabs, ClubGridWithVirtualField,
+    SimpleClubGrid, ClubGridWithVirtualField,
+    MemberGrid, MemberGridTabs, MemberGridCustomActions,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
 from event_app.views import ActionList
@@ -72,6 +73,8 @@ urlpatterns = [
         kwargs={'view_title': 'Club members grid'}),
     url(r'^member-grid-tabs(?P<action>/?\w*)/$', MemberGridTabs.as_view(), name='member_grid_tabs',
         kwargs={'view_title': 'Club members grid with custom layout'}),
+    url(r'^member-grid-custom-actions(?P<action>/?\w*)/$', MemberGridCustomActions.as_view(), name='member_grid_custom_actions',
+        kwargs={'view_title': 'Club members grid with custom actions'}),
 ]
 
 js_info_dict = {

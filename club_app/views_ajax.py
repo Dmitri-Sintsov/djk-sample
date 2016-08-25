@@ -1,5 +1,10 @@
 from collections import OrderedDict
+import json
+
 from django_jinja_knockout.views import KoGridView, KoGridWidget
+from django_jinja_knockout.viewmodels import vm_list
+from django_jinja_knockout.tpl import print_list_group
+
 from .models import Club, Equipment, Manufacturer, Profile, Member
 from .forms import ManufacturerForm, ProfileForm
 
@@ -86,6 +91,33 @@ class MemberGrid(KoGridView):
 class MemberGridTabs(MemberGrid):
 
     template_name = 'member_grid_tabs.htm'
+
+
+class MemberGridCustomActions(MemberGridTabs):
+
+    def get_actions(self):
+        actions = super().get_actions()
+        actions['built_in']['endorse_members'] = {'enabled': True}
+        return actions
+
+    def action_endorse_members(self):
+        member_ids = json.loads(self.request_get('member_ids', '{}'))
+        members = self.model.objects.filter(pk__in=member_ids)
+        modified_members = []
+        for member in members:
+            if member.is_endorsed != member_ids[str(member.pk)]:
+                member.is_endorsed = member_ids[str(member.pk)]
+                member.save()
+                modified_members.append(member.get_str_fields().values())
+        if len(modified_members) > 0:
+            message = print_list_group(modified_members)
+        else:
+            message = 'No membership endorsement were changed.'
+        return vm_list({
+            'view': 'alert',
+            'title': 'Membership endorsement',
+            'message': message
+        })
 
 
 class ClubGridWithVirtualField(SimpleClubGrid):

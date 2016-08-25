@@ -55,6 +55,32 @@ App.ko.MemberGridRow = function(options) {
 
 })(App.ko.MemberGridRow.prototype);
 
+
+App.MemberGridActions = function(options) {
+    $.inherit(App.GridActions.prototype, this);
+    this.init(options);
+};
+
+(function(MemberGridActions) {
+
+    MemberGridActions.queryargs_endorse_members = function(options) {
+        options['member_ids'] = JSON.stringify(this.grid.getEndorsedMemberIds());
+        return options;
+    };
+
+    MemberGridActions.callback_endorse_members = function(viewModel) {
+        this.grid.updateMeta(viewModel.meta);
+        var dialog = new App.Dialog(viewModel);
+        dialog.alert();
+        var lockoutProjectGrid = $('#lockout_project_grid').component();
+        if (lockoutProjectGrid !== null) {
+            lockoutProjectGrid.gridActions.perform('list');
+        }
+    };
+
+})(App.MemberGridActions.prototype);
+
+
 App.ko.MemberGrid = function(options) {
     $.inherit(App.ko.Grid.prototype, this);
     this.init(options);
@@ -64,6 +90,10 @@ App.ko.MemberGrid = function(options) {
 
     MemberGrid.iocRow = function(options) {
         return new App.ko.MemberGridRow(options);
+    };
+
+    MemberGrid.iocGridActions = function(options) {
+        return new App.MemberGridActions(options);
     };
 
     MemberGrid.getEndorsedMemberIds = function() {
@@ -76,8 +106,7 @@ App.ko.MemberGrid = function(options) {
     };
 
     MemberGrid.onChangeEndorsementButtonClick = function(data, ev) {
-        console.log(ev);
-        var members = this.getEndorsedMemberIds();
+        this.gridActions.perform('endorse_members');
     };
 
 })(App.ko.MemberGrid.prototype);
