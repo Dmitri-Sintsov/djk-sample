@@ -1,0 +1,77 @@
+{% from 'ko_grid.htm' import ko_grid with context %}
+{% from 'ko_grid_body.htm' import ko_grid_body with context %}
+{% extends 'base.htm' %}
+
+{% block main %}
+
+    {% call(kwargs) ko_grid(
+        grid_options={
+            'pageRoute': view.request.url_name,
+        },
+        dom_attrs={
+            'id': 'member_grid'
+        },
+        override_template=True,
+    ) %}
+
+    <div{{ flatatt(kwargs.dom_attrs) }} data-component-options='{{ kwargs._grid_options|escapejs(True) }}'>
+    <a name="{{ kwargs.fragment_name }}"></a>
+        <div data-template-id="member_ko_grid_body" data-template-args='{{ _template_options|escapejs(True) }}'>
+        </div>
+    </div>
+
+{% endcall %}
+
+{% endblock main %}
+
+{% block bottom_scripts %}
+    {# Generate standard grid templates for KoGridWidget #}
+    {{ ko_grid_body() }}
+
+    {# Overwrites templates for custom displaying of MemberGrid #}
+    {{
+        ko_grid_body(
+            call_ids={
+                'ko_grid_body': 'member_ko_grid_body',
+                'ko_grid_filter_choices': 'member_ko_grid_filter_choices',
+            },
+            template_ids={
+                'ko_grid_nav': 'member_ko_grid_nav'
+            }
+        )
+    }}
+
+    <script type="text/template" id="member_ko_grid_body">
+        <div class="panel panel-primary">
+            <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
+            <div class="panel-body">
+                <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
+                <div data-template-id="member_ko_grid_nav"></div>
+                <!-- /ko -->
+                <div data-template-id="ko_grid_table"></div>
+                <button data-bind="click: onChangeEndorsementButtonClick.bind($data)" type="button" class="btn btn-warning">Change endorsement</button>
+            </div>
+            <div data-template-id="ko_grid_pagination"></div>
+        </div>
+    </script>
+
+    <script type="text/template" id="member_ko_grid_filter_choices">
+        <li data-bind="grid_filter">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header"><a class="navbar-brand" href="##" data-bind="text: name"></a></div>
+                    <ul class="nav navbar-nav">
+                        <!-- ko foreach: choices -->
+                        <li data-bind="css: {active: is_active()}">
+                            <a data-bind="css: {bold: is_active()}, text: name, grid_filter_choice, click: onLoadFilter.bind($data)" name="#"></a>
+                        </li>
+                        <!-- /ko -->
+                    </ul>
+                </div>
+            </nav>
+        </li>
+    </script>
+
+    <script src="{{ static('js/front/ko-grid.js') }}"></script>
+    <script src="{{ static('js/front/member-grid.js') }}"></script>
+{% endblock bottom_scripts %}

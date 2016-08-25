@@ -41,8 +41,9 @@ App.ko.MemberGridRow = function(options) {
             // Display field value as form input.
             var attrs = {
                 'type': 'checkbox',
-                'class': 'form-field',
-                'name': field + '_' + this.getValue(this.ownerGrid.meta.pkField),
+                'class': 'form-field club-member',
+                'data-pkval': this.getValue(this.ownerGrid.meta.pkField),
+                'name': field + '[]',
             };
             if (this.values[field]) {
                 attrs['checked'] = 'checked';
@@ -63,6 +64,20 @@ App.ko.MemberGrid = function(options) {
 
     MemberGrid.iocRow = function(options) {
         return new App.ko.MemberGridRow(options);
+    };
+
+    MemberGrid.getEndorsedMemberIds = function() {
+        var members = {};
+        $('input.club-member[name^="is_endorsed"]')
+        .map(function() {
+            members[$(this).data('pkval')] = $(this).prop('checked');
+        });
+        return members;
+    };
+
+    MemberGrid.onChangeEndorsementButtonClick = function(data, ev) {
+        console.log(ev);
+        var members = this.getEndorsedMemberIds();
     };
 
 })(App.ko.MemberGrid.prototype);

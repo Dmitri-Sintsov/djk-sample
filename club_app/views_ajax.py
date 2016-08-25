@@ -32,6 +32,11 @@ class MemberGrid(KoGridView):
         'note',
         'is_endorsed'
     ]
+    search_fields = [
+        ('club__title', 'icontains'),
+        ('profile__first_name', 'icontains'),
+        ('profile__last_name', 'icontains')
+    ]
     allowed_sort_orders = [
         'club',
         # Will join 'category' field from related 'Club' table automatically via Django ORM.
@@ -43,8 +48,8 @@ class MemberGrid(KoGridView):
     allowed_filter_fields = OrderedDict([
         ('profile', None),
         ('club', None),
-        ('club__category', None),
         ('last_visit', None),
+        ('club__category', None),
         # Include only some Django model choices and disable multiple choices for 'plays' filter.
         ('plays', {
             'type': 'choices', 'choices': Member.BASIC_SPORTS, 'multiple_choices': False
@@ -77,6 +82,10 @@ class MemberGrid(KoGridView):
     # Overriding get_base_queryset() is not required, but is used to reduce number of queries.
     def get_base_queryset(self):
         return self.__class__.model.objects.select_related('club').all()
+
+class MemberGridTabs(MemberGrid):
+
+    template_name = 'member_grid_tabs.htm'
 
 
 class ClubGridWithVirtualField(SimpleClubGrid):
