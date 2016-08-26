@@ -69,13 +69,21 @@ App.MemberGridActions = function(options) {
     };
 
     MemberGridActions.callback_endorse_members = function(viewModel) {
-        this.grid.updateMeta(viewModel.meta);
-        var dialog = new App.Dialog(viewModel);
-        dialog.alert();
-        var lockoutProjectGrid = $('#lockout_project_grid').component();
-        if (lockoutProjectGrid !== null) {
-            lockoutProjectGrid.gridActions.perform('list');
+        this.grid.updatePage(viewModel);
+        if (viewModel.update_rows.length > 0) {
+            var vm = {
+                title: 'Changed member endorsements',
+                description: viewModel.description
+            };
+            this.renderDescription(vm);
+        } else {
+            var vm = {
+                'title': 'No membership was changed',
+                'message': 'Please invert some checkbox first.'
+            };
         }
+        // this.grid.updateMeta(viewModel.meta);
+        new App.Dialog(vm).alert();
     };
 
 })(App.MemberGridActions.prototype);

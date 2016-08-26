@@ -108,15 +108,11 @@ class MemberGridCustomActions(MemberGridTabs):
             if member.is_endorsed != member_ids[str(member.pk)]:
                 member.is_endorsed = member_ids[str(member.pk)]
                 member.save()
-                modified_members.append(member.get_str_fields().values())
-        if len(modified_members) > 0:
-            message = print_list_group(modified_members)
-        else:
-            message = 'No membership endorsement were changed.'
+                modified_members.append(member)
         return vm_list({
-            'view': 'alert',
-            'title': 'Membership endorsement',
-            'message': message
+            'view': self.__class__.viewmodel_name,
+            'description': [list(member.get_str_fields().values()) for member in modified_members],
+            'update_rows': self.postprocess_qs(modified_members),
         })
 
 
