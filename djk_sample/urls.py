@@ -17,7 +17,7 @@ from django.conf.urls import include, url, patterns
 # from django.contrib import admin
 from club_app.views import ClubCreate, ClubUpdate, ClubDetail, ClubList, EquipmentDetail, MemberDetail
 from club_app.views_ajax import (
-    SimpleClubGrid, ClubGridWithVirtualField,
+    SimpleClubGrid, EditableClubGrid, ClubGridWithVirtualField,
     MemberGrid, MemberGridTabs, MemberGridCustomActions,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
@@ -65,10 +65,15 @@ urlpatterns = [
         kwargs={'ajax': True}),
 
     # AJAX grids.
+    # Sport club.
     url(r'^club-grid-simple(?P<action>/?\w*)/$', SimpleClubGrid.as_view(), name='club_grid_simple',
         kwargs={'view_title': 'Simple club grid'}),
+    url(r'^club-grid-editable(?P<action>/?\w*)/$', EditableClubGrid.as_view(), name='club_grid_editable',
+        kwargs={'view_title': 'Editable club grid'}),
     url(r'^club-grid-with-virtual-field(?P<action>/?\w*)/$', ClubGridWithVirtualField.as_view(), name='club_grid_with_virtual_field',
         kwargs={'view_title': 'Club grid with virtual field'}),
+
+    # Sport club member.
     url(r'^member-grid(?P<action>/?\w*)/$', MemberGrid.as_view(), name='member_grid',
         kwargs={'view_title': 'Club members grid'}),
     url(r'^member-grid-tabs(?P<action>/?\w*)/$', MemberGridTabs.as_view(), name='member_grid_tabs',

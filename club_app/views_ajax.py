@@ -1,12 +1,11 @@
 from collections import OrderedDict
 import json
 
-from django_jinja_knockout.views import KoGridView, KoGridWidget
+from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline
 from django_jinja_knockout.viewmodels import vm_list
-from django_jinja_knockout.tpl import print_list_group
 
 from .models import Club, Equipment, Manufacturer, Profile, Member
-from .forms import ManufacturerForm, ProfileForm
+from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm
 
 
 class SimpleClubGrid(KoGridView):
@@ -15,6 +14,51 @@ class SimpleClubGrid(KoGridView):
     grid_fields = '__all__'
     # Remove next line to disable columns sorting:
     allowed_sort_orders = '__all__'
+
+
+class EditableClubGrid(KoGridInline, SimpleClubGrid):
+
+    client_routes = [
+        'manufacturer_fk_widget_grid',
+        'profile_fk_widget_grid'
+    ]
+    enable_deletion = True
+    form_with_inline_formsets = ClubFormWithInlineFormsets
+
+
+class ClubGridWithVirtualField(SimpleClubGrid):
+
+    grid_fields = [
+        'title', 'category', 'foundation_date', 'total_members'
+    ]
+
+    def get_field_verbose_name(self, field_name):
+        if field_name == 'total_members':
+            # Add virtual field.
+            return 'Total members'
+        else:
+            return super().get_field_verbose_name(field_name)
+
+    def get_related_fields(self, query_fields=None):
+        query_fields = super().get_related_fields(query_fields)
+        # Remove virtual field from queryset values().
+        query_fields.remove('total_members')
+        return query_fields
+
+    def postprocess_row(self, row, obj):
+        # Add virtual field value.
+        row['total_members'] = obj.member_set.count()
+        row = super().postprocess_row(row, obj)
+        return row
+
+    # Optional formatting of virtual field (not required).
+    def get_row_str_fields(self, obj, row):
+        str_fields = super().get_row_str_fields(obj, row)
+        if str_fields is None:
+            str_fields = {}
+        # Add formatted display of virtual field.
+        str_fields['total_members'] = 'None yet' if row['total_members'] == 0 else row['total_members']
+        return str_fields
 
 
 class MemberGrid(KoGridView):
@@ -93,7 +137,7 @@ class MemberGridTabs(MemberGrid):
     template_name = 'member_grid_tabs.htm'
 
 
-class MemberGridCustomActions(MemberGridTabs):
+class MemberGridCustomActions(MemberGrid):
 
     def get_actions(self):
         actions = super().get_actions()
@@ -114,41 +158,6 @@ class MemberGridCustomActions(MemberGridTabs):
             'description': [list(member.get_str_fields().values()) for member in modified_members],
             'update_rows': self.postprocess_qs(modified_members),
         })
-
-
-class ClubGridWithVirtualField(SimpleClubGrid):
-
-    grid_fields = [
-        'title', 'category', 'foundation_date', 'total_members'
-    ]
-
-    def get_field_verbose_name(self, field_name):
-        if field_name == 'total_members':
-            # Add virtual field.
-            return 'Total members'
-        else:
-            return super().get_field_verbose_name(field_name)
-
-    def get_related_fields(self, query_fields=None):
-        query_fields = super().get_related_fields(query_fields)
-        # Remove virtual field from queryset values().
-        query_fields.remove('total_members')
-        return query_fields
-
-    def postprocess_row(self, row, obj):
-        # Add virtual field value.
-        row['total_members'] = obj.member_set.count()
-        row = super().postprocess_row(row, obj)
-        return row
-
-    # Optional formatting of virtual field (not required).
-    def get_row_str_fields(self, obj, row):
-        str_fields = super().get_row_str_fields(obj, row)
-        if str_fields is None:
-            str_fields = {}
-        # Add formatted display of virtual field.
-        str_fields['total_members'] = 'None yet' if row['total_members'] == 0 else row['total_members']
-        return str_fields
 
 
 # Currently is unused.
