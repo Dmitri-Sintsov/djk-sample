@@ -1,6 +1,10 @@
 from collections import OrderedDict
 import json
 
+from django.utils import timezone
+from django.template.defaultfilters import pluralize
+from django.db.models import Count
+
 from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline
 from django_jinja_knockout.viewmodels import vm_list
 
@@ -29,12 +33,22 @@ class EditableClubGrid(KoGridInline, SimpleClubGrid):
 class ClubGridWithVirtualField(SimpleClubGrid):
 
     grid_fields = [
-        'title', 'category', 'foundation_date', 'total_members'
+        'title',
+        'category',
+        'foundation_date',
+        'total_members',
+        'exists_days'
     ]
 
+    def get_base_queryset(self):
+        return super().get_base_queryset().annotate(total_members=Count('member'))
+
     def get_field_verbose_name(self, field_name):
-        if field_name == 'total_members':
+        if field_name == 'exists_days':
             # Add virtual field.
+            return 'Days since foundation'
+        elif field_name == 'total_members':
+            # Add annotated field.
             return 'Total members'
         else:
             return super().get_field_verbose_name(field_name)
@@ -42,12 +56,12 @@ class ClubGridWithVirtualField(SimpleClubGrid):
     def get_related_fields(self, query_fields=None):
         query_fields = super().get_related_fields(query_fields)
         # Remove virtual field from queryset values().
-        query_fields.remove('total_members')
+        query_fields.remove('exists_days')
         return query_fields
 
     def postprocess_row(self, row, obj):
         # Add virtual field value.
-        row['total_members'] = obj.member_set.count()
+        row['exists_days'] = (timezone.now().date() - obj.foundation_date).days
         row = super().postprocess_row(row, obj)
         return row
 
@@ -57,7 +71,8 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         if str_fields is None:
             str_fields = {}
         # Add formatted display of virtual field.
-        str_fields['total_members'] = 'None yet' if row['total_members'] == 0 else row['total_members']
+        is_plural = pluralize(row['exists_days'], arg='days')
+        str_fields['exists_days'] = '{} {}'.format(row['exists_days'], 'day' if is_plural == '' else is_plural)
         return str_fields
 
 
@@ -131,6 +146,7 @@ class MemberGrid(KoGridView):
     # Overriding get_base_queryset() is not required, but is used to reduce number of queries.
     def get_base_queryset(self):
         return self.__class__.model.objects.select_related('club').all()
+
 
 class MemberGridTabs(MemberGrid):
 
