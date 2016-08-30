@@ -155,6 +155,8 @@ class MemberGridTabs(MemberGrid):
 
 class MemberGridCustomActions(MemberGrid):
 
+    template_name = 'member_grid_custom_actions.htm'
+
     def get_actions(self):
         actions = super().get_actions()
         actions['built_in']['endorse_members'] = {'enabled': True}

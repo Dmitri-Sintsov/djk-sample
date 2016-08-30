@@ -8,9 +8,6 @@
         grid_options={
             'pageRoute': view.request.url_name,
         },
-        template_options={
-            'vscroll': True
-        },
         dom_attrs={
             'id': 'member_grid'
         },
@@ -42,10 +39,6 @@
         ko_grid_body(
             call_ids={
                 'ko_grid_body': 'member_ko_grid_body',
-                'ko_grid_filter_choices': 'member_ko_grid_filter_choices',
-            },
-            template_ids={
-                'ko_grid_nav': 'member_ko_grid_nav'
             },
             has_full_body=True
         )
@@ -56,7 +49,7 @@
             <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
             <div class="panel-body">
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
-                <div data-template-id="member_ko_grid_nav"></div>
+                <div data-template-id="ko_grid_nav"></div>
                 <!-- /ko -->
                 <div data-template-id="ko_grid_table"></div>
                 <div class="default-padding">
@@ -68,23 +61,6 @@
             </div>
             <div data-template-id="ko_grid_pagination"></div>
         </div>
-    </script>
-
-    <script type="text/template" id="member_ko_grid_filter_choices">
-        <li data-bind="grid_filter">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header"><a class="navbar-brand" href="##" data-bind="text: name"></a></div>
-                    <ul class="nav navbar-nav">
-                        <!-- ko foreach: choices -->
-                        <li data-bind="css: {active: is_active()}">
-                            <a data-bind="css: {bold: is_active()}, text: name, grid_filter_choice, click: onLoadFilter.bind($data)" name="#"></a>
-                        </li>
-                        <!-- /ko -->
-                    </ul>
-                </div>
-            </nav>
-        </li>
     </script>
 
     <script src="{{ static('js/front/ko-grid.js') }}"></script>
