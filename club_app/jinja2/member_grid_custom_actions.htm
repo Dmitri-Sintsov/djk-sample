@@ -63,6 +63,23 @@
         </div>
     </script>
 
+    <script type="text/template" id="member_note_form">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="ajax-form" enctype="multipart/form-data" method="post" role="form" data-bind="attr: {'data-url': gridActions.getLastActionUrl()}">
+                    <input type="hidden" name="csrfmiddlewaretoken" data-bind="value: getCsrfToken()">
+                    <input type="hidden" name="pk_val" data-bind="value: getLastPkVal()">
+                    <div class="row form-group">
+                        <label data-bind="text: meta.noteLabel" class="control-label col-md-4" for="id_note"></label>
+                        <div class="field col-md-6">
+                            <textarea data-bind="textInput: meta.note" id="id_note" class="form-control autogrow" name="note" type="text"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
     <script src="{{ static('js/front/ko-grid.js') }}"></script>
     <script src="{{ static('js/front/member-grid.js') }}"></script>
 {% endblock bottom_scripts %}

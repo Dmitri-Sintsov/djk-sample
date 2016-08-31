@@ -2,6 +2,7 @@ from collections import OrderedDict
 import json
 
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
@@ -22,6 +23,9 @@ class SimpleClubGrid(KoGridView):
 
 class EditableClubGrid(KoGridInline, SimpleClubGrid):
 
+    search_fields = [
+        ('title', 'icontains')
+    ]
     client_routes = [
         'manufacturer_fk_widget_grid',
         'profile_fk_widget_grid'
@@ -133,6 +137,7 @@ class MemberGrid(KoGridView):
         return {
             # Note: 'classPath' is not required for standard App.ko.Grid.
             'classPath': 'App.ko.MemberGrid',
+            'searchPlaceholder': 'Search for club or member profile',
             'fkGridOptions': {
                 'profile': {
                     'pageRoute': 'profile_fk_widget_grid'
@@ -160,10 +165,24 @@ class MemberGridCustomActions(MemberGrid):
     def get_actions(self):
         actions = super().get_actions()
         actions['built_in']['endorse_members'] = {'enabled': True}
+        # action_type = 'glyphicon'
+        action_type = 'click'
+        actions[action_type]['edit_note'] = {
+            'localName': _('Edit member note'),
+            # 'class': 'glyphicon-cloud-upload',
+            'class': 'btn-warning',
+            'enabled': True
+        }
         return actions
 
     def action_endorse_members(self):
         member_ids = json.loads(self.request_get('member_ids', '{}'))
+        if not isinstance(member_ids, dict):
+            return vm_list({
+                'view': 'alert_error',
+                'title': 'Invalid value of member_ids',
+                'message': self.request_get('member_ids')
+            })
         members = self.model.objects.filter(pk__in=member_ids)
         modified_members = []
         for member in members:
@@ -176,6 +195,26 @@ class MemberGridCustomActions(MemberGrid):
             'description': [list(member.get_str_fields().values()) for member in modified_members],
             'update_rows': self.postprocess_qs(modified_members),
         })
+
+    def action_edit_note(self):
+        member = self.get_object_from_action_template()
+        note = self.request_get('note')
+        modified_members = []
+        if member.note != note:
+            member.note = note
+            member.save()
+            modified_members.append(member)
+        if len(modified_members) == 0:
+            return vm_list({
+                'view': 'alert',
+                'title': str(member.profile),
+                'message': 'Note was not changed.'
+            })
+        else:
+            return vm_list({
+                'view': self.__class__.viewmodel_name,
+                'update_rows': self.postprocess_qs(modified_members),
+            })
 
 
 # Currently is unused.

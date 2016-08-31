@@ -63,6 +63,7 @@ App.MemberGridActions = function(options) {
 
 (function(MemberGridActions) {
 
+    // Generates data for AJAX call.
     MemberGridActions.queryargs_endorse_members = function(options) {
         options['member_ids'] = JSON.stringify(this.grid.getEndorsedMemberIds());
         return options;
@@ -84,6 +85,23 @@ App.MemberGridActions = function(options) {
         }
         // this.grid.updateMeta(viewModel.meta);
         new App.Dialog(vm).alert();
+    };
+
+    // Client-side invocation of the action.
+    MemberGridActions.perform_edit_note = function(queryArgs, ajaxCallback) {
+        var actionDialog = new App.ActionTemplateDialog({
+            template: 'member_note_form',
+            grid: this.grid,
+            meta: {
+                noteLabel: 'Member note',
+                note: this.grid.lastClickedKoRow.getValue('note')
+            },
+        });
+        actionDialog.show();
+    };
+
+    MemberGridActions.callback_edit_note = function(viewModel) {
+        this.grid.updatePage(viewModel);
     };
 
 })(App.MemberGridActions.prototype);
