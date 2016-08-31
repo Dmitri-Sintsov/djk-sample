@@ -217,32 +217,6 @@ class MemberGridCustomActions(MemberGrid):
             })
 
 
-# Currently is unused.
-class EquipmentGrid(KoGridView):
-
-    client_routes = [
-        'equipment_grid'
-    ]
-    model = Equipment
-    grid_fields = [
-        'manufacturer',
-        # Will join 'direct_shipping' field from related 'Manufacturer' table automatically via Django ORM.
-        'manufacturer__direct_shipping',
-        'inventory_name',
-        # Will join 'title' field from related 'Club' table automatically via Django ORM.
-        'club__category',
-        'category',
-    ]
-    allowed_sort_orders = '__all__'
-    allowed_filter_fields = OrderedDict([
-        ('manufacturer', None),
-        ('club_category', None),
-        ('category', {
-            'type': 'choices', 'choices': Equipment.CATEGORIES, 'multiple_choices': False
-        }),
-    ])
-
-
 class ManufacturerFkWidgetGrid(KoGridWidget):
 
     model = Manufacturer

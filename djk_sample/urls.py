@@ -22,6 +22,7 @@ from club_app.views_ajax import (
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
 from event_app.views import ActionList
+from event_app.views_ajax import ActionGrid
 
 
 urlpatterns = [
@@ -45,6 +46,8 @@ urlpatterns = [
     # Action
     url(r'^action-list/$', ActionList.as_view(), name='action_list',
         kwargs={'view_title': 'Log of actions'}),
+    url(r'^action-grid(?P<action>/?\w*)/$', ActionGrid.as_view(), name='action_grid',
+        kwargs={'view_title': 'Grid with the list of performed actions'}),
 
     # Equipment
     url(r'^equipment-detail-(?P<equipment_id>\d+)/$', EquipmentDetail.as_view(), name='equipment_detail',
