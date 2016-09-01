@@ -24,6 +24,7 @@ class ActionGrid(KoGridView):
     mark_safe_fields = [
         'content_object'
     ]
+    enable_deletion = True
 
     def get_allowed_filter_fields(self):
         allowed_filter_fields = OrderedDict([
@@ -63,3 +64,9 @@ class ActionGrid(KoGridView):
                 *obj.content_object.get_canonical_link()
             )
         return str_fields
+
+    @classmethod
+    def get_default_grid_options(cls):
+        return {
+            'selectMultipleRows': True
+        }

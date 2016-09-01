@@ -80,6 +80,23 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         return str_fields
 
 
+class ClubGridWithActionLogging(EditableClubGrid):
+
+    template_name = 'club_grid_with_action_logging.htm'
+    client_routes = [
+        'manufacturer_fk_widget_grid',
+        'profile_fk_widget_grid',
+        'action_grid',
+    ]
+
+    @classmethod
+    def get_default_grid_options(cls):
+        return {
+            # Note: 'classPath' is not required for standard App.ko.Grid.
+            'classPath': 'App.ko.ClubGrid',
+        }
+
+
 class MemberGrid(KoGridView):
 
     client_routes = [
@@ -197,7 +214,7 @@ class MemberGridCustomActions(MemberGrid):
         })
 
     def action_edit_note(self):
-        member = self.get_object_from_action_template()
+        member = self.get_object_for_action()
         note = self.request_get('note')
         modified_members = []
         if member.note != note:

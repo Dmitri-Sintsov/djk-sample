@@ -67,7 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django_jinja_knockout.middleware.ContextMiddleware',
+    'djk_sample.middleware.ContextMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (

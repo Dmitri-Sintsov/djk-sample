@@ -1,0 +1,32 @@
+{% from 'ko_grid.htm' import ko_grid with context %}
+{% from 'ko_grid_body.htm' import ko_grid_body with context %}
+{% extends 'base.htm' %}
+
+{% block main %}
+
+    {{ ko_grid(
+        grid_options={
+            'pageRoute': 'club_grid_with_action_logging',
+        },
+        dom_attrs={
+            'id': 'club_grid'
+        }
+    ) }}
+
+    {{ ko_grid(
+        grid_options={
+            'pageRoute': 'action_grid',
+        },
+        dom_attrs={
+            'id': 'action_grid'
+        }
+    ) }}
+
+{% endblock main %}
+
+{% block bottom_scripts %}
+    {{ ko_grid_body() }}
+    <script src="{{ static('js/front/formsets.js') }}"></script>
+    <script src="{{ static('js/front/ko-grid.js') }}"></script>
+    <script src="{{ static('js/front/club-grid.js') }}"></script>
+{% endblock bottom_scripts %}

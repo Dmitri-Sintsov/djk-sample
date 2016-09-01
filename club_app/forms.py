@@ -9,6 +9,8 @@ from django_jinja_knockout.forms import (
 )
 from django_jinja_knockout.viewmodels import to_json
 
+from djk_sample.middleware import ContextMiddleware
+from event_app.models import Action
 from .models import Profile, Manufacturer, Club, Equipment, Member
 
 
@@ -35,6 +37,13 @@ class ClubForm(BootstrapModelForm):
             'category': forms.RadioSelect()
         }
 
+    def save(self, commit=True):
+        action_type = Action.TYPE_CREATED if self.instance.pk is None else Action.TYPE_MODIFIED
+        obj = super().save(commit=commit)
+        if self.has_changed():
+            ContextMiddleware().add_action(obj, action_type)
+        return obj
+
 
 class ClubDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
 
@@ -55,6 +64,13 @@ class EquipmentForm(BootstrapModelForm):
             }),
             'category': forms.RadioSelect()
         }
+
+    def save(self, commit=True):
+        action_type = Action.TYPE_CREATED if self.instance.pk is None else Action.TYPE_MODIFIED
+        obj = super().save(commit=commit)
+        if self.has_changed():
+            ContextMiddleware().add_action(obj, action_type)
+        return obj
 
 
 class EquipmentDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
@@ -86,6 +102,13 @@ class MemberForm(BootstrapModelForm):
             current_member = Member.objects.filter(club=club, role=role).first()
             if current_member is not None and current_member != self.instance:
                 self.add_error('role', 'Non-member roles should be unique')
+
+    def save(self, commit=True):
+        action_type = Action.TYPE_CREATED if self.instance.pk is None else Action.TYPE_MODIFIED
+        obj = super().save(commit=commit)
+        if self.has_changed():
+            ContextMiddleware().add_action(obj, action_type)
+        return obj
 
 
 class MemberDisplayForm(WidgetInstancesMixin, metaclass=DisplayModelMetaclass):
@@ -151,6 +174,10 @@ class ClubFormWithInlineFormsets(FormWithInlineFormsets):
 
     FormClass = ClubForm
     FormsetClasses = [ClubEquipmentFormSet, ClubMemberFormSet]
+
+    def save_success(self):
+        super().save_success()
+        ContextMiddleware().save_actions()
 
 
 class ClubDisplayFormWithInlineFormsets(FormWithInlineFormsets):
