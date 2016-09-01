@@ -175,10 +175,6 @@ class ClubFormWithInlineFormsets(FormWithInlineFormsets):
     FormClass = ClubForm
     FormsetClasses = [ClubEquipmentFormSet, ClubMemberFormSet]
 
-    def save_success(self):
-        super().save_success()
-        ContextMiddleware().save_actions()
-
 
 class ClubDisplayFormWithInlineFormsets(FormWithInlineFormsets):
 

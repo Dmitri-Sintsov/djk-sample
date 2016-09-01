@@ -9,9 +9,13 @@ class ContextMiddleware(BaseContextMiddleware):
             request.actions = []
         request.actions.append((obj, action_type))
 
-    def save_actions(self):
-        request = self.get_request()
+    def save_actions(self, request):
         if hasattr(request, 'actions'):
             from event_app.models import Action
             for args in request.actions:
                 Action.do(*args)
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        result = super().process_view(request, view_func, view_args, view_kwargs)
+        self.save_actions(request)
+        return result
