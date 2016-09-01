@@ -1,5 +1,7 @@
 from collections import OrderedDict
 
+from django.utils.html import format_html
+
 from django_jinja_knockout.views import KoGridView
 
 from .models import Action
@@ -18,6 +20,9 @@ class ActionGrid(KoGridView):
         'performer',
         'date',
         'action_type',
+    ]
+    mark_safe_fields = [
+        'content_object'
     ]
 
     def get_allowed_filter_fields(self):
@@ -40,7 +45,9 @@ class ActionGrid(KoGridView):
     def postprocess_row(self, row, obj):
         # Add virtual field value.
         content_object = obj.content_object
-        row['content_object'] = content_object.get_str_fields() if hasattr(content_object, 'get_str_fields') else str(content_object)
+        row['content_object'] = content_object.get_str_fields() \
+            if hasattr(content_object, 'get_str_fields') \
+            else str(content_object)
         row = super().postprocess_row(row, obj)
         return row
 
@@ -50,5 +57,9 @@ class ActionGrid(KoGridView):
         if str_fields is None:
             str_fields = {}
         # Add formatted display of virtual field.
-        str_fields['content_object'] = '<a href="{}">{}</a>'.format(obj.content_object.get_canonical_link(), row['content_object'])
+        if hasattr(obj.content_object, 'get_canonical_link'):
+            str_fields['content_object'] = format_html(
+                '<a href="{1}">{0}</a>',
+                *obj.content_object.get_canonical_link()
+            )
         return str_fields

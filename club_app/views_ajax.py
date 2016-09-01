@@ -9,7 +9,7 @@ from django.db.models import Count
 from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline
 from django_jinja_knockout.viewmodels import vm_list
 
-from .models import Club, Equipment, Manufacturer, Profile, Member
+from .models import Club, Manufacturer, Profile, Member
 from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm
 
 
