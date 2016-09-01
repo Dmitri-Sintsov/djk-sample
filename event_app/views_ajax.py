@@ -68,5 +68,6 @@ class ActionGrid(KoGridView):
     @classmethod
     def get_default_grid_options(cls):
         return {
-            'selectMultipleRows': True
+            'selectMultipleRows': True,
+            'highlightMode': 1,
         }

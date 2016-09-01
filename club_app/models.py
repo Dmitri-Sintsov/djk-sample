@@ -166,6 +166,7 @@ class Member(models.Model):
 
     def get_canonical_link(self):
         str_fields = self.get_str_fields()
+        join_dict_values(' / ', str_fields, ['profile', 'club'])
         return ' / '.join([str_fields['profile'], str_fields['club']]), \
                reverse('member_detail', kwargs={'member_id': self.pk})
 
