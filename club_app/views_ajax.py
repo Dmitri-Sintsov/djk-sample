@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from copy import copy
 import json
 
 from django.utils import timezone
@@ -63,9 +64,22 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         query_fields.remove('exists_days')
         return query_fields
 
+    def get_model_fields(self):
+        model_fields = copy(super().get_model_fields())
+        # Remove annotated field which is unavailable when creating / updating single object which does not uses
+        # self.get_base_queryset()
+        # Required only because current grid is editable.
+        model_fields.remove('total_members')
+        return model_fields
+
     def postprocess_row(self, row, obj):
         # Add virtual field value.
         row['exists_days'] = (timezone.now().date() - obj.foundation_date).days
+        if 'total_members' not in row:
+            # Add annotated field value which is unavailable when creating / updating single object which does not uses
+            # self.get_base_queryset()
+            # Required only because current grid is editable.
+            row['total_members'] = obj.member_set.count()
         row = super().postprocess_row(row, obj)
         return row
 
@@ -80,7 +94,7 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         return str_fields
 
 
-class ClubGridWithActionLogging(EditableClubGrid):
+class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
 
     template_name = 'club_grid_with_action_logging.htm'
     client_routes = [
