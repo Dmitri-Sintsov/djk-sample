@@ -10,7 +10,7 @@ App.ClubGridActions = function(options) {
         var actionGrid = $('#action_grid').component();
         if (actionGrid !== null) {
             // Update ActionGrid.
-            actionGrid.gridActions.perform('list');
+            actionGrid.gridActions.perform('update');
         }
     };
 
