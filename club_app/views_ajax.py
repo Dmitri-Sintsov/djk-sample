@@ -149,7 +149,7 @@ class MemberGrid(KoGridView):
         ('club', None),
         ('last_visit', None),
         ('club__category', None),
-        # Include only some Django model choices and disable multiple choices for 'plays' filter.
+        # Include only some Django model field choices and disable multiple choices for 'plays' filter.
         ('plays', {
             'type': 'choices', 'choices': Member.BASIC_SPORTS, 'multiple_choices': False
         }),
@@ -174,7 +174,9 @@ class MemberGrid(KoGridView):
                     'pageRoute': 'profile_fk_widget_grid'
                 },
                 'club': {
-                    'pageRoute': 'club_grid_simple'
+                    'pageRoute': 'club_grid_simple',
+                    # Optional setting for BootstrapDialog:
+                    'dialogOptions': {'size': 'size-wide'},
                 }
             }
         }
