@@ -111,6 +111,12 @@ class MemberForm(BootstrapModelForm):
         return obj
 
 
+class MemberFormForGrid(MemberForm):
+
+    class Meta(MemberForm.Meta):
+        exclude = ('club', 'profile')
+
+
 class MemberDisplayForm(WidgetInstancesMixin, metaclass=DisplayModelMetaclass):
 
     class Meta:

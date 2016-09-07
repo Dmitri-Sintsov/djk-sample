@@ -53,6 +53,16 @@ App.ko.MemberGridRow = function(options) {
         return displayValue;
     };
 
+    MemberGridRow.hasEnabledAction = function(action) {
+        if (action.name === 'quick_endorse' && this.values['is_endorsed'] === true) {
+            return false;
+        }
+        if (action.name === 'quick_disendorse' && this.values['is_endorsed'] === false) {
+            return false;
+        }
+        return true;
+    };
+
 })(App.ko.MemberGridRow.prototype);
 
 
@@ -85,6 +95,14 @@ App.MemberGridActions = function(options) {
         }
         // this.grid.updateMeta(viewModel.meta);
         new App.Dialog(vm).alert();
+    };
+
+    MemberGridActions.callback_quick_endorse = function(viewModel) {
+        this.grid.updatePage(viewModel);
+    };
+
+    MemberGridActions.callback_quick_disendorse = function(viewModel) {
+        this.grid.updatePage(viewModel);
     };
 
     // Client-side invocation of the action.

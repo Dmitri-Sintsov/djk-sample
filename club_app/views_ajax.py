@@ -11,7 +11,7 @@ from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline
 from django_jinja_knockout.viewmodels import vm_list
 
 from .models import Club, Manufacturer, Profile, Member
-from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm
+from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm, MemberFormForGrid
 
 
 class SimpleClubGrid(KoGridView):
@@ -194,16 +194,25 @@ class MemberGridTabs(MemberGrid):
 class MemberGridCustomActions(MemberGrid):
 
     template_name = 'member_grid_custom_actions.htm'
+    form = MemberFormForGrid
 
     def get_actions(self):
         actions = super().get_actions()
         actions['built_in']['endorse_members'] = {'enabled': True}
         # action_type = 'glyphicon'
-        action_type = 'click'
-        actions[action_type]['edit_note'] = {
+        actions['click']['edit_note'] = {
             'localName': _('Edit member note'),
-            # 'class': 'glyphicon-cloud-upload',
             'class': 'btn-warning',
+            'enabled': True
+        }
+        actions['glyphicon']['quick_endorse'] = {
+            'localName': _('Quick endorsement'),
+            'class': 'glyphicon-cloud-upload',
+            'enabled': True
+        }
+        actions['glyphicon']['quick_disendorse'] = {
+            'localName': _('Quick disendorsement'),
+            'class': 'glyphicon-cloud-download',
             'enabled': True
         }
         return actions
@@ -228,6 +237,24 @@ class MemberGridCustomActions(MemberGrid):
             'description': [list(member.get_str_fields().values()) for member in modified_members],
             'update_rows': self.postprocess_qs(modified_members),
         })
+
+    def change_endorsement(self, is_endorsed):
+        member = self.get_object_for_action()
+        modified_members = []
+        if member.is_endorsed != is_endorsed:
+            member.is_endorsed = is_endorsed
+            member.save()
+            modified_members.append(member)
+        return vm_list({
+            'view': self.__class__.viewmodel_name,
+            'update_rows': self.postprocess_qs(modified_members),
+        })
+
+    def action_quick_endorse(self):
+        return self.change_endorsement(is_endorsed=True)
+
+    def action_quick_disendorse(self):
+        return self.change_endorsement(is_endorsed=False)
 
     def action_edit_note(self):
         member = self.get_object_for_action()
