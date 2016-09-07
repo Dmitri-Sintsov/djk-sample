@@ -22,7 +22,7 @@ from club_app.views_ajax import (
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
 from event_app.views import ActionList
-from event_app.views_ajax import ActionGrid
+from event_app.views_ajax import UserFkWidgetGrid, ActionGrid
 
 
 urlpatterns = [
@@ -58,6 +58,10 @@ urlpatterns = [
         kwargs={'view_title': '{}'}),
 
     # Foreign key widgets.
+    url(r'^user-fk-widget-grid(?P<action>/?\w*)/$', UserFkWidgetGrid.as_view(),
+        name='user_fk_widget_grid',
+        # kwargs={'ajax': True, 'permission_required': 'auth.change_user'}),
+        kwargs={'ajax': True}),
     url(r'^manufacturer-fk-widget-grid(?P<action>/?\w*)/$', ManufacturerFkWidgetGrid.as_view(),
         name='manufacturer_fk_widget_grid',
         # kwargs={'ajax': True, 'permission_required': 'club_app.change_manufacturer'}),
