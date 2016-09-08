@@ -31,12 +31,12 @@ In Windows:
 
 Then issue the following commands::
 
-    pip3 djk_sample
+    python -m venv djk_sample
     cd djk_sample
     Scripts\activate.bat
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
-    cd djk-sample
     pip3 install --use-wheel --no-index lxml-3.4.4-cp34-none-win32.whl
+    cd djk-sample
     pip3 install -r requirements.txt
     mkdir "%VIRTUAL_ENV%\djk-sample\logs"
     python manage.py makemigrations club_app
