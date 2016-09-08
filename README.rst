@@ -24,6 +24,7 @@ In Ubuntu 14.04 LTS::
     python manage.py runserver
 
 In Windows:
+
 * Make sure python.exe / pip3.exe are in your PATH.
 * Download appropriate lxml wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
   (this example uses Python 3.4 for Windows 32 bit version of lxml).
