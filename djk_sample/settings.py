@@ -135,6 +135,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Next line is required only if project uses Django templates (DTL).
+                'djk_sample.context_processors.template_context_processor'
             ],
         },
     },

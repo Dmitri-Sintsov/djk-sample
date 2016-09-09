@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
-from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline, FormatTitleMixin
+from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline, FormatTitleMixin, ContextDataMixin
 from django_jinja_knockout.viewmodels import vm_list
 
 from .models import Club, Manufacturer, Profile, Member
@@ -20,6 +20,17 @@ class SimpleClubGrid(KoGridView):
     grid_fields = '__all__'
     # Remove next line to disable columns sorting:
     allowed_sort_orders = '__all__'
+
+
+class SimpleClubGridDTL(ContextDataMixin, SimpleClubGrid):
+    template_name = 'club_grid.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['club_grid_options'] = {
+            'pageRoute': self.request.url_name
+        }
+        return context_data
 
 
 class EditableClubGrid(KoGridInline, SimpleClubGrid):

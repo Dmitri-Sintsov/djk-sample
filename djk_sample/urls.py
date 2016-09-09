@@ -17,7 +17,7 @@ from django.conf.urls import include, url, patterns
 # from django.contrib import admin
 from club_app.views import ClubCreate, ClubUpdate, ClubDetail, ClubList, EquipmentDetail, MemberDetail
 from club_app.views_ajax import (
-    SimpleClubGrid, EditableClubGrid, ClubGridWithVirtualField, ClubGridWithActionLogging,
+    SimpleClubGrid, SimpleClubGridDTL, EditableClubGrid, ClubGridWithVirtualField, ClubGridWithActionLogging,
     MemberGrid, ClubMemberGrid, MemberGridTabs, MemberGridCustomActions,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
@@ -75,8 +75,11 @@ urlpatterns = [
     # Sport club.
     url(r'^club-grid-simple(?P<action>/?\w*)/$', SimpleClubGrid.as_view(), name='club_grid_simple',
         kwargs={'view_title': 'Simple club grid'}),
+    url(r'^club-grid-simple-dtl(?P<action>/?\w*)/$', SimpleClubGridDTL.as_view(), name='club_grid_simple_dtl',
+        kwargs={'view_title': 'Simple club grid (Django Template Language)'}),
     url(r'^club-grid-editable(?P<action>/?\w*)/$', EditableClubGrid.as_view(), name='club_grid_editable',
-        kwargs={'view_title': 'Editable club grid', 'permission_required': 'club_app.change_club'}),
+        # kwargs={'view_title': 'Editable club grid', 'permission_required': 'club_app.change_club'}),
+        kwargs={'view_title': 'Editable club grid'}),
     url(r'^club-grid-with-virtual-field(?P<action>/?\w*)/$', ClubGridWithVirtualField.as_view(), name='club_grid_with_virtual_field',
         kwargs={'view_title': 'Club grid with virtual field'}),
     url(r'^club-grid-with-action-logging(?P<action>/?\w*)/$', ClubGridWithActionLogging.as_view(),
