@@ -114,7 +114,7 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
     grid_fields = [
         'title',
         'category',
-        'foundation_date'
+        'foundation_date',
     ]
 
     def get_display_value(self, obj, field):
@@ -126,8 +126,12 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
             )]
             if ContextMiddleware.get_request().user.is_authenticated():
                 links.append(format_html(
-                    '<div><a href="{}"><span class="glyphicon glyphicon-edit"></span></a></div>',
+                    '<a href="{}"><span class="glyphicon glyphicon-edit"></span></a>',
                     reverse('club_update', kwargs={'club_id': obj.pk}))
+                )
+                links.append(format_html(
+                    '<a href="{}"><span class="glyphicon glyphicon-user"></span></a>',
+                    reverse('club_member_grid', kwargs={'action': '', 'club_id': obj.pk}))
                 )
             return mark_safe(''.join(links))
         else:

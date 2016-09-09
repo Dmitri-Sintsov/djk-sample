@@ -4,10 +4,12 @@
 
 {% block main %}
 
+{# 'pageRouteKwargsKeys' is used by ClubMemberGrid to filter queryset in get_base_queryset() #}
 {{
 ko_grid(
     grid_options={
         'pageRoute': view.request.url_name,
+        'pageRouteKwargsKeys': ['club_id'],
     }
 )
 }}

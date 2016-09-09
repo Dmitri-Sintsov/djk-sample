@@ -18,7 +18,7 @@ from django.conf.urls import include, url, patterns
 from club_app.views import ClubCreate, ClubUpdate, ClubDetail, ClubList, EquipmentDetail, MemberDetail
 from club_app.views_ajax import (
     SimpleClubGrid, EditableClubGrid, ClubGridWithVirtualField, ClubGridWithActionLogging,
-    MemberGrid, MemberGridTabs, MemberGridCustomActions,
+    MemberGrid, ClubMemberGrid, MemberGridTabs, MemberGridCustomActions,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
 from event_app.views import ActionList
@@ -76,7 +76,7 @@ urlpatterns = [
     url(r'^club-grid-simple(?P<action>/?\w*)/$', SimpleClubGrid.as_view(), name='club_grid_simple',
         kwargs={'view_title': 'Simple club grid'}),
     url(r'^club-grid-editable(?P<action>/?\w*)/$', EditableClubGrid.as_view(), name='club_grid_editable',
-        kwargs={'view_title': 'Editable club grid'}),
+        kwargs={'view_title': 'Editable club grid', 'permission_required': 'club_app.change_club'}),
     url(r'^club-grid-with-virtual-field(?P<action>/?\w*)/$', ClubGridWithVirtualField.as_view(), name='club_grid_with_virtual_field',
         kwargs={'view_title': 'Club grid with virtual field'}),
     url(r'^club-grid-with-action-logging(?P<action>/?\w*)/$', ClubGridWithActionLogging.as_view(),
@@ -90,6 +90,8 @@ urlpatterns = [
         kwargs={'view_title': 'Club members grid with custom layout'}),
     url(r'^member-grid-custom-actions(?P<action>/?\w*)/$', MemberGridCustomActions.as_view(), name='member_grid_custom_actions',
         kwargs={'view_title': 'Club members grid with custom actions'}),
+    url(r'^club-member-grid-(?P<club_id>\w*)(?P<action>/?\w*)/$', ClubMemberGrid.as_view(), name='club_member_grid',
+        kwargs={'view_title': '"{}" members'}),
 ]
 
 js_info_dict = {

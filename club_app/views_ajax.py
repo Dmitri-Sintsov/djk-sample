@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
-from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline
+from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline, FormatTitleMixin
 from django_jinja_knockout.viewmodels import vm_list
 
 from .models import Club, Manufacturer, Profile, Member
@@ -184,6 +184,35 @@ class MemberGrid(KoGridView):
     # Overriding get_base_queryset() is not required, but is used to reduce number of queries.
     def get_base_queryset(self):
         return self.__class__.model.objects.select_related('club').all()
+
+
+class ClubMemberGrid(FormatTitleMixin, MemberGrid):
+
+    format_view_title = True
+    grid_fields = [
+        'profile',
+        'last_visit',
+        'plays',
+        'role',
+        'note',
+        'is_endorsed'
+    ]
+    allowed_filter_fields = OrderedDict([
+        ('profile', None),
+        ('last_visit', None),
+        ('plays', None),
+        ('role', None),
+        ('is_endorsed', None),
+    ])
+
+    def get_base_queryset(self):
+        return super().get_base_queryset().filter(club_id=self.kwargs['club_id'])
+
+    def get(self, request, *args, **kwargs):
+        club = Club.objects.filter(pk=self.kwargs['club_id']).first()
+        if club is not None:
+            self.format_title(club)
+        return super().get(request, *args, **kwargs)
 
 
 class MemberGridTabs(MemberGrid):
