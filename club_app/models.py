@@ -17,6 +17,7 @@ class Profile(models.Model):
         unique_together = ('first_name', 'last_name', 'birth_date')
         verbose_name = 'Sportsman profile'
         verbose_name_plural = 'Sportsmen profiles'
+        ordering = ('first_name', 'last_name', 'birth_date')
 
     def get_str_fields(self):
         return OrderedDict([
@@ -36,6 +37,7 @@ class Manufacturer(models.Model):
     class Meta:
         verbose_name = 'Sport equipment manufacturer'
         verbose_name_plural = 'Sport equipment manufacturers'
+        ordering = ('company_name',)
 
     def get_str_fields(self):
         str_fields = OrderedDict([
@@ -64,7 +66,7 @@ class Club(models.Model):
     class Meta:
         verbose_name = 'Sport club'
         verbose_name_plural = 'Sport clubs'
-        ordering = ('title', 'category')
+        ordering = ('title',)
 
     def save(self, *args, **kwargs):
         if self.pk is None:
