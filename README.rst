@@ -19,7 +19,7 @@ In Ubuntu 14.04 LTS::
     cd djk-sample
     python3 -m pip install -U -r requirements.txt
     mkdir "$VIRTUAL_ENV/djk-sample/logs/"
-    python manage.py makemigrations club_app
+    python manage.py makemigrations club_app event_app
     python manage.py migrate
     python manage.py runserver
 
@@ -39,6 +39,6 @@ Then issue the following commands::
     cd djk-sample
     pip3 install -r requirements.txt
     mkdir "%VIRTUAL_ENV%\djk-sample\logs"
-    python manage.py makemigrations club_app
+    python manage.py makemigrations club_app event_app
     python manage.py migrate
     python manage.py runserver
