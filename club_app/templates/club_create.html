@@ -1,0 +1,20 @@
+{% extends 'base_min.html' %}
+{% load jinja %}
+{% load staticfiles %}
+
+{% block mainmenu %}
+{% jinja 'mainmenu.htm' %}
+{% endblock mainmenu %}
+
+{% block main %}
+{% if main_navs %}
+    {% jinja 'bs_navs.htm' with _render_=1 navs=main_navs %}
+{% endif %}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">{{ view.get_heading }}</div>
+    <div class="panel-body">
+    {% jinja 'bs_inline_formsets.htm' with _render_=1 related_form=form formsets=formsets action=view.get_form_action_url html=view.get_bs_form_opts %}
+    </div>
+</div>
+{% endblock main %}

@@ -15,7 +15,9 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url, patterns
 # from django.contrib import admin
-from club_app.views import ClubCreate, ClubUpdate, ClubDetail, ClubList, EquipmentDetail, MemberDetail
+from club_app.views import (
+    ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail, ClubList, ClubListDTL, EquipmentDetail, MemberDetail
+)
 from club_app.views_ajax import (
     SimpleClubGrid, SimpleClubGridDTL, EditableClubGrid, ClubGridWithVirtualField, ClubGridWithActionLogging,
     MemberGrid, ClubMemberGrid, MemberGridTabs, MemberGridCustomActions,
@@ -36,12 +38,16 @@ urlpatterns = [
     url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
     url(r'^club-create/$', ClubCreate.as_view(), name='club_create',
         kwargs={'view_title': 'Add new club'}),
+    url(r'^club-create-dtl/$', ClubCreateDTL.as_view(), name='club_create_dtl',
+        kwargs={'view_title': 'Add new club (Django Template Language)'}),
     url(r'^club-update-(?P<club_id>\d+)/$', ClubUpdate.as_view(), name='club_update',
         kwargs={'view_title': 'Edit club "{}"'}),
     url(r'^club-detail-(?P<club_id>\d+)/$', ClubDetail.as_view(), name='club_detail',
         kwargs={'view_title': '{}'}),
     url(r'^club-list/$', ClubList.as_view(), name='club_list',
         kwargs={'view_title': 'List of sport clubs', 'allow_anonymous': True}),
+    url(r'^club-list-dtl/$', ClubListDTL.as_view(), name='club_list_dtl',
+        kwargs={'view_title': 'List of sport clubs (Django Template Language)', 'allow_anonymous': True}),
 
     # Action
     url(r'^action-list/$', ActionList.as_view(), name='action_list',

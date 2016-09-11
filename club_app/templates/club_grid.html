@@ -1,12 +1,15 @@
 {% extends 'base_min.html' %}
 {% load jinja %}
 {% load staticfiles %}
+
 {% block mainmenu %}
 {% jinja 'mainmenu.htm' %}
 {% endblock mainmenu %}
+
 {% block main %}
 {% jinja 'ko_grid.htm' with _render_=1 grid_options=club_grid_options %}
 {% endblock main %}
+
 {% block bottom_scripts %}
     {% jinja 'ko_grid_body.htm' with _render_=1 %}
     <script src="{% static 'js/front/ko-grid.js' %}"></script>

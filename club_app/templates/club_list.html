@@ -1,0 +1,11 @@
+{% extends 'base_min.html' %}
+{% load jinja %}
+{% load staticfiles %}
+
+{% block mainmenu %}
+{% jinja 'mainmenu.htm' %}
+{% endblock mainmenu %}
+
+{% block main %}
+{% jinja 'bs_list.htm' with _render_=1 view=view object_list=object_list is_paginated=is_paginated page_obj=page_obj %}
+{% endblock main %}

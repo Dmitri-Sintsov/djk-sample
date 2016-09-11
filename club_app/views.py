@@ -67,6 +67,11 @@ class ClubCreate(ClubEditMixin, InlineCreateView):
         return reverse('club_detail', kwargs={'club_id': self.object.pk})
 
 
+class ClubCreateDTL(ClubCreate):
+
+    template_name = 'club_create.html'
+
+
 class ClubUpdate(ClubEditMixin, InlineDetailView):
 
     format_view_title = True
@@ -136,6 +141,10 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
             return mark_safe(''.join(links))
         else:
             return super().get_display_value(obj, field)
+
+
+class ClubListDTL(ClubList):
+    template_name = 'club_list.html'
 
 
 class EquipmentDetail(FormDetailView):
