@@ -230,6 +230,15 @@ class MemberGridTabs(MemberGrid):
 
     template_name = 'member_grid_tabs.htm'
 
+    allowed_filter_fields = OrderedDict([
+        ('profile', None),
+        ('last_visit', None),
+        # Next choices of 'plays' field filter will be set when grid loads.
+        ('plays', {'active_choices': [Member.SPORT_BADMINTON, Member.SPORT_SQUASH]}),
+        ('role', None),
+        ('is_endorsed', None),
+    ])
+
 
 class MemberGridCustomActions(MemberGrid):
 

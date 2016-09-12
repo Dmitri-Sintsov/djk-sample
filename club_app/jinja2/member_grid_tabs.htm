@@ -3,10 +3,11 @@
 {% extends 'base.htm' %}
 
 {% block main %}
-
+    {# 'separateMeta' is required because Django grid specifies 'active_choices' field filter value. #}
     {% call(kwargs) ko_grid(
         grid_options={
             'pageRoute': view.request.url_name,
+            'separateMeta': True,
         },
         template_options={
             'vscroll': True
