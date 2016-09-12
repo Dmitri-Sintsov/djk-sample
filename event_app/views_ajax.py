@@ -103,10 +103,17 @@ class ActionGrid(KoGridView):
             str_fields = {}
         # Add formatted display of virtual field.
         if hasattr(obj.content_object, 'get_canonical_link'):
-            str_fields['content_object'] = format_html(
-                '<a href="{1}">{0}</a>',
-                *obj.content_object.get_canonical_link()
-            )
+            if isinstance(str_fields['content_object'], OrderedDict):
+                desc, link = obj.content_object.get_canonical_link()
+                str_fields['content_object'] = [
+                    format_html('<a href="{}" target="_blank">Open</a>', link),
+                    str_fields['content_object'],
+                ]
+            else:
+                str_fields['content_object'] = format_html(
+                    '<a href="{1}">{0}</a>',
+                    *obj.content_object.get_canonical_link()
+                )
         return str_fields
 
     @classmethod
