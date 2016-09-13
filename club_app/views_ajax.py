@@ -343,6 +343,9 @@ class ManufacturerFkWidgetGrid(KoGridWidget):
     allowed_filter_fields = OrderedDict([
         ('direct_shipping', None)
     ])
+    search_fields = [
+        ('company_name', 'icontains'),
+    ]
 
 
 class ProfileFkWidgetGrid(KoGridWidget):
@@ -352,3 +355,7 @@ class ProfileFkWidgetGrid(KoGridWidget):
     enable_deletion = True
     grid_fields = ['first_name', 'last_name']
     allowed_sort_orders = '__all__'
+    search_fields = [
+        ('first_name', 'icontains'),
+        ('last_name', 'icontains'),
+    ]
