@@ -1,4 +1,4 @@
 Django>=1.8.0,<1.9
 html5lib==0.9999999
-git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git@67aae4541ae302d95c44be6b55986365dd534222
+git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git@1abb9f480571e0c4c822f98e5f3c83da25d52a53
 django-allauth==0.26.1
