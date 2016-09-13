@@ -229,6 +229,7 @@ class ClubMemberGrid(FormatTitleMixin, MemberGrid):
 class MemberGridTabs(MemberGrid):
 
     template_name = 'member_grid_tabs.htm'
+    enable_deletion = True
 
     allowed_filter_fields = OrderedDict([
         ('profile', None),
@@ -238,6 +239,12 @@ class MemberGridTabs(MemberGrid):
         ('role', None),
         ('is_endorsed', None),
     ])
+
+    # Do not allow to delete Member instances with role=Member.ROLE_FOUNDER:
+    def action_delete_is_allowed(self, objects):
+        # ._clone() is required because original pagination queryset is passed as objects argument.
+        qs = objects._clone()
+        return not qs.filter(role=Member.ROLE_FOUNDER).exists()
 
 
 class MemberGridCustomActions(MemberGrid):
