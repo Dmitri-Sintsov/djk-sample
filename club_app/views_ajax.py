@@ -255,7 +255,6 @@ class MemberGridCustomActions(MemberGrid):
     def get_actions(self):
         actions = super().get_actions()
         actions['built_in']['endorse_members'] = {'enabled': True}
-        # action_type = 'glyphicon'
         actions['click']['edit_note'] = {
             'localName': _('Edit member note'),
             'class': 'btn-warning',
