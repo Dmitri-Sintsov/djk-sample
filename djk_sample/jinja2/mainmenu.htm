@@ -1,21 +1,98 @@
 {% if client_conf.userId != 0 %}
-    <li><a href="{{ url('account_email') }}">{{ _('Change E-mail') }}</a></li>
-    <li><a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a></li>
-    <li><a href="{{ url('club_create') }}">{{ _('Add sport club') }}</a></li>
-    <li><a href="{{ url('club_create_dtl') }}">{{ _('Add sport club (Django Template Language)') }}</a></li>
+    <li>
+        <a href="{{ url('account_email') }}">
+            {{ _('Change E-mail') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('account_logout') }}">
+            {{ _('Sign Out') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_create') }}">
+            {{ _('Add sport club') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_create_dtl') }}">
+            {{ _('Add sport club (Django Template Language)') }}
+        </a>
+    </li>
 {% else %}
-    <li><a href="{{ url('account_login') }}">{{ _('Sign In') }}</a></li>
-    <li><a href="{{ url('account_signup') }}">{{ _('Sign Up') }}</a></li>
+    <li>
+        <a href="{{ url('account_login') }}">
+            {{ _('Sign In') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('account_signup') }}">
+            {{ _('Sign Up') }}
+        </a>
+    </li>
 {% endif %}
-    <li><a href="{{ url('action_list') }}">{{ _('Log of performed actions') }}</a></li>
-    <li><a href="{{ url('action_grid', action='') }}">{{ _('Grid with performed actions') }}</a></li>
-    <li><a href="{{ url('club_list') }}">{{ _('List of sport clubs') }}</a></li>
-    <li><a href="{{ url('club_list_dtl') }}">{{ _('List of sport clubs (Django Template Language)') }}</a></li>
-    <li><a href="{{ url('club_grid_simple', action='') }}">{{ _('Simple club grid') }}</a></li>
-    <li><a href="{{ url('club_grid_simple_dtl', action='') }}">{{ _('Simple club grid (Django Template Language)') }}</a></li>
-    <li><a href="{{ url('club_grid_editable', action='') }}">{{ _('Editable club grid') }}</a></li>
-    <li><a href="{{ url('club_grid_with_virtual_field', action='') }}">{{ _('Club grid with virtual field') }}</a></li>
-    <li><a href="{{ url('club_grid_with_action_logging', action='') }}">{{ _('Club grid with action logging') }}</a></li>
-    <li><a href="{{ url('member_grid', action='') }}">{{ _('Members grid with client-side formatting') }}</a></li>
-    <li><a href="{{ url('member_grid_tabs', action='') }}">{{ _('Members grid with custom layout') }}</a></li>
-    <li><a href="{{ url('member_grid_custom_actions', action='') }}">{{ _('Members grid with custom actions') }}</a></li>
+    <li>
+        <a href="{{ url('action_list') }}">
+            {{ _('Log of performed actions') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('action_grid', action='') }}">
+            {{ _('Grid with performed actions') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_list') }}">
+            {{ _('List of sport clubs') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_list_dtl') }}">
+            {{ _('List of sport clubs (Django Template Language)') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_grid_simple', action='') }}">
+            {{ _('Simple club grid') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_grid_simple_dtl', action='') }}">
+            {{ _('Simple club grid (Django Template Language)') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_grid_editable', action='') }}">
+            {{ _('Editable club grid') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_grid_with_virtual_field', action='') }}">
+            {{ _('Club grid with virtual field') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_grid_with_action_logging', action='') }}">
+            {{ _('Club grid with action logging') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('club_equipment_grid', action='') }}">
+            {{ _('Club grid with Equipment grid interaction') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('member_grid', action='') }}">
+            {{ _('Members grid with client-side formatting') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('member_grid_tabs', action='') }}">
+            {{ _('Members grid with custom layout') }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('member_grid_custom_actions', action='') }}">
+            {{ _('Members grid with custom actions') }}
+        </a>
+    </li>

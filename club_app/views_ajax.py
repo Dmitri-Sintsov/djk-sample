@@ -7,11 +7,12 @@ from django.utils.translation import gettext as _
 from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
+from django_jinja_knockout.models import get_meta
 from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline, FormatTitleMixin, ContextDataMixin
 from django_jinja_knockout.viewmodels import vm_list
 
-from .models import Club, Manufacturer, Profile, Member
-from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm, MemberFormForGrid
+from .models import Club, Manufacturer, Profile, Member, Equipment
+from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberFormForGrid
 
 
 class SimpleClubGrid(KoGridView):
@@ -120,6 +121,52 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
             # Note: 'classPath' is not required for standard App.ko.Grid.
             'classPath': 'App.ko.ClubGrid',
         }
+
+
+class ClubEquipmentGrid(EditableClubGrid):
+
+    client_routes = ['equipment_grid']
+    template_name = 'club_equipment.htm'
+
+    def get_actions(self):
+        actions = super().get_actions()
+        actions['glyphicon']['add_equipment'] = {
+            'localName': _('Add equipment'),
+            'class': 'glyphicon-plus',
+            'enabled': True
+        }
+        return actions
+
+    def action_add_equipment(self):
+        club = self.get_object_for_action()
+        if club is None:
+            return vm_list({
+                'view': 'alert_error',
+                'title': 'Error',
+                'message': 'Unknown instance of Club'
+            })
+        equipment_form = ClubEquipmentForm(initial={'club': club})
+        return self.vm_form(
+            equipment_form, get_meta(Equipment, 'verbose_name')
+        )
+
+    def action_save_equipment(self):
+        club = self.get_object_for_action()
+        club.last_update = timezone.now()
+        club.save()
+        return vm_list({
+            'view': self.__class__.viewmodel_name,
+            'update_rows': self.postprocess_qs([club]),
+            # return grid rows for client-side App.ko.MemberGrid.updatePage():
+            'member_grid_view': {
+                'update_rows': member_grid_rows
+            }
+        })
+
+
+class EquipmentGrid(KoGridView):
+    model = Equipment
+    grid_fields = '__all__'
 
 
 class MemberGrid(KoGridView):

@@ -24,6 +24,27 @@ App.ClubGridActions = function(options) {
         this.updateActionGrid();
     };
 
+    ClubGridActions.queryargs_endorse_all_members = function(options) {
+        var memberGrid = $('#member_grid').component();
+        var visibleMembersPkVals = _.map(memberGrid.gridRows(), function(gridRow) {
+            return gridRow.getValue(memberGrid.meta.pkField);
+        });
+        options['visibleMembersPkVals'] = memberGridPkVals;
+    };
+
+    ClubGridActions.callback_endorse_all_members = function(viewModel) {
+        var memberGridView = viewModel.member_grid_view;
+        delete viewModel.member_grid_view;
+
+        this.grid.updatePage(viewModel);
+        // Get client-side class of MemberGrid component by id (instance of App.ko.Grid or derived class).
+        var memberGrid = $('#member_grid').component();
+        if (memberGrid !== null) {
+            // Update rows of MemberGrid component (instance of App.ko.Grid or derived class).
+            memberGrid.updatePage(memberGridView);
+        }
+    };
+
 })(App.ClubGridActions.prototype);
 
 

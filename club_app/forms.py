@@ -80,6 +80,19 @@ class EquipmentDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
         fields = '__all__'
 
 
+class ClubEquipmentForm(EquipmentForm):
+
+    class Meta(EquipmentForm.Meta):
+        widgets = {
+            'club': forms.HiddenInput(),
+            'manufacturer': ForeignKeyGridWidget(model=Manufacturer, grid_options={
+                'pageRoute': 'manufacturer_fk_widget_grid',
+            }),
+            'category': forms.RadioSelect()
+        }
+
+
+
 class MemberForm(BootstrapModelForm):
 
     class Meta:

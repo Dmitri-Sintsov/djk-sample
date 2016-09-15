@@ -62,6 +62,7 @@ class Club(models.Model):
         choices=CATEGORIES, default=CATEGORY_RECREATIONAL, db_index=True, verbose_name='Category'
     )
     foundation_date = models.DateField(db_index=True, verbose_name='Foundation date')
+    last_update = models.DateTimeField(db_index=True, verbose_name='Last update')
 
     class Meta:
         verbose_name = 'Sport club'

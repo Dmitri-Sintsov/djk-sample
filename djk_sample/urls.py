@@ -20,6 +20,7 @@ from club_app.views import (
 )
 from club_app.views_ajax import (
     SimpleClubGrid, SimpleClubGridDTL, EditableClubGrid, ClubGridWithVirtualField, ClubGridWithActionLogging,
+    ClubEquipmentGrid, EquipmentGrid,
     MemberGrid, ClubMemberGrid, MemberGridTabs, MemberGridCustomActions,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
@@ -58,8 +59,10 @@ urlpatterns = [
     # Equipment
     url(r'^equipment-detail-(?P<equipment_id>\d+)/$', EquipmentDetail.as_view(), name='equipment_detail',
         kwargs={'view_title': '{}'}),
+    url(r'^equipment-grid(?P<action>/?\w*)/$', EquipmentGrid.as_view(), name='equipment_grid',
+        kwargs={'view_title': 'Grid with the available equipment'}),
 
-    # Equipment
+    # Member
     url(r'^member-detail-(?P<member_id>\d+)/$', MemberDetail.as_view(), name='member_detail',
         kwargs={'view_title': '{}'}),
 
@@ -91,6 +94,9 @@ urlpatterns = [
     url(r'^club-grid-with-action-logging(?P<action>/?\w*)/$', ClubGridWithActionLogging.as_view(),
         name='club_grid_with_action_logging',
         kwargs={'view_title': 'Club grid with virtual field'}),
+    url(r'^club-equipment-grid(?P<action>/?\w*)/$', ClubEquipmentGrid.as_view(),
+        name='club_equipment_grid',
+        kwargs={'view_title': 'Club equipment grid'}),
 
     # Sport club member.
     url(r'^member-grid(?P<action>/?\w*)/$', MemberGrid.as_view(), name='member_grid',
