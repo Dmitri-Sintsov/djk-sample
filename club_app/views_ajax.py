@@ -9,7 +9,7 @@ from django.db.models import Count
 
 from django_jinja_knockout.models import get_meta
 from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline, FormatTitleMixin, ContextDataMixin
-from django_jinja_knockout.viewmodels import vm_list
+from django_jinja_knockout.viewmodels import vm_list, find_by_kw
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
 from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberFormForGrid
@@ -125,14 +125,20 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
 
 class ClubEquipmentGrid(EditableClubGrid):
 
-    client_routes = ['equipment_grid']
+    client_routes = [
+        'equipment_grid',
+        'manufacturer_fk_widget_grid',
+    ]
     template_name = 'club_equipment.htm'
 
     def get_actions(self):
         actions = super().get_actions()
+        actions['built_in']['save_equipment'] = {
+            'enabled': True
+        }
         actions['glyphicon']['add_equipment'] = {
             'localName': _('Add equipment'),
-            'class': 'glyphicon-plus',
+            'class': 'glyphicon-wrench',
             'enabled': True
         }
         return actions
@@ -145,21 +151,31 @@ class ClubEquipmentGrid(EditableClubGrid):
                 'title': 'Error',
                 'message': 'Unknown instance of Club'
             })
-        equipment_form = ClubEquipmentForm(initial={'club': club})
-        return self.vm_form(
-            equipment_form, get_meta(Equipment, 'verbose_name')
+        equipment_form = ClubEquipmentForm(initial={'club': club.pk})
+        vms = self.vm_form(
+            equipment_form, get_meta(Equipment, 'verbose_name'), form_action='save_equipment'
         )
+        return vms
 
     def action_save_equipment(self):
-        club = self.get_object_for_action()
+        form = ClubEquipmentForm(self.request.POST)
+        if not form.is_valid():
+            form_vms = vm_list()
+            self.add_form_viewmodels(form, form_vms)
+            return form_vms
+        equipment = form.save()
+        club = equipment.club
         club.last_update = timezone.now()
         club.save()
+        equipment_grid = EquipmentGrid()
+        equipment_grid.request = self.request
+        equipment_grid.init_class(equipment_grid)
         return vm_list({
             'view': self.__class__.viewmodel_name,
             'update_rows': self.postprocess_qs([club]),
             # return grid rows for client-side App.ko.MemberGrid.updatePage():
-            'member_grid_view': {
-                'update_rows': member_grid_rows
+            'equipment_grid_view': {
+                'prepend_rows': equipment_grid.postprocess_qs([equipment])
             }
         })
 

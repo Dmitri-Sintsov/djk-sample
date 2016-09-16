@@ -5,43 +5,40 @@ App.ClubGridActions = function(options) {
 
 (function(ClubGridActions) {
 
-    ClubGridActions.updateActionGrid = function() {
-        // Get instance of ActionGrid.
-        var actionGrid = $('#action_grid').component();
-        if (actionGrid !== null) {
-            // Update ActionGrid.
-            actionGrid.gridActions.perform('update');
+    ClubGridActions.updateDependentGrid = function($selector) {
+        // Get instance of dependent grid.
+        var grid = $selector.component();
+        if (grid !== null) {
+            // Update dependent grid.
+            grid.gridActions.perform('update');
         }
     };
 
     ClubGridActions.callback_save_inline = function(viewModel) {
         this._super._call('callback_save_inline', viewModel);
-        this.updateActionGrid();
+        this.updateDependentGrid('#action_grid');
+        this.updateDependentGrid('#equipment_grid');
     };
 
     ClubGridActions.callback_delete_confirmed = function(viewModel) {
         this._super._call('callback_delete_confirmed', viewModel);
-        this.updateActionGrid();
+        this.updateDependentGrid('#action_grid');
+        this.updateDependentGrid('#equipment_grid');
     };
 
-    ClubGridActions.queryargs_endorse_all_members = function(options) {
-        var memberGrid = $('#member_grid').component();
-        var visibleMembersPkVals = _.map(memberGrid.gridRows(), function(gridRow) {
-            return gridRow.getValue(memberGrid.meta.pkField);
-        });
-        options['visibleMembersPkVals'] = memberGridPkVals;
+    ClubGridActions.callback_add_equipment = function(viewModel) {
+        this.callback_create_form(viewModel);
     };
 
-    ClubGridActions.callback_endorse_all_members = function(viewModel) {
-        var memberGridView = viewModel.member_grid_view;
-        delete viewModel.member_grid_view;
-
+    ClubGridActions.callback_save_equipment = function(viewModel) {
+        var equipmentGridView = viewModel.equipment_grid_view;
+        delete viewModel.equipment_grid_view;
         this.grid.updatePage(viewModel);
-        // Get client-side class of MemberGrid component by id (instance of App.ko.Grid or derived class).
-        var memberGrid = $('#member_grid').component();
-        if (memberGrid !== null) {
+        // Get client-side class of EquipmentGrid component by id (instance of App.ko.Grid or derived class).
+        var equipmentGrid = $('#equipment_grid').component();
+        if (equipmentGrid !== null) {
             // Update rows of MemberGrid component (instance of App.ko.Grid or derived class).
-            memberGrid.updatePage(memberGridView);
+            equipmentGrid.updatePage(equipmentGridView);
         }
     };
 
