@@ -39,6 +39,9 @@ DJK_APPS = (
     'event_app',
 )
 
+# Order of installed apps is important for Django Template loader to find 'djk_sample/templates/base.html'
+# before original allauth 'base.html' is found, when allauth DTL templates are used instead of built-in
+# 'django_jinja_knockout._allauth' Jinja2 templates, thus DJK_APPS are included before 'allauth'.
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,15 +51,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # 'sites' is required by allauth
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    # Required for socialaccount template tag library despite we do not use social login
-    'allauth.socialaccount',
     'django_jinja',
     'django_jinja.contrib._humanize',
     'django_jinja_knockout',
     'django_jinja_knockout._allauth',
-) + DJK_APPS
+) + DJK_APPS + \
+(
+    'allauth',
+    'allauth.account',
+    # Required for socialaccount template tag library despite we do not use social login
+    'allauth.socialaccount',
+)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,9 +126,6 @@ TEMPLATES = [
                 'djk_sample.context_processors.template_context_processor'
             ]
         },
-        'DIRS': [
-            os.path.join(BASE_DIR, 'ispdev', 'templates'),
-        ]
     },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
