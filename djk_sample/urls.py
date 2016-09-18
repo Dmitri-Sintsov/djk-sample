@@ -13,11 +13,15 @@ Including another URLconf
     1. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import include, url, patterns
+from django.conf.urls import include, url
 # from django.contrib import admin
+
+from django.views.i18n import javascript_catalog
+
 from club_app.views import (
     ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail, ClubList, ClubListDTL, EquipmentDetail, MemberDetail
 )
+from club_app.views import main_page
 from club_app.views_ajax import (
     SimpleClubGrid, SimpleClubGridDTL, EditableClubGrid, ClubGridWithVirtualField, ClubGridWithActionLogging,
     ClubEquipmentGrid, EquipmentGrid,
@@ -34,7 +38,7 @@ urlpatterns = [
     # Class-based views.
 
     # Club
-    url(r'^$', 'club_app.views.main_page', name='club_main_page',
+    url(r'^$', main_page, name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
     # More pretty-looking but possibly not compatible with arbitrary allauth version:
     # url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
@@ -117,8 +121,8 @@ js_info_dict = {
     'packages': ('djk_sample',),
 }
 
-urlpatterns += patterns('',
-    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
+urlpatterns.append(
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog')
 )
 
 if settings.DEBUG:
