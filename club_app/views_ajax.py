@@ -209,6 +209,14 @@ class EquipmentGrid(KoGridView):
         ('manufacturer', None),
         ('category', None)
     ])
+
+    def get_actions(self):
+        # Disable adding new Equipment because ClubEquipmentForm is incomplete (has no Club) for action 'create_form'.
+        # ClubEquipmentGrid.action_add_equipment is used instead.
+        actions = super().get_actions()
+        actions['button']['create_form']['enabled'] = False
+        return actions
+
     @classmethod
     def get_default_grid_options(cls):
         return {
