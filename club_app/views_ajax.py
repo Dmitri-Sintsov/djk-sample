@@ -193,6 +193,8 @@ class ClubEquipmentGrid(EditableClubGrid):
 
 class EquipmentGrid(KoGridView):
     model = Equipment
+    form = ClubEquipmentForm
+    enable_deletion = True
     grid_fields = [
         'club',
         'manufacturer',
