@@ -12,7 +12,10 @@ from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline, 
 from django_jinja_knockout.viewmodels import vm_list, find_by_kw
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
-from .forms import ClubFormWithInlineFormsets, ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberFormForGrid
+from .forms import (
+    ClubForm, ClubFormWithInlineFormsets,
+    ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberFormForGrid
+)
 
 
 class SimpleClubGrid(KoGridView):
@@ -127,9 +130,12 @@ class ClubEquipmentGrid(EditableClubGrid):
 
     client_routes = [
         'equipment_grid',
+        'club_grid_simple',
         'manufacturer_fk_widget_grid',
     ]
     template_name = 'club_equipment.htm'
+    form = ClubForm
+    form_with_inline_formsets = None
 
     def get_actions(self):
         actions = super().get_actions()
@@ -137,12 +143,13 @@ class ClubEquipmentGrid(EditableClubGrid):
             'enabled': True
         }
         actions['glyphicon']['add_equipment'] = {
-            'localName': _('Add equipment'),
+            'localName': _('Add club equipment'),
             'class': 'glyphicon-wrench',
             'enabled': True
         }
         return actions
 
+    # Creates AJAX ClubEquipmentForm bound to particular Club instance.
     def action_add_equipment(self):
         club = self.get_object_for_action()
         if club is None:
@@ -152,11 +159,13 @@ class ClubEquipmentGrid(EditableClubGrid):
                 'message': 'Unknown instance of Club'
             })
         equipment_form = ClubEquipmentForm(initial={'club': club.pk})
+        # Generate equipment_form viewmodel
         vms = self.vm_form(
-            equipment_form, get_meta(Equipment, 'verbose_name'), form_action='save_equipment'
+            equipment_form, form_action='save_equipment'
         )
         return vms
 
+    #
     def action_save_equipment(self):
         form = ClubEquipmentForm(self.request.POST)
         if not form.is_valid():
@@ -182,7 +191,35 @@ class ClubEquipmentGrid(EditableClubGrid):
 
 class EquipmentGrid(KoGridView):
     model = Equipment
-    grid_fields = '__all__'
+    grid_fields = [
+        'club',
+        'manufacturer',
+        'inventory_name',
+        'category',
+    ]
+    search_fields = [
+        ('inventory_name', 'icontains')
+    ]
+    allowed_filter_fields = OrderedDict([
+        ('club', None),
+        ('manufacturer', None),
+        ('category', None)
+    ])
+    @classmethod
+    def get_default_grid_options(cls):
+        return {
+            'searchPlaceholder': 'Search inventory name',
+            'fkGridOptions': {
+                'club': {
+                    'pageRoute': 'club_grid_simple',
+                    # Optional setting for BootstrapDialog:
+                    'dialogOptions': {'size': 'size-wide'},
+                },
+                'manufacturer': {
+                    'pageRoute': 'manufacturer_fk_widget_grid'
+                },
+            }
+        }
 
 
 class MemberGrid(KoGridView):

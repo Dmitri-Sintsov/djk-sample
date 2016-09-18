@@ -82,7 +82,8 @@ class Club(models.Model):
         return OrderedDict([
             ('title', self.title),
             ('category', self.get_category_display()),
-            ('foundation_date', format_local_date(self.foundation_date))
+            ('foundation_date', format_local_date(self.foundation_date)),
+            ('last_update', format_local_date(self.last_update))
         ])
 
     def __str__(self):

@@ -5,17 +5,17 @@ App.ClubGridActions = function(options) {
 
 (function(ClubGridActions) {
 
-    ClubGridActions.updateDependentGrid = function($selector) {
+    ClubGridActions.updateDependentGrid = function(selector) {
         // Get instance of dependent grid.
-        var grid = $selector.component();
+        var grid = $(selector).component();
         if (grid !== null) {
             // Update dependent grid.
             grid.gridActions.perform('update');
         }
     };
 
-    ClubGridActions.callback_save_inline = function(viewModel) {
-        this._super._call('callback_save_inline', viewModel);
+    ClubGridActions.callback_save_form = function(viewModel) {
+        this._super._call('callback_save_form', viewModel);
         this.updateDependentGrid('#action_grid');
         this.updateDependentGrid('#equipment_grid');
     };
