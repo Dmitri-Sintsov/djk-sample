@@ -1,3 +1,10 @@
+/**
+ * This code is partially shared between these templates / class-based views
+ *
+ * 'club_grid_with_action_logging.htm' / club_app.views_ajax.ClubGridWithActionLogging
+ * 'club_equipment.htm' / club_app.views_ajax.ClubEquipmentGrid
+ *
+ */
 App.ClubGridActions = function(options) {
     $.inherit(App.GridActions.prototype, this);
     this.init(options);
@@ -14,6 +21,14 @@ App.ClubGridActions = function(options) {
         }
     };
 
+    // Used in club_app.views_ajax.ClubGridWithActionLogging.
+    ClubGridActions.callback_save_inline = function(viewModel) {
+        this._super._call('callback_save_form', viewModel);
+        this.updateDependentGrid('#action_grid');
+        this.updateDependentGrid('#equipment_grid');
+    };
+
+    // Used in club_app.views_ajax.ClubEquipmentGrid.
     ClubGridActions.callback_save_form = function(viewModel) {
         this._super._call('callback_save_form', viewModel);
         this.updateDependentGrid('#action_grid');
