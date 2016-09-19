@@ -73,6 +73,7 @@ class Club(models.Model):
         if self.pk is None:
             if self.foundation_date is None:
                 self.foundation_date = timezone.now()
+            self.last_update = timezone.now()
         super().save(*args, **kwargs)
 
     def get_canonical_link(self):

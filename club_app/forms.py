@@ -33,6 +33,7 @@ class ClubForm(BootstrapModelForm):
     class Meta:
         model = Club
         fields = '__all__'
+        exclude = ('last_update',)
         widgets = {
             'category': forms.RadioSelect()
         }

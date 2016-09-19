@@ -9,9 +9,6 @@
             'classPath': 'App.ko.ClubGrid',
             'pageRoute': 'club_equipment_grid',
         },
-        template_options={
-            'vscroll': True
-        },
         dom_attrs={
             'id': 'club_equipment_grid'
         }
@@ -20,6 +17,9 @@
     {{ ko_grid(
         grid_options={
             'pageRoute': 'equipment_grid',
+        },
+        template_options={
+            'vscroll': True
         },
         dom_attrs={
             'id': 'equipment_grid'

@@ -197,16 +197,23 @@ class EquipmentGrid(KoGridView):
     enable_deletion = True
     grid_fields = [
         'club',
-        'manufacturer',
+        'manufacturer__company_name',
+        'manufacturer__direct_shipping',
         'inventory_name',
         'category',
     ]
     search_fields = [
         ('inventory_name', 'icontains')
     ]
+    allowed_sort_orders = [
+        'manufacturer__company_name',
+        'inventory_name',
+        'category'
+    ]
     allowed_filter_fields = OrderedDict([
         ('club', None),
         ('manufacturer', None),
+        ('manufacturer__direct_shipping', None),
         ('category', None)
     ])
 
