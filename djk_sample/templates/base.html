@@ -1,6 +1,7 @@
 {# Currently serves as sample, nested inheritance with {% jinja %} calls does not work #}
 {% extends 'base_min.html' %}
 {% load jinja %}
+
 {% block mainmenu %}
 {% jinja 'mainmenu.htm' %}
 {% endblock mainmenu %}
