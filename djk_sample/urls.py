@@ -41,9 +41,9 @@ urlpatterns = [
     url(r'^$', main_page, name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
     # More pretty-looking but possibly not compatible with arbitrary allauth version:
-    # url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
+    url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
     # Standard allauth DTL templates working together with Jinja2 templates via {% load jinja %}
-    url(r'^accounts/', include('allauth.urls')),
+    # url(r'^accounts/', include('allauth.urls')),
     url(r'^club-create/$', ClubCreate.as_view(), name='club_create',
         kwargs={'view_title': 'Add new club'}),
     url(r'^club-create-dtl/$', ClubCreateDTL.as_view(), name='club_create_dtl',

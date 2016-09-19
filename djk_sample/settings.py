@@ -209,7 +209,7 @@ SESSION_COOKIE_NAME = 'djk_sessionid'
 """
 python manage.py shell
 from django.contrib.auth.models import User
-user = User.objects.create_user('questpc', email='questpc@gmail.com', password='test123')
+user = User.objects.create_user('user', email='user@gmail.com', password='test123')
 user.save()
 exit()
 """
