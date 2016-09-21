@@ -129,7 +129,9 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
 class ClubEquipmentGrid(EditableClubGrid):
 
     client_routes = [
-        'equipment_grid',
+        # Injected in djk_sample.context_processors.TemplateContextProcessor.CLIENT_ROUTES,
+        # just for the test of global route injection.
+        # 'equipment_grid',
         'club_grid_simple',
         'manufacturer_fk_widget_grid',
     ]
