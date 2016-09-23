@@ -108,7 +108,6 @@ class ClubDetail(ClubNavsMixin, InlineDetailView):
 class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
 
     model = Club
-    paginate_by = settings.OBJECTS_PER_PAGE
     allowed_sort_orders = '__all__'
     extra_context_data = {
         'format_local_date': format_local_date

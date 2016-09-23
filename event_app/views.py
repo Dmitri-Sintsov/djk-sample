@@ -8,7 +8,6 @@ from .models import Action
 class ActionList(ContextDataMixin, ListSortingView):
 
     model = Action
-    paginate_by = settings.OBJECTS_PER_PAGE
     grid_fields = [
         'performer',
         'date',
