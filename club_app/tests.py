@@ -6,11 +6,6 @@ from django_jinja_knockout.tpl import reverseq
 
 
 class SeleniumMixin:
-    pass
-
-
-class ClubAppTests(StaticLiveServerTestCase):
-    # fixtures = ['user-data.json']
 
     @classmethod
     def setUpClass(cls):
@@ -30,6 +25,10 @@ class ClubAppTests(StaticLiveServerTestCase):
         print('get_reverse_url: {}'.format(url))
         return self.selenium.get(url)
 
+
+class ClubAppTests(SeleniumMixin, StaticLiveServerTestCase):
+    # fixtures = ['user-data.json']
+
     def test_signup(self):
         from selenium.webdriver.support.wait import WebDriverWait
         timeout = 20
@@ -42,4 +41,4 @@ class ClubAppTests(StaticLiveServerTestCase):
         password_input = self.selenium.find_element_by_id("id_password2")
         password_input.send_keys('test123')
 
-        self.selenium.find_element_by_xpath('//input[@value="Sign Up »"]').click()
+        self.selenium.find_element_by_xpath('//form[@class="signup"]//button[@type="submit"]').click()
