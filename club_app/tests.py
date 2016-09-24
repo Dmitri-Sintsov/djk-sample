@@ -25,6 +25,16 @@ class SeleniumMixin:
         print('get_reverse_url: {}'.format(url))
         return self.selenium.get(url)
 
+    def keys_by_id(self, id, keys, *args):
+        input = self.selenium.find_element_by_id(id)
+        input.send_keys(keys)
+        if len(args) > 0:
+            for _id, _keys in zip(args[::2], args[1::2]):
+                yield self.keys_by_id(_id, _keys)
+            yield input
+        else:
+            return input
+
 
 class ClubAppTests(SeleniumMixin, StaticLiveServerTestCase):
     # fixtures = ['user-data.json']
@@ -34,11 +44,10 @@ class ClubAppTests(SeleniumMixin, StaticLiveServerTestCase):
         timeout = 20
         self.get_reverse_url('account_signup')
 
-        username_input = self.selenium.find_element_by_id("id_username")
-        username_input.send_keys('testuser')
-        password_input = self.selenium.find_element_by_id("id_password1")
-        password_input.send_keys('test123')
-        password_input = self.selenium.find_element_by_id("id_password2")
-        password_input.send_keys('test123')
+        self.keys_by_id(
+            'id_username', 'testuser',
+            'id_password1', 'test123',
+            'id_password2', 'test123'
+        )
 
         self.selenium.find_element_by_xpath('//form[@class="signup"]//button[@type="submit"]').click()
