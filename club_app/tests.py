@@ -5,6 +5,21 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from django_jinja_knockout.tpl import reverseq
 
 
+"""
+Selenium tests may require Firefox ESR because Ubuntu sometimes updates Firefox to newer version
+than currently installed Selenium supports.
+
+Here is the example of installing Firefox ESR in Ubuntu 14.04:
+
+apt-get remove firefox
+wget http://ftp.mozilla.org/pub/firefox/releases/45.4.0esr/linux-x86_64/en-US/firefox-45.4.0esr.tar.bz2
+tar -xvjf firefox-45.4.0esr.tar.bz2 -C /opt
+ln -s /opt/firefox/firefox /usr/bin/firefox
+
+Do not forget to update to latest ESR when running the tests.
+"""
+
+
 class SeleniumMixin:
 
     @classmethod
