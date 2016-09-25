@@ -45,6 +45,14 @@ class ClubAppTests(SeleniumCommands):
             'has_messages_success',
         )
 
+    def empty_club_list(self):
+        self.exec(
+            'reverse_url', {'viewname': 'club_list'},
+            'by_xpath', (
+                '//div[@class="jumbotron"]/div[@class="default-padding" and contains(text(), "There is")]',
+            )
+        )
+
     def add_sport_club(self):
         self.exec(
             'reverse_url', {'viewname': 'club_create'}
@@ -56,4 +64,5 @@ class ClubAppTests(SeleniumCommands):
         self.register_new_user()
         self.logout_user()
         self.login_user()
+        self.empty_club_list()
         # self.add_sport_club()
