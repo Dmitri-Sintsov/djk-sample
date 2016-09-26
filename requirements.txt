@@ -1,2 +1,2 @@
 django-allauth
-git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git@b27aafd4d028184cc18005838f48082233cfe711
+git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git@5ce7d022601d0d419d764ba956ca1498e8f873f4
