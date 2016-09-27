@@ -6,7 +6,8 @@ from .models import Action
 
 
 class ActionList(ContextDataMixin, ListSortingView):
-
+    # Enabled always visible paginator links because there could be many pages of actions, potentially.
+    always_visible_links = True
     model = Action
     grid_fields = [
         'performer',
