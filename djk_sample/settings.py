@@ -219,6 +219,8 @@ exit()
 
 # For 'allauth'.
 SITE_ID = 1
+# Prevents infinite redirect when user has no permission to access current view.
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 
 # Login / logout for allauth.
 LOGIN_URL = '/accounts/login/'

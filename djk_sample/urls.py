@@ -46,6 +46,8 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^club-create/$', ClubCreate.as_view(), name='club_create',
         kwargs={'view_title': 'Add new club'}),
+    url(r'^club-create-perms-check/$', ClubCreate.as_view(), name='club_create_perms_check',
+        kwargs={'view_title': 'Add new club with Django permissions check', 'permission_required': 'club_app.add_club'}),
     url(r'^club-create-dtl/$', ClubCreateDTL.as_view(), name='club_create_dtl',
         kwargs={'view_title': 'Add new club (Django Template Language)'}),
     url(r'^club-update-(?P<club_id>\d+)/$', ClubUpdate.as_view(), name='club_update',
