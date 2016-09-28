@@ -9,7 +9,10 @@ Installation
 
 .. highlight:: shell
 
-In Ubuntu 14.04 LTS::
+Ubuntu
+~~~~~~
+
+This is example for Ubuntu 14.04 LTS::
 
     sudo apt-get install libxml2-dev libxslt-dev
     python3 -m venv djk_sample
@@ -23,11 +26,17 @@ In Ubuntu 14.04 LTS::
     python manage.py migrate
     python manage.py runserver
 
-In Windows:
+Windows
+~~~~~~~
 
-* Make sure python.exe / pip3.exe are in your PATH.
-* Download appropriate lxml wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
-  (this example uses Python 3.4 for Windows 32 bit version of lxml).
+Example for Windows 32 bit.
+
+* Download and install Python 3.4 or 3.5 (download and install KB2999226 if Python 3.5 installation freezes).
+* Make sure ``python.exe`` / ``pip3.exe`` are in your `PATH`.
+* Download appropriate lxml wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml for example:
+
+  * ``lxml-3.4.4-cp34-none-win32.whl`` for Python 3.4.3 32 bit
+  * ``lxml-3.6.4-cp35-cp35m-win32.whl`` for Python 3.5.2 32 bit
 
 Then issue the following commands::
 
@@ -42,3 +51,11 @@ Then issue the following commands::
     python manage.py makemigrations club_app event_app
     python manage.py migrate
     python manage.py runserver
+
+Mac OS X
+~~~~~~~~
+
+Use brew:
+
+* Install Python3 from http://brew.sh/
+* Follow Ubuntu instructions with the exception that ``libxml2-dev`` ``libxslt-dev`` are already installed.
