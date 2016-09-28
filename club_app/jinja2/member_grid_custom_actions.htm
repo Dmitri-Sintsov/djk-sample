@@ -10,8 +10,7 @@
         },
         dom_attrs={
             'id': 'member_grid'
-        },
-        override_template=True,
+        }
     ) %}
 
     <div{{ flatatt(kwargs.dom_attrs) }} data-component-options='{{ kwargs._grid_options|escapejs }}'>
