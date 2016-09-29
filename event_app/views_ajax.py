@@ -56,6 +56,7 @@ class ActionGrid(KoGridView):
         'performer',
         'date',
         'action_type',
+        'content_type',
         'content_object'
     ]
     allowed_sort_orders = [
@@ -64,7 +65,7 @@ class ActionGrid(KoGridView):
         'action_type',
     ]
     mark_safe_fields = [
-        'content_object'
+        'content_type'
     ]
     enable_deletion = True
 
@@ -80,6 +81,12 @@ class ActionGrid(KoGridView):
             ))
         ])
         return allowed_filter_fields
+
+    def get_field_verbose_name(self, field_name):
+        if field_name == 'content_object':
+            return 'Object description'
+        else:
+            return super().get_field_verbose_name(field_name)
 
     def get_related_fields(self, query_fields=None):
         query_fields = super().get_related_fields(query_fields)
@@ -103,17 +110,12 @@ class ActionGrid(KoGridView):
             str_fields = {}
         # Add formatted display of virtual field.
         if hasattr(obj.content_object, 'get_canonical_link'):
-            if isinstance(str_fields['content_object'], OrderedDict):
-                desc, link = obj.content_object.get_canonical_link()
-                str_fields['content_object'] = [
-                    format_html('<a href="{}" target="_blank">Open</a>', link),
-                    str_fields['content_object'],
-                ]
-            else:
-                str_fields['content_object'] = format_html(
-                    '<a href="{1}">{0}</a>',
-                    *obj.content_object.get_canonical_link()
-                )
+            desc, link = obj.content_object.get_canonical_link()
+            str_fields['content_type'] = format_html(
+                '<a href="{}" target="_blank">{}</a>',
+                link,
+                str_fields['content_type']
+            )
         return str_fields
 
     @classmethod
