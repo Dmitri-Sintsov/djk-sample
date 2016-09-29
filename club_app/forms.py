@@ -104,6 +104,9 @@ class MemberForm(BootstrapModelForm):
                 'pageRoute': 'profile_fk_widget_grid',
                 'dialogOptions': {'size': 'size-wide'},
             }),
+            'club': ForeignKeyGridWidget(model=Club, grid_options={
+                'pageRoute': 'club_grid_simple',
+            }),
             'plays': forms.RadioSelect(),
             'role': forms.RadioSelect()
         }
@@ -125,7 +128,7 @@ class MemberForm(BootstrapModelForm):
         return obj
 
 
-class MemberFormForGrid(MemberForm):
+class MemberFormNoRelations(MemberForm):
 
     class Meta(MemberForm.Meta):
         exclude = ('club', 'profile')

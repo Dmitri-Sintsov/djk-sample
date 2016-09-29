@@ -8,13 +8,13 @@ from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
 from django_jinja_knockout.models import get_meta
-from django_jinja_knockout.views import KoGridView, KoGridWidget, KoGridInline, FormatTitleMixin, ContextDataMixin
+from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin, ContextDataMixin
 from django_jinja_knockout.viewmodels import vm_list, find_by_kw
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
 from .forms import (
     ClubForm, ClubFormWithInlineFormsets,
-    ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberFormForGrid
+    ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberForm, MemberFormNoRelations
 )
 
 
@@ -371,7 +371,7 @@ class MemberGridTabs(MemberGrid):
 class MemberGridCustomActions(MemberGrid):
 
     template_name = 'member_grid_custom_actions.htm'
-    form = MemberFormForGrid
+    form = MemberForm
 
     def get_actions(self):
         actions = super().get_actions()
@@ -453,7 +453,7 @@ class MemberGridCustomActions(MemberGrid):
             })
 
 
-class ManufacturerFkWidgetGrid(KoGridWidget):
+class ManufacturerFkWidgetGrid(KoGridView):
 
     model = Manufacturer
     form = ManufacturerForm
@@ -468,7 +468,7 @@ class ManufacturerFkWidgetGrid(KoGridWidget):
     ]
 
 
-class ProfileFkWidgetGrid(KoGridWidget):
+class ProfileFkWidgetGrid(KoGridView):
 
     model = Profile
     form = ProfileForm

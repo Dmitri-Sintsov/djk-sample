@@ -4,12 +4,12 @@ from django.utils.html import format_html
 from django.contrib.auth.models import User
 
 from django_jinja_knockout.tpl import format_local_date
-from django_jinja_knockout.views import KoGridView, KoGridWidget
+from django_jinja_knockout.views import KoGridView
 
 from .models import Action
 
 
-class UserFkWidgetGrid(KoGridWidget):
+class UserFkWidgetGrid(KoGridView):
 
     model = User
     grid_fields = [
