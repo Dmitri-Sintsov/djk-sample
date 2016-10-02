@@ -2,6 +2,8 @@
 djk-sample
 ==========
 
+.. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
+
 Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sintsov/django-jinja-knockout
 
 Installation
@@ -59,3 +61,19 @@ Use brew:
 
 * Install Python3 from http://brew.sh/
 * Follow Ubuntu instructions with the exception that ``libxml2-dev`` ``libxslt-dev`` are already installed.
+
+Selenium tests
+--------------
+
+Inside project virtual environment install selenium::
+
+    pip3 install selenium
+
+Install latest `Firefox ESR`_. Then run the following command::
+
+    python manage.py test
+
+Close Firefox window when the tests are complete. It should print the following message in console::
+
+    OK
+    Destroying test database for alias 'default'...
