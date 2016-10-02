@@ -97,3 +97,10 @@ In such case remove tox installed via apt-get and install newer version of tox v
     $ apt-get remove python-tox
     $ pip3 install tox
     $ /usr/local/bin/tox -r -e py 35
+
+Tips
+~~~~
+
+To run a subset of tests for `djk-sample`_::
+
+    $ python manage.py test club_app.tests.ClubAppTests
