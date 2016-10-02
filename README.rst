@@ -62,8 +62,11 @@ Use brew:
 * Install Python3 from http://brew.sh/
 * Follow Ubuntu instructions with the exception that ``libxml2-dev`` ``libxslt-dev`` are already installed.
 
+Unit tests
+----------
+
 Selenium tests
---------------
+~~~~~~~~~~~~~~
 
 Inside project virtual environment install selenium::
 
@@ -77,3 +80,20 @@ Close Firefox window when the tests are complete. It should print the following 
 
     OK
     Destroying test database for alias 'default'...
+
+Tox tests
+~~~~~~~~~
+
+Testing other Python versions with tox.
+
+Install tox via::
+
+    apt-get install python-tox
+
+Note that python 3.5 tests requires tox 2.3.1 or newer version, while Ubuntu 14.04 LTS has older 1.6 version.
+In such case remove tox installed via apt-get and install newer version of tox via pip3 globally::
+
+    $ deactivate
+    $ apt-get remove python-tox
+    $ pip3 install tox
+    $ /usr/local/bin/tox -r -e py 35
