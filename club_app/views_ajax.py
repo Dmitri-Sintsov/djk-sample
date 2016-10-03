@@ -473,6 +473,7 @@ class ProfileFkWidgetGrid(KoGridView):
     model = Profile
     form = ProfileForm
     enable_deletion = True
+    force_str_desc = True
     grid_fields = ['first_name', 'last_name']
     allowed_sort_orders = '__all__'
     search_fields = [
