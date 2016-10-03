@@ -81,7 +81,7 @@ class ClubGridWithVirtualField(SimpleClubGrid):
 
     def get_model_fields(self):
         model_fields = copy(super().get_model_fields())
-        # Remove annotated field which is unavailable when creating / updating single object which does not uses
+        # Remove annotated field which is unavailable when creating / updating single object which does not use
         # self.get_base_queryset()
         # Required only because current grid is editable.
         model_fields.remove('total_members')
@@ -91,7 +91,7 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         # Add virtual field value.
         row['exists_days'] = (timezone.now().date() - obj.foundation_date).days
         if 'total_members' not in row:
-            # Add annotated field value which is unavailable when creating / updating single object which does not uses
+            # Add annotated field value which is unavailable when creating / updating single object which does not use
             # self.get_base_queryset()
             # Required only because current grid is editable.
             row['total_members'] = obj.member_set.count()
