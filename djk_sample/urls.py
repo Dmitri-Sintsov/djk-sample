@@ -23,7 +23,8 @@ from club_app.views import (
 )
 from club_app.views import main_page
 from club_app.views_ajax import (
-    SimpleClubGrid, SimpleClubGridDTL, EditableClubGrid, ClubGridWithVirtualField, ClubGridWithActionLogging,
+    SimpleClubGrid, SimpleClubGridDTL, EditableClubGrid, ClubGridRawQuery,
+    ClubGridWithVirtualField, ClubGridWithActionLogging,
     ClubEquipmentGrid, EquipmentGrid,
     MemberGrid, ClubMemberGrid, MemberGridTabs, MemberGridCustomActions,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
@@ -98,6 +99,8 @@ urlpatterns = [
     url(r'^club-grid-editable(?P<action>/?\w*)/$', EditableClubGrid.as_view(), name='club_grid_editable',
         # kwargs={'view_title': 'Editable club grid', 'permission_required': 'club_app.change_club'}),
         kwargs={'view_title': 'Editable club grid'}),
+    url(r'^club-grid-raw-query(?P<action>/?\w*)/$', ClubGridRawQuery.as_view(), name='club_grid_raw_query',
+        kwargs={'view_title': 'Club grid raw query'}),
     url(r'^club-grid-with-virtual-field(?P<action>/?\w*)/$', ClubGridWithVirtualField.as_view(), name='club_grid_with_virtual_field',
         kwargs={'view_title': 'Club grid with virtual field'}),
     url(r'^club-grid-with-action-logging(?P<action>/?\w*)/$', ClubGridWithActionLogging.as_view(),

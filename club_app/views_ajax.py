@@ -8,8 +8,10 @@ from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
 from django_jinja_knockout.models import get_meta
+from django_jinja_knockout.query import FilteredRawQuerySet
 from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin, ContextDataMixin
 from django_jinja_knockout.viewmodels import vm_list, find_by_kw
+from django_jinja_knockout.utils import sdv
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
 from .forms import (
@@ -48,6 +50,55 @@ class EditableClubGrid(KoGridInline, SimpleClubGrid):
     ]
     enable_deletion = True
     form_with_inline_formsets = ClubFormWithInlineFormsets
+
+
+class ClubGridRawQuery(SimpleClubGrid):
+
+    grid_fields = [
+        'title',
+        'category',
+        'foundation_date',
+        'first_name',
+        'last_name',
+        'role'
+    ]
+
+    def get_field_verbose_name(self, field_name):
+        if field_name == 'first_name':
+            return 'Founder\'s first name'
+        elif field_name == 'last_name':
+            return 'Founder\'s last name'
+        elif field_name == 'role':
+            return 'Role'
+        else:
+            return super().get_field_verbose_name(field_name)
+
+    def get_row_str_fields(self, obj, row):
+        str_fields = super().get_row_str_fields(obj, row)
+        if str_fields is None:
+            str_fields = {}
+        # Add formatted display of manually JOINed field.
+        str_fields['role'] = sdv.get_choice_str(Member.ROLES, row['role'])
+        return str_fields
+
+    def get_base_queryset(self):
+        # Mostly supposed to work with LEFT JOIN. Might produce wrong results with arbitrary queries.
+        raw_qs = self.model.objects.raw(
+            'SELECT club_app_club.*, club_app_member.role, '
+            'club_app_profile.first_name, club_app_profile.last_name FROM club_app_club '
+            'LEFT JOIN club_app_member ON club_app_club.id = club_app_member.club_id AND '
+            'club_app_member.role = %s '
+            'LEFT JOIN club_app_profile ON club_app_profile.id = club_app_member.profile_id ',
+            params=[Member.ROLE_FOUNDER]
+        )
+        fqs = FilteredRawQuerySet.clone_raw_queryset(
+            raw_qs=raw_qs, relation_map={
+                'role': 'member',
+                'first_name': 'member__profile',
+                'last_name': 'member__profile'
+            }
+        )
+        return fqs
 
 
 class ClubGridWithVirtualField(SimpleClubGrid):
