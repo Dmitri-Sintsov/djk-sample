@@ -55,23 +55,35 @@ class EditableClubGrid(KoGridInline, SimpleClubGrid):
 class ClubGridRawQuery(SimpleClubGrid):
 
     grid_fields = [
+        'first_name',
+        'last_name',
+        'role',
         'title',
         'category',
         'foundation_date',
-        'first_name',
-        'last_name',
-        'role'
     ]
+
+    allowed_filter_fields = OrderedDict([
+        ('category', None),
+        ('foundation_date', None),
+        ('role', None)
+    ])
 
     def get_field_verbose_name(self, field_name):
         if field_name == 'first_name':
-            return 'Founder\'s first name'
+            return 'First name'
         elif field_name == 'last_name':
-            return 'Founder\'s last name'
+            return 'Last name'
         elif field_name == 'role':
             return 'Role'
         else:
             return super().get_field_verbose_name(field_name)
+
+    def get_field_validator(self, fieldname):
+        if fieldname == 'role':
+            return self.__class__.field_validator(self, fieldname, model_class=Member)
+        else:
+            return super().get_field_validator(fieldname)
 
     def get_row_str_fields(self, obj, row):
         str_fields = super().get_row_str_fields(obj, row)
@@ -86,10 +98,8 @@ class ClubGridRawQuery(SimpleClubGrid):
         raw_qs = self.model.objects.raw(
             'SELECT club_app_club.*, club_app_member.role, '
             'club_app_profile.first_name, club_app_profile.last_name FROM club_app_club '
-            'LEFT JOIN club_app_member ON club_app_club.id = club_app_member.club_id AND '
-            'club_app_member.role = %s '
-            'LEFT JOIN club_app_profile ON club_app_profile.id = club_app_member.profile_id ',
-            params=[Member.ROLE_FOUNDER]
+            'LEFT JOIN club_app_member ON club_app_club.id = club_app_member.club_id '
+            'LEFT JOIN club_app_profile ON club_app_profile.id = club_app_member.profile_id '
         )
         fqs = FilteredRawQuerySet.clone_raw_queryset(
             raw_qs=raw_qs, relation_map={
