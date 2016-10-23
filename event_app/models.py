@@ -8,7 +8,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 from django_jinja_knockout.tpl import format_local_date
-from django_jinja_knockout.utils.sdv import join_dict_values
+from django_jinja_knockout.utils.sdv import str_dict
 
 from djk_sample.middleware import ContextMiddleware
 
@@ -67,6 +67,4 @@ class Action(models.Model):
 
     def __str__(self):
         str_fields = self.get_str_fields()
-        if isinstance(str_fields['content_object'], dict):
-            join_dict_values(' / ', str_fields, ['content_object'])
-        return ' › '.join(str_fields.values())
+        return str_dict(str_fields)

@@ -5,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 
 from django_jinja_knockout.tpl import format_local_date
-from django_jinja_knockout.utils.sdv import join_dict_values
+from django_jinja_knockout.utils.sdv import flatten_dict, str_dict
 
 
 class Profile(models.Model):
@@ -128,11 +128,7 @@ class Equipment(models.Model):
 
     def __str__(self):
         str_fields = self.get_str_fields()
-        foreign_fields = ['club']
-        if 'manufacturer' in str_fields:
-            foreign_fields.append('manufacturer')
-        join_dict_values(' / ', str_fields, foreign_fields)
-        return ' › '.join(str_fields.values())
+        return str_dict(str_fields)
 
 
 class Member(models.Model):
@@ -172,8 +168,7 @@ class Member(models.Model):
         verbose_name_plural = 'Sport club members'
 
     def get_canonical_link(self):
-        str_fields = self.get_str_fields()
-        join_dict_values(' / ', str_fields, ['profile', 'club'])
+        str_fields = flatten_dict(self.get_str_fields(), enclosure_fmt=None)
         return ' / '.join([str_fields['profile'], str_fields['club']]), \
                reverse('member_detail', kwargs={'member_id': self.pk})
 
@@ -190,5 +185,4 @@ class Member(models.Model):
 
     def __str__(self):
         str_fields = self.get_str_fields()
-        join_dict_values(' / ', str_fields, ['profile', 'club'])
-        return ' › '.join(str_fields.values())
+        return str_dict(str_fields)
