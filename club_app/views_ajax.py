@@ -85,7 +85,7 @@ class ClubGridRawQuery(SimpleClubGrid):
         else:
             return super().get_field_validator(fieldname)
 
-    def get_row_str_fields(self, obj, row):
+    def get_row_str_fields(self, obj, row=None):
         str_fields = super().get_row_str_fields(obj, row)
         if str_fields is None:
             str_fields = {}
@@ -160,7 +160,7 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         return row
 
     # Optional formatting of virtual field (not required).
-    def get_row_str_fields(self, obj, row):
+    def get_row_str_fields(self, obj, row=None):
         str_fields = super().get_row_str_fields(obj, row)
         if str_fields is None:
             str_fields = {}
