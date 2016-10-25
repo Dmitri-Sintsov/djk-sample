@@ -105,8 +105,6 @@ class ActionGrid(KoGridView):
 
     # Optional formatting of virtual field (not required).
     def get_row_str_fields(self, obj, row=None):
-        if row is not None and not isinstance(row, dict):
-            raise ValueError('row value should be None or dict')
         str_fields = super().get_row_str_fields(obj, row)
         if str_fields is None:
             str_fields = {}
