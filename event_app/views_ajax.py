@@ -68,6 +68,17 @@ class ActionGrid(KoGridView):
         'content_type'
     ]
     enable_deletion = True
+    grid_options = {
+        'selectMultipleRows': True,
+        'highlightMode': 1,
+        'fkGridOptions': {
+            'performer': {
+                'pageRoute': 'user_fk_widget_grid',
+                # Optional setting for BootstrapDialog:
+                'dialogOptions': {'size': 'size-wide'},
+            }
+        }
+    }
 
     def get_allowed_filter_fields(self):
         allowed_filter_fields = OrderedDict([
@@ -117,17 +128,3 @@ class ActionGrid(KoGridView):
                 str_fields['content_type']
             )
         return str_fields
-
-    @classmethod
-    def get_default_grid_options(cls):
-        return {
-            'selectMultipleRows': True,
-            'highlightMode': 1,
-            'fkGridOptions': {
-                'performer': {
-                    'pageRoute': 'user_fk_widget_grid',
-                    # Optional setting for BootstrapDialog:
-                    'dialogOptions': {'size': 'size-wide'},
-                }
-            }
-        }

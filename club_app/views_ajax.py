@@ -178,14 +178,10 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
         'profile_fk_widget_grid',
         'action_grid',
     ]
-
-    @classmethod
-    def get_default_grid_options(cls):
-        return {
-            # Note: 'classPath' is not required for standard App.ko.Grid.
-            'classPath': 'App.ko.ClubGrid',
-        }
-
+    grid_options = {
+        # Note: 'classPath' is not required for standard App.ko.Grid.
+        'classPath': 'App.ko.ClubGrid',
+    }
 
 class ClubEquipmentGrid(EditableClubGrid):
 
@@ -288,7 +284,7 @@ class EquipmentGrid(KoGridView):
         return actions
 
     @classmethod
-    def get_default_grid_options(cls):
+    def get_grid_options(cls):
         return {
             'searchPlaceholder': 'Search inventory name',
             'fkGridOptions': {
@@ -357,7 +353,7 @@ class MemberGrid(KoGridView):
             return super().get_field_verbose_name(field_name)
 
     @classmethod
-    def get_default_grid_options(cls):
+    def get_grid_options(cls):
         return {
             # Note: 'classPath' is not required for standard App.ko.Grid.
             'classPath': 'App.ko.MemberGrid',
