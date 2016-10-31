@@ -241,7 +241,6 @@ class ClubEquipmentGrid(EditableClubGrid):
         equipment_grid.request = self.request
         equipment_grid.init_class(equipment_grid)
         return vm_list({
-            'view': self.__class__.viewmodel_name,
             'update_rows': self.postprocess_qs([club]),
             # return grid rows for client-side EquipmentGrid component .updatePage(),
             'equipment_grid_view': {
@@ -466,7 +465,6 @@ class MemberGridCustomActions(MemberGrid):
                 member.save()
                 modified_members.append(member)
         return vm_list({
-            'view': self.__class__.viewmodel_name,
             'description': [list(member.get_str_fields().values()) for member in modified_members],
             'update_rows': self.postprocess_qs(modified_members),
         })
@@ -479,7 +477,6 @@ class MemberGridCustomActions(MemberGrid):
             member.save()
             modified_members.append(member)
         return vm_list({
-            'view': self.__class__.viewmodel_name,
             'update_rows': self.postprocess_qs(modified_members),
         })
 
@@ -505,7 +502,6 @@ class MemberGridCustomActions(MemberGrid):
             })
         else:
             return vm_list({
-                'view': self.__class__.viewmodel_name,
                 'update_rows': self.postprocess_qs(modified_members),
             })
 
