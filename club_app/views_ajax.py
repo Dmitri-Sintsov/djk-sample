@@ -269,11 +269,20 @@ class EquipmentGrid(KoGridView):
         'category'
     ]
     allowed_filter_fields = OrderedDict([
-        ('club', None),
-        ('manufacturer', None),
+        ('club', {
+            'pageRoute': 'club_grid_simple',
+            # Optional setting for BootstrapDialog:
+            'dialogOptions': {'size': 'size-wide'},
+        }),
+        ('manufacturer', {
+            'pageRoute': 'manufacturer_fk_widget_grid'
+        }),
         ('manufacturer__direct_shipping', None),
         ('category', None)
     ])
+    grid_options = {
+        'searchPlaceholder': 'Search inventory name',
+    }
 
     def get_actions(self):
         # Disable adding new Equipment because ClubEquipmentForm is incomplete (has no Club) for action 'create_form'.
@@ -281,22 +290,6 @@ class EquipmentGrid(KoGridView):
         actions = super().get_actions()
         actions['button']['create_form']['enabled'] = False
         return actions
-
-    @classmethod
-    def get_grid_options(cls):
-        return {
-            'searchPlaceholder': 'Search inventory name',
-            'fkGridOptions': {
-                'club': {
-                    'pageRoute': 'club_grid_simple',
-                    # Optional setting for BootstrapDialog:
-                    'dialogOptions': {'size': 'size-wide'},
-                },
-                'manufacturer': {
-                    'pageRoute': 'manufacturer_fk_widget_grid'
-                },
-            }
-        }
 
 
 class MemberGrid(KoGridView):

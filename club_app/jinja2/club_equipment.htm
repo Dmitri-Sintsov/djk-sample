@@ -1,9 +1,13 @@
+{% from 'bs_tabs.htm' import bs_tabs with context %}
 {% from 'ko_grid.htm' import ko_grid with context %}
 {% from 'ko_grid_body.htm' import ko_grid_body with context %}
 {% extends 'base.htm' %}
 
 {% block main %}
 
+    {% set tabs = [] %}
+
+    {% set html %}
     {{ ko_grid(
         grid_options={
             'classPath': 'App.ko.ClubGrid',
@@ -13,7 +17,17 @@
             'id': 'club_equipment_grid'
         }
     ) }}
+    {% endset %}
+    {% do tabs.append({
+        'id': 'club_equipment_tab',
+        'title': 'Sport clubs',
+        'tooltip': 'Add, modify, remove sport club, add related equipment to sport club',
+        'html': html,
+        'is_active': True
+    }) %}
 
+
+    {% set html %}
     {{ ko_grid(
         grid_options={
             'pageRoute': 'equipment_grid',
@@ -25,6 +39,15 @@
             'id': 'equipment_grid'
         }
     ) }}
+    {% endset %}
+    {% do tabs.append({
+        'id': 'equipment_tab',
+        'title': 'Sport club equipments',
+        'tooltip': 'All the equipments of all sport clubs',
+        'html': html,
+    }) %}
+
+    {{ bs_tabs(tabs) }}
 
 {% endblock main %}
 
