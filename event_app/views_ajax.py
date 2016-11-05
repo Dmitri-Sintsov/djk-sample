@@ -71,6 +71,7 @@ class ActionGrid(KoGridView):
     grid_options = {
         'selectMultipleRows': True,
         'highlightMode': 1,
+        # Use fkGridOptions to setup allowed_filter_fields['performer'].
         'fkGridOptions': {
             'performer': {
                 'pageRoute': 'user_fk_widget_grid',
@@ -83,6 +84,12 @@ class ActionGrid(KoGridView):
     def get_allowed_filter_fields(self):
         allowed_filter_fields = OrderedDict([
             ('performer', None),
+            # Autodetect foreign key grid fkGridOptions, instead of explicitly specifying them in grid_options.
+            # ('performer', {
+            #    'pageRoute': 'user_fk_widget_grid',
+            #    # Optional setting for BootstrapDialog:
+            #    'dialogOptions': {'size': 'size-wide'},
+            #}),
             ('date', None),
             ('action_type', None),
             ('content_type', self.get_contenttype_filter(
