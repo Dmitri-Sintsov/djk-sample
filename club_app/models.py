@@ -176,7 +176,7 @@ class Member(models.Model):
         parts = OrderedDict([
             ('profile', self.profile.get_str_fields()),
             ('club', self.club.get_str_fields()),
-            ('last_visit', format_local_date(timezone.localtime(self.last_visit))),
+            ('last_visit', format_local_date(self.last_visit)),
             ('plays', self.get_plays_display()),
             ('role', self.get_role_display()),
             ('is_endorsed', 'endorsed' if self.is_endorsed else 'unofficial')
