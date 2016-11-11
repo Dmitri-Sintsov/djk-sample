@@ -40,7 +40,7 @@ class UserFkWidgetGrid(KoGridView):
     # Optional formatting of virtual field (not required).
     def get_row_str_fields(self, obj, row=None):
         str_fields = {
-            'last_login': format_local_date(obj.last_login),
+            'last_login': '' if obj.last_login is None else format_local_date(obj.last_login),
             'date_joined': format_local_date(obj.date_joined),
         }
         return str_fields
