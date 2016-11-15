@@ -69,6 +69,13 @@ class ClubGridRawQuery(SimpleClubGrid):
         ('role', None)
     ])
 
+    def get_model_meta(self, key):
+        if key == 'verbose_name_plural':
+            # Override grid title.
+            return 'Sport clubs and their members'
+        else:
+            return super().get_model_meta(key)
+
     def get_field_verbose_name(self, field_name):
         if field_name == 'first_name':
             return 'First name'
