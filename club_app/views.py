@@ -7,6 +7,7 @@ from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.views import (
     FormDetailView, InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
+from django_jinja_knockout.viewmodels import to_json
 
 from djk_sample.middleware import ContextMiddleware
 from event_app.models import Action
@@ -121,26 +122,57 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
         'foundation_date',
     ]
 
+    def get_title_links(self, obj):
+        links = [format_html(
+            '<div><a href="{}">{}</a></div>',
+            reverse('club_detail', kwargs={'club_id': obj.pk}),
+            obj.title
+        )]
+        if ContextMiddleware.get_request().user.is_authenticated():
+            links.append(format_html(
+                '<a href="{}"><span class="glyphicon glyphicon-edit"></span></a>',
+                reverse('club_update', kwargs={'club_id': obj.pk})
+            ))
+            links.append(format_html(
+                '<a href="{}"><span class="glyphicon glyphicon-user"></span></a>',
+                reverse('club_member_grid', kwargs={'action': '', 'club_id': obj.pk})
+            ))
+        return links
+
     def get_display_value(self, obj, field):
         if field == 'title':
-            links = [format_html(
-                '<div><a href="{}">{}</a></div>',
-                reverse('club_detail', kwargs={'club_id': obj.pk}),
-                obj.title
-            )]
-            if ContextMiddleware.get_request().user.is_authenticated():
-                links.append(format_html(
-                    '<a href="{}"><span class="glyphicon glyphicon-edit"></span></a>',
-                    reverse('club_update', kwargs={'club_id': obj.pk}))
-                )
-                links.append(format_html(
-                    '<a href="{}"><span class="glyphicon glyphicon-user"></span></a>',
-                    reverse('club_member_grid', kwargs={'action': '', 'club_id': obj.pk}))
-                )
+            links = self.get_title_links(obj)
             return mark_safe(''.join(links))
         else:
             return super().get_display_value(obj, field)
 
+
+class ClubListWithComponent(ClubList):
+
+    client_routes = [
+        'club_member_grid',
+        'profile_fk_widget_grid',
+    ]
+    template_name = 'club_list_with_component.htm'
+
+    def get_title_links(self, obj):
+        links = super().get_title_links(obj)
+        links.append(format_html(
+            '<button class="component" data-event="click" data-component-options="{}">'
+            '<span class="glyphicon glyphicon-user"></span>See inline'
+            '</button>',
+            to_json({
+                'classPath': 'App.GridDialog',
+                'filterOptions': {
+                    'pageRoute': 'club_member_grid',
+                    'pageRouteKwargs': {'club_id': obj.pk},
+                    'fkGridOptions': {
+                        'profile': 'profile_fk_widget_grid',
+                    }
+                }
+            })
+        ))
+        return links
 
 class ClubListDTL(ClubList):
     template_name = 'club_list.html'

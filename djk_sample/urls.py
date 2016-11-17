@@ -19,7 +19,9 @@ from django.conf.urls import include, url
 from django.views.i18n import javascript_catalog
 
 from club_app.views import (
-    ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail, ClubList, ClubListDTL, EquipmentDetail, MemberDetail
+    ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail,
+    ClubList, ClubListWithComponent, ClubListDTL,
+    EquipmentDetail, MemberDetail
 )
 from club_app.views import main_page
 from club_app.views_ajax import (
@@ -57,6 +59,8 @@ urlpatterns = [
         kwargs={'view_title': '{}'}),
     url(r'^club-list/$', ClubList.as_view(), name='club_list',
         kwargs={'view_title': 'List of sport clubs', 'allow_anonymous': True}),
+    url(r'^club-list-with-component/$', ClubListWithComponent.as_view(), name='club_list_with_component',
+        kwargs={'view_title': 'List of sport clubs with their members as App.GridDialog component'}),
     url(r'^club-list-dtl/$', ClubListDTL.as_view(), name='club_list_dtl',
         kwargs={'view_title': 'List of sport clubs (Django Template Language)', 'allow_anonymous': True}),
 
