@@ -22,6 +22,40 @@ class ClubAppTests(SeleniumCommands):
             '//div[@class="jumbotron"]/div[@class="default-padding" and contains(text(), "{}")]'.format(text),
         )
 
+    def do_input_as_select_click(self, id):
+        self.exec(
+            'by_id', (id,),
+            'element_by_xpath', ('parent::label',),
+            'click',
+        )
+        return self.last_result
+
+    def do_fk_widget_click(self, id):
+        self.exec(
+            'by_id', (id,),
+            'element_by_xpath', ('following-sibling::button',),
+            'click',
+            'to_active_element',
+        )
+        return self.last_result
+
+    def do_grid_dialog_button_action_click(self, action_name):
+        self.exec(
+            'by_classname', ('bootstrap-dialog-message',),
+            'element_by_xpath', ('//span[text()="{}"]/parent::button'.format(action_name),),
+            'click',
+        )
+        return self.last_result
+
+    def do_dialog_button_click(self, button_title):
+        self.exec(
+            'to_active_element',
+            'element_by_xpath',
+                ('//div[@class="bootstrap-dialog-footer"]//button[contains(., "{}")]'.format(button_title),),
+            'click'
+        )
+        return self.last_result
+
     def register_new_user(self):
         self.exec(
             'reverse_url', {'viewname': 'account_signup'},
@@ -86,9 +120,10 @@ class ClubAppTests(SeleniumCommands):
             'keys_by_id',
                 ('id_title', 'Yaroslavl Bears'),
                 ('id_foundation_date', '1971-08-29'),
-            'by_id', ('id_category_1',),
-            'element_by_xpath', ('parent::*',),
-            'click',
+            'input_as_select_click', ('id_category_1',),
+            'fk_widget_click', ('id_equipment_set-0-manufacturer',),
+            'grid_dialog_button_action_click', ('Add',),
+            'dialog_button_click', ('Save',),
         )
 
     def test_signup(self):
