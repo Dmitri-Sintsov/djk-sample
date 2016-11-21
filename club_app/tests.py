@@ -87,15 +87,18 @@ class ClubAppTests(DjkSeleniumCommands):
             'by_id', ('id_direct_shipping',),
             'click',
             'dialog_button_click', ('Save',),
-        )
-        self.exec(
             'to_active_element',
             'grid_find_data_column', ('Company name', 'Yanex'),
+            'grid_select_current_row',
+            'dialog_button_click', ('Apply',),
+            'keys_by_id', ('id_equipment_set-0-inventory_name', 'Silent Air 2020'),
+            'input_as_select_click', ('id_equipment_set-0-category_2',),
+            'button_click', ('Add "Sport club member"',),
         )
 
-    def test_signup(self):
+    def test_all(self):
         self.register_new_user()
-        # self.logout_user()
-        # self.login_user()
-        # self.empty_club_list()
+        self.logout_user()
+        self.login_user()
+        self.empty_club_list()
         self.add_sport_club()
