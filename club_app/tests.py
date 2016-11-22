@@ -94,6 +94,8 @@ class ClubAppTests(DjkSeleniumCommands):
             'keys_by_id', ('id_equipment_set-0-inventory_name', 'Silent Air 2020'),
             'input_as_select_click', ('id_equipment_set-0-category_2',),
             'button_click', ('Add "Sport club member"',),
+            'fk_widget_click', ('id_member_set-0-profile',),
+            'grid_button_action_click', ('Add',),
         )
 
     def test_all(self):
