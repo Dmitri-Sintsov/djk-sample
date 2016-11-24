@@ -1,3 +1,4 @@
+from pudb import set_trace
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from django.utils.html import format_html
@@ -16,40 +17,38 @@ class ClubAppTests(DjkSeleniumCommands):
 
     def register_new_user(self):
         self.exec(
-            'reverse_url', {'viewname': 'account_signup'},
+            'relative_url', ('/',),
+            'click_anchor_by_view', {'viewname': 'account_signup'},
             'keys_by_id',
                 ('id_username', 'testuser'),
                 ('id_password1', 'test123'),
                 ('id_password2', 'test123'),
-            'find_submit_by_view', ('account_signup',),
-            'click',
+            'click_submit_by_view', ('account_signup',),
             'has_messages_success',
         )
 
     def logout_user(self):
         self.exec(
-            'reverse_url', {'viewname': 'account_logout'},
-            'find_submit_by_view', ('account_logout',),
-            'click',
+            'click_anchor_by_view', {'viewname': 'account_logout'},
+            'click_submit_by_view', ('account_logout',),
             'has_messages_success',
         )
 
     def login_user(self):
         self.exec(
-            'reverse_url', {'viewname': 'account_login'},
+            'click_anchor_by_view', {'viewname': 'account_login'},
             'keys_by_id',
                 ('id_login', 'testuser'),
                 ('id_password', 'test123'),
-            'find_submit_by_view', ('account_login',),
-            'click',
+            'click_submit_by_view', ('account_login',),
             'has_messages_success',
         )
 
     def empty_club_list(self):
         self.exec(
-            'reverse_url', {'viewname': 'club_list'},
+            'click_anchor_by_view', {'viewname': 'club_list'},
             'jumbotron_text', ('There is no',),
-            'find_anchor_by_view', (
+            'click_anchor_by_view', (
                 'club_list',
                 {},
                 {
@@ -58,7 +57,6 @@ class ClubAppTests(DjkSeleniumCommands):
                     })
                 }
             ),
-            'click',
             'jumbotron_text', ('There is no',),
             'reverse_url', (
                 'club_list',
@@ -74,7 +72,9 @@ class ClubAppTests(DjkSeleniumCommands):
 
     def add_sport_club(self):
         self.exec(
-            'reverse_url', {'viewname': 'club_create'},
+            'click_anchor_by_view', {'viewname': 'club_create'},
+            # Next one step is optional:
+            'form_by_view', ('club_create',),
             'keys_by_id',
                 ('id_title', 'Yaroslavl Bears'),
                 ('id_foundation_date', '1971-08-29'),
@@ -114,8 +114,20 @@ class ClubAppTests(DjkSeleniumCommands):
             'input_as_select_click', ('id_member_set-0-role_1',),
             'by_id', ('id_member_set-0-is_endorsed',),
             'click',
-            'find_submit_by_view', ('club_create',),
-            'click',
+            'click_submit_by_view', ('club_create',),
+        )
+
+    def details_sport_club(self):
+        self.exec(
+            'button_click', ('Read',),
+            'sleep', (3,),
+            'dialog_button_click', ('OK',),
+            'sleep', (3,),
+        )
+
+    def edit_sport_club(self):
+        self.exec(
+            'click_anchor_by_view', {'viewname': 'club_update', 'kwargs': {'club_id': 1}},
         )
 
     def test_all(self):
@@ -124,3 +136,5 @@ class ClubAppTests(DjkSeleniumCommands):
         self.login_user()
         self.empty_club_list()
         self.add_sport_club()
+        self.details_sport_club()
+        self.edit_sport_club()
