@@ -1,4 +1,3 @@
-from pudb import set_trace
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from django.utils.html import format_html
