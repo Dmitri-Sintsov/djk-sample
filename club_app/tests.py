@@ -137,3 +137,4 @@ class ClubAppTests(DjkSeleniumCommands):
         self.add_sport_club()
         self.details_sport_club()
         self.edit_sport_club()
+        self._sleep(10)
