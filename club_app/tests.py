@@ -119,9 +119,7 @@ class ClubAppTests(DjkSeleniumCommands):
     def details_sport_club(self):
         self.exec(
             'button_click', ('Read',),
-            'default_sleep',
             'dialog_button_click', ('OK',),
-            'default_sleep',
         )
 
     def edit_sport_club(self):
