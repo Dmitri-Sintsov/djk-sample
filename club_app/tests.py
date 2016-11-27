@@ -123,16 +123,55 @@ class ClubAppTests(DjkSeleniumCommands):
         )
 
     def edit_sport_club(self):
+        update_view = {'viewname': 'club_update', 'kwargs': {'club_id': 1}}
         self.exec(
-            'click_anchor_by_view', {'viewname': 'club_update', 'kwargs': {'club_id': 1}},
+            'click_anchor_by_view', update_view,
+            'form_by_view', update_view,
+            # 'relative_form_button_click', ('Add "Sport club equipment"',),
+            # 'by_id', ('id_equipment_set-1-DELETE',),
+            # 'click',
+            # 'to_top_bootstrap_dialog',
+            # 'dialog_button_click', ('Yes',),
+            'form_by_view', update_view,
+            'relative_form_button_click', ('Add "Sport club equipment"',),
+            'fk_widget_add_and_select', (
+                'id_equipment_set-1-manufacturer',
+                (
+                    'keys_by_id', ('id_company_name', 'Bubblelat'),
+                ),
+                (
+                    'grid_find_data_column', ('Company name', 'Bubblelat'),
+                )
+            ),
+            'keys_by_id', ('id_equipment_set-1-inventory_name', 'Bubble Pro 2010'),
+            'input_as_select_click', ('id_equipment_set-1-category_1',),
+            'relative_form_button_click', ('Add "Sport club member"',),
+            'fk_widget_add_and_select', (
+                'id_member_set-1-profile',
+                (
+                    'keys_by_id',
+                    ('id_first_name', 'John',),
+                    ('id_last_name', 'Smith',),
+                    ('id_birth_date', '1973-05-19',),
+                ),
+                (
+                    'grid_find_data_column', ('First name', 'John'),
+                )
+            ),
+            'keys_by_id',
+            ('id_member_set-1-last_visit', '2016-11-27 19:27:41'),
+            ('id_member_set-1-note', 'Enterpreneur and master of squash'),
+            'input_as_select_click', ('id_member_set-1-plays_3',),
+            'input_as_select_click', ('id_member_set-1-role_0',),
+            'click_submit_by_view', update_view,
         )
 
     def test_all(self):
         self.register_new_user()
-        self.logout_user()
-        self.login_user()
-        self.empty_club_list()
+        # self.logout_user()
+        # self.login_user()
+        # self.empty_club_list()
         self.add_sport_club()
         self.details_sport_club()
         self.edit_sport_club()
-        self._sleep(10)
+        self._sleep(3)
