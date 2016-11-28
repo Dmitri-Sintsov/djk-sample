@@ -191,7 +191,7 @@ class ClubAppTests(DjkSeleniumCommands):
             ),
             'keys_by_id',
             ('id_member_set-1-last_visit', '2016-11-27 19:27:41'),
-            ('id_member_set-1-note', 'Enterpreneur and master of squash'),
+            ('id_member_set-1-note', 'Entrepreneur and master of squash'),
             'input_as_select_click', ('id_member_set-1-plays_3',),
             'input_as_select_click', ('id_member_set-1-role_0',),
         )
