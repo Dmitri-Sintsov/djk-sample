@@ -200,7 +200,7 @@ class ClubAppTests(DjkSeleniumCommands):
         def get_commands(cls):
             commands = (
                 cls.open_update_form() +
-                # cls.test_formset_removal() +
+                cls.test_formset_removal() +
                 cls.add_equipment_bubblelat +
                 cls.add_member_john_smith +
                 ('click_submit_by_view', cls.update_view,)
