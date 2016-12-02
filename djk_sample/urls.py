@@ -16,6 +16,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 # from django.contrib import admin
 
+from django.conf import settings
 from django.views.i18n import javascript_catalog
 
 from club_app.views import (
@@ -34,19 +35,28 @@ from club_app.views_ajax import (
 from event_app.views import ActionList
 from event_app.views_ajax import UserFkWidgetGrid, ActionGrid
 
-
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
+]
 
+# Allauth views.
+if settings.ALLAUTH_DJK_URLS:
+    # More pretty-looking bootstrap forms but possibly are not compatible with arbitrary allauth version:
+    urlpatterns.append(
+        url(r'^accounts/', include('django_jinja_knockout._allauth.urls'))
+    )
+else:
+    # Standard allauth DTL templates working with Jinja2 templates via {% load jinja %} template tag library.
+    urlpatterns.append(
+        url(r'^accounts/', include('allauth.urls'))
+    )
+
+urlpatterns += [
     # Class-based views.
 
     # Club
     url(r'^$', main_page, name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
-    # More pretty-looking but possibly not compatible with arbitrary allauth version:
-    # url(r'^accounts/', include('django_jinja_knockout._allauth.urls')),
-    # Standard allauth DTL templates working together with Jinja2 templates via {% load jinja %}
-    url(r'^accounts/', include('allauth.urls')),
     url(r'^club-create/$', ClubCreate.as_view(), name='club_create',
         kwargs={'view_title': 'Add new club'}),
     url(r'^club-create-perms-check/$', ClubCreate.as_view(), name='club_create_perms_check',

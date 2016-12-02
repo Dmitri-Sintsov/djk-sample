@@ -208,6 +208,7 @@ class ClubAppTests(DjkSeleniumCommands):
             return commands
 
     def test_all(self):
+        self._maximize_window()
         self.register_new_user()
         self.logout_user()
         self.login_user()
@@ -215,4 +216,4 @@ class ClubAppTests(DjkSeleniumCommands):
         self.exec_class(self.__class__.AddSportClub)
         self.details_sport_club()
         self.exec_class(self.__class__.UpdateSportClub)
-        self._sleep(3)
+        self._default_sleep()
