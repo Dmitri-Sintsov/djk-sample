@@ -7,11 +7,10 @@ from django.utils.translation import gettext as _
 from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
-from django_jinja_knockout.models import get_meta
+from django_jinja_knockout.models import get_meta, get_choice_str
 from django_jinja_knockout.query import FilteredRawQuerySet
 from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin, ContextDataMixin
 from django_jinja_knockout.viewmodels import vm_list, find_by_kw
-from django_jinja_knockout.utils import sdv
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
 from .forms import (
@@ -97,7 +96,7 @@ class ClubGridRawQuery(SimpleClubGrid):
         if str_fields is None:
             str_fields = {}
         # Add formatted display of manually JOINed field.
-        str_fields['role'] = sdv.get_choice_str(Member.ROLES, row['role'])
+        str_fields['role'] = get_choice_str(Member.ROLES, row['role'])
         return str_fields
 
     def get_base_queryset(self):

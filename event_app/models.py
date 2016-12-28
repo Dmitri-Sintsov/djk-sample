@@ -7,8 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
-from django_jinja_knockout.tpl import format_local_date
-from django_jinja_knockout.utils.sdv import str_dict
+from django_jinja_knockout.tpl import format_local_date, str_dict
 
 from djk_sample.middleware import ContextMiddleware
 
