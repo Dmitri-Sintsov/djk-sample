@@ -93,7 +93,6 @@ class ClubEquipmentForm(EquipmentForm):
         }
 
 
-
 class MemberForm(BootstrapModelForm):
 
     class Meta:
@@ -159,7 +158,7 @@ class MemberDisplayForm(WidgetInstancesMixin, metaclass=DisplayModelMetaclass):
 
 
 ClubEquipmentFormSet = ko_inlineformset_factory(
-    Club, Equipment, form=EquipmentForm, extra=0, min_num=1, max_num=3, can_delete=True
+    Club, Equipment, form=EquipmentForm, extra=0, min_num=1, max_num=5, can_delete=True
 )
 ClubDisplayEquipmentFormSet = ko_inlineformset_factory(
     Club, Equipment, form=EquipmentDisplayForm
