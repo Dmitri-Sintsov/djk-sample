@@ -19,7 +19,7 @@ class AddSportClub(AutomationCommands):
 class AddSportClubInventory(AutomationCommands):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.formset_idx = kwargs.pop('formset_idx', 0)
+        self.formset_idx = kwargs.pop('formset_idx')
 
     def add_manufacturers(self):
         result = ()
@@ -73,6 +73,13 @@ class AddSportClubInventory(AutomationCommands):
         )
         return result
 
+
+class AddSportClubMembers(AutomationCommands):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.formset_idx = kwargs.pop('formset_idx')
+
     def add_member(self):
         return (
             'relative_form_button_click', ('Add "Sport club member"',),
@@ -96,9 +103,6 @@ class AddSportClubInventory(AutomationCommands):
             'by_id', ('id_member_set-0-is_endorsed',),
             'click',
         )
-
-    def submit(self):
-        return 'click_submit_by_view', ('club_create',)
 
 
 class UpdateSportClub(AutomationCommands):
@@ -202,13 +206,13 @@ class ClubAppCommands(AutomationCommands):
     )
 
     def add_sport_club(self):
-        result = AddSportClub(context={
+        result = AddSportClub().set_context({
             'club': {
                 'title': 'Yaroslavl Bears',
                 'foundation_date': '1971-08-29',
             },
         }).club_base_info()
-        result += AddSportClubInventory(context={
+        result += AddSportClubInventory(formset_idx=0).set_context({
             'manufacturers': [
                 {
                     'company_name': 'Yanix',
@@ -226,7 +230,7 @@ class ClubAppCommands(AutomationCommands):
                 },
                 {
                     'company_name': 'Oldidos',
-                    'direct_shipping': True,
+                    'direct_shipping': False,
                     'inventories': [
                         {
                             'name': 'Nanostrength 5',
@@ -235,11 +239,11 @@ class ClubAppCommands(AutomationCommands):
                     ]
                 }
             ]
-        }).get_class_commands(
-            'add_manufacturers',
-            'add_member',
-            'submit'
-        )
+        }).add_manufacturers()
+        result += AddSportClubMembers(
+            formset_idx=0
+        ).add_member(
+        ) + ('click_submit_by_view', ('club_create',))
         return result
 
     def details_sport_club(self):

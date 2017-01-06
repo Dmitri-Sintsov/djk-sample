@@ -1,16 +1,12 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from django_jinja_knockout.testing import DjkSeleniumCommands
 
 from club_app.tests import ClubAppCommands
 
 
-class DjkAppTests(DjkSeleniumCommands):
-    # fixtures = ['user-data.json']
-
-    @classmethod
-    def selenium_factory(cls):
-        return WebDriver()
+class DjkSampleCommands(DjkSeleniumCommands):
 
     def register_new_user(self):
         self.exec(
@@ -43,10 +39,6 @@ class DjkAppTests(DjkSeleniumCommands):
 
     def test_all(self):
         self._maximize_window()
-        self._context({
-            'username': 'testuser',
-            'password': 'test123',
-        })
         self.register_new_user()
         # self.logout_user()
         # self.login_user()
@@ -58,3 +50,30 @@ class DjkAppTests(DjkSeleniumCommands):
             # 'update_sport_club',
         )
         self._default_sleep()
+
+
+class DjkSampleTestCase(StaticLiveServerTestCase):
+    # fixtures = ['user-data.json']
+
+    WAIT_SECONDS = 5
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.selenium = cls.selenium_factory()
+        cls.selenium.implicitly_wait(cls.WAIT_SECONDS)
+
+    @classmethod
+    def tearDownClass(cls):
+        # cls.selenium.quit()
+        super().tearDownClass()
+
+    @classmethod
+    def selenium_factory(cls):
+        return WebDriver()
+
+    def test_all(self):
+        DjkSampleCommands(testcase=self).set_context({
+            'username': 'testuser',
+            'password': 'test123',
+        }).test_all()
