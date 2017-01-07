@@ -78,29 +78,42 @@ class AddSportClubMembers(AutomationCommands):
         super().__init__(*args, **kwargs)
         self.formset_idx = kwargs.pop('formset_idx')
 
-    def add_member(self):
+    def add_members(self):
+        for key, member in enumerate(self._.members):
+            is_last_member = key + 1 == len(self._.members)
+            yield from self.add_member(member, is_last_member)
+            self.formset_idx += 1
+
+    def add_member(self, member, is_last_member):
         yield (
             'relative_form_button_click', ('Add "Sport club member"',),
             'fk_widget_add_and_select', (
-                'id_member_set-0-profile',
+                'id_member_set-{}-profile'.format(self.formset_idx),
                 (
                     'keys_by_id',
-                    ('id_first_name', 'Ivan',),
-                    ('id_last_name', 'Petrov',),
-                    ('id_birth_date', '1971-07-29',),
+                    ('id_first_name', member['first_name']),
+                    ('id_last_name', member['last_name']),
+                    ('id_birth_date', member['birth_date']),
                 ),
                 (
-                    'grid_find_data_column', ('First name', 'Ivan'),
+                    'grid_find_data_column', ('First name', member['first_name']),
                 )
             ),
             'keys_by_id',
-            ('id_member_set-0-last_visit', '2016-11-23 14:47:33'),
-            ('id_member_set-0-note', 'Veteran of Russian badminton'),
-            'input_as_select_click', ('id_member_set-0-plays_0',),
-            'input_as_select_click', ('id_member_set-0-role_1',),
-            'by_id', ('id_member_set-0-is_endorsed',),
-            'click',
+            ('id_member_set-{}-last_visit'.format(self.formset_idx), member['last_visit']),
+            ('id_member_set-{}-note'.format(self.formset_idx), member['note']),
+            'input_as_select_click', (
+                'id_member_set-{}-plays_{}'.format(self.formset_idx, member['plays']),
+            ),
+            'input_as_select_click', (
+                'id_member_set-{}-role_{}'.format(self.formset_idx, member['role']),
+            ),
         )
+        if member['is_endorsed']:
+            yield (
+                'by_id', ('id_member_set-{}-is_endorsed'.format(self.formset_idx),),
+                'click',
+            )
 
 
 class UpdateSportClub(AutomationCommands):
@@ -240,7 +253,30 @@ class ClubAppCommands(AutomationCommands):
         }).add_manufacturers()
         yield from AddSportClubMembers(
             formset_idx=0
-        ).add_member()
+        ).set_context({
+            'members': [
+                {
+                    'first_name': 'Ivan',
+                    'last_name': 'Petrov',
+                    'birth_date': '1971-07-29',
+                    'last_visit': '2016-11-23 14:47:33',
+                    'note': 'Veteran of Russian badminton',
+                    'plays': 0,
+                    'role': 1,
+                    'is_endorsed': True,
+                },
+                {
+                    'first_name': 'Liu',
+                    'last_name': 'Zhuang',
+                    'birth_date': '1982-05-18',
+                    'last_visit': '2015-07-15 11:25:17',
+                    'note': 'Chinese player with ultra-fast reaction and speed',
+                    'plays': 3,
+                    'role': 0,
+                    'is_endorsed': False,
+                }
+            ]
+        }).add_members()
         yield ('click_submit_by_view', ('club_create',))
 
     def details_sport_club(self):
