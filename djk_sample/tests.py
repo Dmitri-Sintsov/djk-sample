@@ -1,15 +1,15 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
-from django_jinja_knockout.testing import DjkSeleniumCommands
+from django_jinja_knockout.testing import AutomationCommands, DjkSeleniumCommands
 
 from club_app.tests import ClubAppCommands
 
 
-class DjkSampleCommands(DjkSeleniumCommands):
+class DjkSampleCommands(AutomationCommands):
 
     def register_new_user(self):
-        self.exec(
+        yield (
             'relative_url', ('/',),
             'click_anchor_by_view', {'viewname': 'account_signup'},
             'keys_by_id',
@@ -21,14 +21,14 @@ class DjkSampleCommands(DjkSeleniumCommands):
         )
 
     def logout_user(self):
-        self.exec(
+        yield (
             'click_anchor_by_view', {'viewname': 'account_logout'},
             'click_submit_by_view', ('account_logout',),
             'has_messages_success',
         )
 
     def login_user(self):
-        self.exec(
+        yield (
             'click_anchor_by_view', {'viewname': 'account_login'},
             'keys_by_id',
             ('id_login', self._.username),
@@ -38,18 +38,17 @@ class DjkSampleCommands(DjkSeleniumCommands):
         )
 
     def test_all(self):
-        self._maximize_window()
-        self.register_new_user()
-        # self.logout_user()
-        # self.login_user()
-        self.exec_class(
+        yield ('maximize_window',)
+        yield from self.register_new_user()
+        yield from self.logout_user()
+        yield from self.login_user()
+        yield from self.yield_class_commands(
             ClubAppCommands(),
             'empty_club_list',
             'add_sport_club',
             'details_sport_club',
             # 'update_sport_club',
         )
-        self._default_sleep()
 
 
 class DjkSampleTestCase(StaticLiveServerTestCase):
@@ -73,7 +72,10 @@ class DjkSampleTestCase(StaticLiveServerTestCase):
         return WebDriver()
 
     def test_all(self):
-        DjkSampleCommands(testcase=self).set_context({
-            'username': 'testuser',
-            'password': 'test123',
-        }).test_all()
+        DjkSeleniumCommands(testcase=self).exec_class(
+            DjkSampleCommands().set_context({
+                'username': 'testuser',
+                'password': 'test123',
+            }),
+            'test_all'
+        )._default_sleep()

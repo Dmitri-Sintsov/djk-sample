@@ -5,7 +5,7 @@ from django_jinja_knockout.automation import AutomationCommands
 class AddSportClub(AutomationCommands):
 
     def club_base_info(self):
-        return (
+        yield (
             'click_anchor_by_view', {'viewname': 'club_create'},
             # Next one step is optional:
             'form_by_view', ('club_create',),
@@ -22,11 +22,9 @@ class AddSportClubInventory(AutomationCommands):
         self.formset_idx = kwargs.pop('formset_idx')
 
     def add_manufacturers(self):
-        result = ()
         for key, manufacturer in enumerate(self._.manufacturers):
             is_last_key = key + 1 == len(self._.manufacturers)
-            result += self.add_manufacturer(manufacturer, is_last_key)
-        return result
+            yield from self.add_manufacturer(manufacturer, is_last_key)
 
     def add_manufacturer(self, manufacturer, is_last_manufacturer):
         add_commands = (
@@ -42,7 +40,7 @@ class AddSportClubInventory(AutomationCommands):
         select_commands = (
             'grid_find_data_column', ('Company name', manufacturer['company_name']),
         )
-        result = (
+        yield (
             'fk_widget_add_and_select', (
                 'id_equipment_set-{}-manufacturer'.format(self.formset_idx),
                 add_commands,
@@ -50,20 +48,21 @@ class AddSportClubInventory(AutomationCommands):
             ),
         )
         for key, inventory in enumerate(manufacturer['inventories']):
-            result += self.add_manufacturer_inventory(inventory)
+            yield from self.add_manufacturer_inventory(inventory)
             self.formset_idx += 1
             if not is_last_manufacturer or key + 1 < len(manufacturer['inventories']):
-                result += (
-                              'relative_form_button_click', ('Add "Sport club equipment"',),
-                              'fk_widget_click', ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
-                          ) + select_commands + (
-                              'grid_select_current_row',
-                              'dialog_button_click', ('Apply',),
-                          )
-        return result
+                yield (
+                    'relative_form_button_click', ('Add "Sport club equipment"',),
+                    'fk_widget_click', ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
+                )
+                yield select_commands
+                yield (
+                    'grid_select_current_row',
+                    'dialog_button_click', ('Apply',),
+                )
 
     def add_manufacturer_inventory(self, inventory):
-        result = (
+        yield (
             'keys_by_id', (
                 'id_equipment_set-{}-inventory_name'.format(self.formset_idx), inventory['name']
             ),
@@ -71,7 +70,6 @@ class AddSportClubInventory(AutomationCommands):
                 'id_equipment_set-{}-category_{}'.format(self.formset_idx, inventory['category_id']),
             ),
         )
-        return result
 
 
 class AddSportClubMembers(AutomationCommands):
@@ -81,7 +79,7 @@ class AddSportClubMembers(AutomationCommands):
         self.formset_idx = kwargs.pop('formset_idx')
 
     def add_member(self):
-        return (
+        yield (
             'relative_form_button_click', ('Add "Sport club member"',),
             'fk_widget_add_and_select', (
                 'id_member_set-0-profile',
@@ -206,13 +204,13 @@ class ClubAppCommands(AutomationCommands):
     )
 
     def add_sport_club(self):
-        result = AddSportClub().set_context({
+        yield from AddSportClub().set_context({
             'club': {
                 'title': 'Yaroslavl Bears',
                 'foundation_date': '1971-08-29',
             },
         }).club_base_info()
-        result += AddSportClubInventory(formset_idx=0).set_context({
+        yield from AddSportClubInventory(formset_idx=0).set_context({
             'manufacturers': [
                 {
                     'company_name': 'Yanix',
@@ -240,14 +238,13 @@ class ClubAppCommands(AutomationCommands):
                 }
             ]
         }).add_manufacturers()
-        result += AddSportClubMembers(
+        yield from AddSportClubMembers(
             formset_idx=0
-        ).add_member(
-        ) + ('click_submit_by_view', ('club_create',))
-        return result
+        ).add_member()
+        yield ('click_submit_by_view', ('club_create',))
 
     def details_sport_club(self):
-        return (
+        yield (
             'button_click', ('Read',),
             'dialog_button_click', ('OK',),
         )
