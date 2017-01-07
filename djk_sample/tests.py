@@ -42,12 +42,11 @@ class DjkSampleCommands(AutomationCommands):
         yield from self.register_new_user()
         yield from self.logout_user()
         yield from self.login_user()
-        yield from self.yield_class_commands(
-            ClubAppCommands(),
+        yield from ClubAppCommands().yield_class_commands(
             'empty_club_list',
             'add_sport_club',
             'details_sport_club',
-            # 'update_sport_club',
+            'update_sport_club',
         )
 
 

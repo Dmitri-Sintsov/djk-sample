@@ -2,24 +2,31 @@ from django_jinja_knockout.viewmodels import to_json
 from django_jinja_knockout.automation import AutomationCommands
 
 
-class AddSportClub(AutomationCommands):
+class SportClub(AutomationCommands):
 
     def club_base_info(self):
         yield (
-            'click_anchor_by_view', {'viewname': 'club_create'},
+            'click_anchor_by_view', self._.form_view,
             # Next one step is optional:
-            'form_by_view', ('club_create',),
-            'keys_by_id',
-            ('id_title', self._.club['title']),
-            ('id_foundation_date', self._.club['foundation_date']),
-            'input_as_select_click', ('id_category_1',),
+            'form_by_view', self._.form_view,
         )
+        if hasattr(self._, 'club'):
+            yield (
+                'keys_by_id',
+                ('id_title', self._.club['title']),
+                ('id_foundation_date', self._.club['foundation_date']),
+                'input_as_select_click', ('id_category_1',),
+            )
 
 
-class AddSportClubInventory(AutomationCommands):
+class SportClubInventory(AutomationCommands):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.formset_idx = kwargs.pop('formset_idx')
+
+    def new_formset_form(self):
+        yield 'relative_form_button_click', ('Add "Sport club equipment"',),
 
     def add_manufacturers(self):
         for key, manufacturer in enumerate(self._.manufacturers):
@@ -51,8 +58,8 @@ class AddSportClubInventory(AutomationCommands):
             yield from self.add_manufacturer_inventory(inventory)
             self.formset_idx += 1
             if not is_last_manufacturer or key + 1 < len(manufacturer['inventories']):
+                yield from self.new_formset_form()
                 yield (
-                    'relative_form_button_click', ('Add "Sport club equipment"',),
                     'fk_widget_click', ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
                 )
                 yield select_commands
@@ -71,12 +78,27 @@ class AddSportClubInventory(AutomationCommands):
             ),
         )
 
+    def test_formset_removal(self):
+        yield from self.new_formset_form()
+        yield (
+            'by_id', (
+                'id_equipment_set-{}-DELETE'.format(self.formset_idx),
+            ),
+            'click',
+            'to_top_bootstrap_dialog',
+            'dialog_button_click', ('Yes',),
+            'form_by_view', self._.form_view,
+        )
 
-class AddSportClubMembers(AutomationCommands):
+
+class SportClubMembers(AutomationCommands):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.formset_idx = kwargs.pop('formset_idx')
+
+    def new_formset_form(self):
+        yield 'relative_form_button_click', ('Add "Sport club member"',),
 
     def add_members(self):
         for key, member in enumerate(self._.members):
@@ -85,8 +107,8 @@ class AddSportClubMembers(AutomationCommands):
             self.formset_idx += 1
 
     def add_member(self, member, is_last_member):
+        yield from self.new_formset_form()
         yield (
-            'relative_form_button_click', ('Add "Sport club member"',),
             'fk_widget_add_and_select', (
                 'id_member_set-{}-profile'.format(self.formset_idx),
                 (
@@ -121,72 +143,13 @@ class UpdateSportClub(AutomationCommands):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.club_id = kwargs.pop('club_id')
-        self. update_view = {'viewname': 'club_update', 'kwargs': {'club_id': self.club_id}}
+        self.update_view = {'viewname': 'club_update', 'kwargs': {'club_id': self.club_id}}
 
     def open_update_form(self):
         return (
             'click_anchor_by_view', self.update_view,
             'form_by_view', self.update_view,
         )
-
-    def test_formset_removal(self):
-        return (
-            'relative_form_button_click', ('Add "Sport club equipment"',),
-            'by_id', ('id_equipment_set-1-DELETE',),
-            'click',
-            'to_top_bootstrap_dialog',
-            'dialog_button_click', ('Yes',),
-            'form_by_view', self.update_view,
-        )
-
-    def add_equipment_bubblelat(self):
-        AddSportClubInventory
-    add_equipment_bubblelat = (
-        'relative_form_button_click', ('Add "Sport club equipment"',),
-        'fk_widget_add_and_select', (
-            'id_equipment_set-1-manufacturer',
-            (
-                'keys_by_id', ('id_company_name', 'Bubblelat'),
-            ),
-            (
-                'grid_find_data_column', ('Company name', 'Bubblelat'),
-            )
-        ),
-        'keys_by_id', ('id_equipment_set-1-inventory_name', 'Bubble Pro 2010'),
-        'input_as_select_click', ('id_equipment_set-1-category_1',),
-    )
-
-    add_member_john_smith = (
-        'relative_form_button_click', ('Add "Sport club member"',),
-        'fk_widget_add_and_select', (
-            'id_member_set-1-profile',
-            (
-                'keys_by_id',
-                ('id_first_name', 'John',),
-                ('id_last_name', 'Smith',),
-                ('id_birth_date', '1973-05-19',),
-            ),
-            (
-                'grid_find_data_column', ('First name', 'John'),
-            )
-        ),
-        'keys_by_id',
-        ('id_member_set-1-last_visit', '2016-11-27 19:27:41'),
-        ('id_member_set-1-note', 'Entrepreneur and master of squash'),
-        'input_as_select_click', ('id_member_set-1-plays_3',),
-        'input_as_select_click', ('id_member_set-1-role_0',),
-    )
-
-    @classmethod
-    def get_commands(cls):
-        commands = (
-            cls.open_update_form() +
-            cls.test_formset_removal() +
-            cls.add_equipment_bubblelat +
-            cls.add_member_john_smith +
-            ('click_submit_by_view', cls.update_view,)
-        )
-        return commands
 
 
 class ClubAppCommands(AutomationCommands):
@@ -217,13 +180,15 @@ class ClubAppCommands(AutomationCommands):
     )
 
     def add_sport_club(self):
-        yield from AddSportClub().set_context({
+        form_view = ('club_create',)
+        yield from SportClub().set_context({
+            'form_view': form_view,
             'club': {
                 'title': 'Yaroslavl Bears',
                 'foundation_date': '1971-08-29',
             },
         }).club_base_info()
-        yield from AddSportClubInventory(formset_idx=0).set_context({
+        yield from SportClubInventory(formset_idx=0).set_context({
             'manufacturers': [
                 {
                     'company_name': 'Yanix',
@@ -251,7 +216,7 @@ class ClubAppCommands(AutomationCommands):
                 }
             ]
         }).add_manufacturers()
-        yield from AddSportClubMembers(
+        yield from SportClubMembers(
             formset_idx=0
         ).set_context({
             'members': [
@@ -272,15 +237,60 @@ class ClubAppCommands(AutomationCommands):
                     'last_visit': '2015-07-15 11:25:17',
                     'note': 'Chinese player with ultra-fast reaction and speed',
                     'plays': 3,
-                    'role': 0,
+                    'role': 2,
                     'is_endorsed': False,
                 }
             ]
         }).add_members()
-        yield ('click_submit_by_view', ('club_create',))
+        yield ('click_submit_by_view', form_view)
 
     def details_sport_club(self):
         yield (
             'button_click', ('Read',),
             'dialog_button_click', ('OK',),
         )
+
+    def update_sport_club(self):
+        form_view = {'viewname': 'club_update', 'kwargs': {'club_id': 1}}
+        yield from SportClub().set_context({
+            'form_view': form_view,
+        }).club_base_info()
+        yield from SportClubInventory(formset_idx=3).set_context({
+            'form_view': form_view,
+            'manufacturers': [
+                {
+                    'company_name': 'Bubblelat',
+                    'direct_shipping': True,
+                    'inventories': [
+                        {
+                            'name': 'Bubble Pro 2010',
+                            'category_id': 1,
+                        },
+                    ]
+                },
+            ]
+        }).yield_class_commands(
+            'test_formset_removal',
+            'new_formset_form',
+            'add_manufacturers',
+        )
+        yield from SportClubMembers(
+            formset_idx=2
+        ).set_context({
+            'members': [
+                {
+                    'first_name': 'John',
+                    'last_name': 'Smith',
+                    'birth_date': '1973-05-19',
+                    'last_visit': '2016-11-27 19:27:41',
+                    'note': 'Entrepreneur and master of squash',
+                    'plays': 3,
+                    'role': 0,
+                    'is_endorsed': False,
+                },
+            ]
+        }).yield_class_commands(
+            # 'new_formset_form',
+            'add_members'
+        )
+        yield ('click_submit_by_view', form_view)
