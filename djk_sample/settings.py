@@ -165,7 +165,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'TEST': {
-            'NAME': ':memory:',
+            # 'NAME': ':memory:',
+            'NAME': os.path.join(BASE_DIR, 'test.sqlite3'),
         },
     }
 }
@@ -232,5 +233,10 @@ LOGOUT_URL = '/accounts/logout/'
 
 # Pagination settings.
 OBJECTS_PER_PAGE = 3 if DEBUG else 10
+
+# unit testing settings
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'fixtures'),
+)
 
 random.seed(timezone.now().timestamp())

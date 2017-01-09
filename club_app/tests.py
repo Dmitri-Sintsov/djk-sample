@@ -293,4 +293,7 @@ class ClubAppCommands(AutomationCommands):
             # 'new_formset_form',
             'add_members'
         )
-        yield ('click_submit_by_view', form_view)
+        yield (
+            'click_submit_by_view', (form_view),
+            'dump_data', ('sport_club_updated',)
+        )
