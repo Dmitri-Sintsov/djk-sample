@@ -32,16 +32,7 @@ class EventAppCommands(AutomationCommands):
                 })
             }
         ),
-        'click_anchor_by_view', (
-            'action_list',
-            {},
-            {
-                'list_filter': to_json({
-                    'action_type': 0,
-                    'content_type': 12,
-                })
-            }
-        ),
+        'click_by_link_text', ('Sport club member',),
     )
 
     event_list_preview_member = (

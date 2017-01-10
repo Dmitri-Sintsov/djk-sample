@@ -1,11 +1,6 @@
 import os
-from selenium.webdriver.firefox.webdriver import WebDriver
 
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test.utils import override_settings
-from django.conf import settings
-
-from django_jinja_knockout.testing import AutomationCommands, DjkSeleniumCommands
+from django_jinja_knockout.testing import AutomationCommands, DjkSeleniumCommands, DjkTestCase
 
 from club_app.tests import ClubAppCommands
 from event_app.tests import EventAppCommands
@@ -69,35 +64,10 @@ class DjkSampleCommands(AutomationCommands):
         )
 
 
-@override_settings(DEBUG=True)
-class DjkSampleTestCase(StaticLiveServerTestCase):
-    fixtures = []
-    # fixtures = ['sport_club_updated_2017-01-09_16-03-42-236662.json']
+class DjkSampleTestCase(DjkTestCase):
 
-    reset_sequences = True
-
-    WAIT_SECONDS = 5
-
-    def has_fixture_prefix(self, prefix):
-        for fixture in self.fixtures:
-            if fixture.startswith(prefix):
-                return True
-        return False
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.selenium = cls.selenium_factory()
-        cls.selenium.implicitly_wait(cls.WAIT_SECONDS)
-
-    @classmethod
-    def tearDownClass(cls):
-        # cls.selenium.quit()
-        super().tearDownClass()
-
-    @classmethod
-    def selenium_factory(cls):
-        return WebDriver()
+    # fixtures = []
+    fixtures = ['sport_club_updated_2017-01-10_09-58-28-266131.json']
 
     def test_all(self):
         DjkSeleniumCommands(testcase=self).exec_class(
