@@ -66,8 +66,8 @@ class DjkSampleCommands(AutomationCommands):
 
 class DjkSampleTestCase(DjkTestCase):
 
-    # fixtures = []
-    fixtures = ['sport_club_updated_2017-01-10_09-58-28-266131.json']
+    fixtures = []
+    # fixtures = ['sport_club_updated_2017-01-10_09-58-28-266131.json']
 
     def test_all(self):
         DjkSeleniumCommands(testcase=self).exec_class(
