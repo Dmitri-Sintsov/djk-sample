@@ -153,7 +153,7 @@ class MemberDisplayForm(WidgetInstancesMixin, metaclass=DisplayModelMetaclass):
         model = Member
         fields = '__all__'
         widgets = {
-            'note': DisplayText(get_text_cb=get_note)
+            'note': DisplayText(get_text_method=get_note)
         }
 
 
