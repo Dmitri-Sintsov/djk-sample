@@ -46,12 +46,12 @@ class DjkSampleCommands(AutomationCommands):
             'maximize_window',
             'relative_url', ('/',),
         )
-        if not self.testcase.has_fixture_prefix('sport_club_updated'):
+        if not self.testcase.has_fixture('new_user_registered'):
             yield from self.register_new_user()
             yield from self.logout_user()
         yield from self.login_user()
 
-        if not self.testcase.has_fixture_prefix('sport_club_updated'):
+        if not self.testcase.has_fixture('sport_club_updated'):
             yield from ClubAppCommands().yield_class_commands(
                 'empty_club_list',
                 'add_sport_club',
@@ -66,8 +66,9 @@ class DjkSampleCommands(AutomationCommands):
 
 class DjkSampleTestCase(DjkTestCase):
 
-    fixtures = []
-    # fixtures = ['sport_club_updated_2017-01-10_09-58-28-266131.json']
+    # fixtures = []
+    fixtures = ['0_new_user_registered.json']
+    # fixtures = ['1_sport_club_updated.json']
 
     def test_all(self):
         DjkSeleniumCommands(testcase=self).exec_class(
