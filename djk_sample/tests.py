@@ -66,9 +66,14 @@ class DjkSampleCommands(AutomationCommands):
 
 class DjkSampleTestCase(DjkTestCase):
 
-    # fixtures = []
-    fixtures = ['0_new_user_registered.json']
-    # fixtures = ['1_sport_club_updated.json']
+    fixtures = []
+    # fixtures = ['0000_new_user_registered.json']
+    # fixtures = ['0001_sport_club_updated.json']
+
+    fixtures_order = [
+        'new_user_registered',
+        'sport_club_updated',
+    ]
 
     def test_all(self):
         DjkSeleniumCommands(testcase=self).exec_class(
