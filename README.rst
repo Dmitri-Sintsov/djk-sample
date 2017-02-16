@@ -3,6 +3,10 @@ djk-sample
 ==========
 
 .. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
+.. _fixtures_order: https://github.com/Dmitri-Sintsov/djk-sample/search?utf8=%E2%9C%93&q=fixtures_order
+.. _dump_data: https://github.com/Dmitri-Sintsov/djk-sample/search?utf8=%E2%9C%93&q=fixtures_order
+.. _has_fixture: https://github.com/Dmitri-Sintsov/djk-sample/search?utf8=%E2%9C%93&q=has_fixture
+
 
 Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sintsov/django-jinja-knockout
 
@@ -103,6 +107,6 @@ In such case remove tox installed via apt-get and install newer version of tox v
 Tips
 ~~~~
 
-To run a subset of tests for `djk-sample`_::
-
-    $ python manage.py test club_app.tests.ClubAppTests
+To skip all or part of already executed tests uncomment one of ``# fixtures =`` definitions before `fixtures_order`_
+list in ``djk_sample/tests.py``. Newly introduced fixtures added via `dump_data`_ Selenium command should be added in
+proper place of `fixtures_order`_ list to retain loading / checking order of `has_fixture`_ method.
