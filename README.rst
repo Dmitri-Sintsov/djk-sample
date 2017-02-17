@@ -43,7 +43,7 @@ Example for Windows 32 bit.
 * Download appropriate lxml wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml for example:
 
   * ``lxml-3.4.4-cp34-none-win32.whl`` for Python 3.4.3 32 bit
-  * ``lxml-3.6.4-cp35-cp35m-win32.whl`` for Python 3.5.2 32 bit
+  * ``lxml-3.7.2-cp35-cp35m-win32.whl`` for Python 3.5.2 32 bit
 
 Then issue the following commands::
 
