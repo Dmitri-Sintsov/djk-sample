@@ -53,6 +53,7 @@ class EditableClubGrid(KoGridInline, SimpleClubGrid):
 
 class ClubGridRawQuery(SimpleClubGrid):
 
+    template_name = 'cbv_grid_breadcrumbs.htm'
     grid_fields = [
         'first_name',
         'last_name',
