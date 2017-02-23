@@ -74,7 +74,8 @@ class EquipmentForm(BootstrapModelForm):
         return obj
 
 
-class EquipmentDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
+# WidgetInstancesMixin is used to automatically render club via self.club.instance.get_str_fields().
+class EquipmentDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta:
         model = Equipment
@@ -133,7 +134,7 @@ class MemberFormNoRelations(MemberForm):
         exclude = ('club', 'profile')
 
 
-class MemberDisplayForm(WidgetInstancesMixin, metaclass=DisplayModelMetaclass):
+class MemberDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta:
 
