@@ -1,5 +1,3 @@
-from django.conf import settings
-
 from django_jinja_knockout.views import ListSortingView, ContextDataMixin
 
 from .models import Action

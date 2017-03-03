@@ -7,15 +7,15 @@ from django.utils.translation import gettext as _
 from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
-from django_jinja_knockout.models import get_meta, get_choice_str
+from django_jinja_knockout.models import get_choice_str
 from django_jinja_knockout.query import FilteredRawQuerySet
 from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin, ContextDataMixin
-from django_jinja_knockout.viewmodels import vm_list, find_by_kw
+from django_jinja_knockout.viewmodels import vm_list
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
 from .forms import (
     ClubForm, ClubFormWithInlineFormsets,
-    ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberForm, MemberFormNoRelations
+    ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberForm
 )
 
 
@@ -189,6 +189,7 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
         # Note: 'classPath' is not required for standard App.ko.Grid.
         'classPath': 'App.ko.ClubGrid',
     }
+
 
 class ClubEquipmentGrid(EditableClubGrid):
 

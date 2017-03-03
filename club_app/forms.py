@@ -185,6 +185,7 @@ class ClubMemberFormSetCls(BaseInlineFormSet):
                 else:
                     roles.append(role)
 
+
 ClubMemberFormSet = ko_inlineformset_factory(
     Club, Member, form=MemberForm, formset=ClubMemberFormSetCls, extra=0, min_num=0, max_num=10, can_delete=True
 )

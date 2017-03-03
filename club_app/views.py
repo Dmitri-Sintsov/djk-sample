@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
 from django.utils.html import format_html, mark_safe
-from django.conf import settings
 from django.shortcuts import render
 
 from django_jinja_knockout.tpl import format_local_date
@@ -10,7 +9,6 @@ from django_jinja_knockout.views import (
 from django_jinja_knockout.viewmodels import to_json
 
 from djk_sample.middleware import ContextMiddleware
-from event_app.models import Action
 
 from .models import Club, Equipment, Member
 from .forms import EquipmentDisplayForm, MemberDisplayForm, ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
@@ -173,6 +171,7 @@ class ClubListWithComponent(ClubList):
             })
         ))
         return links
+
 
 class ClubListDTL(ClubList):
     template_name = 'club_list.html'

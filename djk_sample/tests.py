@@ -1,5 +1,3 @@
-import os
-
 from django_jinja_knockout.testing import AutomationCommands, DjkSeleniumCommands, DjkTestCase
 
 from club_app.tests import ClubAppCommands

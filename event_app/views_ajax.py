@@ -89,7 +89,7 @@ class ActionGrid(KoGridView):
             #    'pageRoute': 'user_fk_widget_grid',
             #    # Optional setting for BootstrapDialog:
             #    'dialogOptions': {'size': 'size-wide'},
-            #}),
+            # }),
             ('date', None),
             ('action_type', None),
             ('content_type', self.get_contenttype_filter(
