@@ -128,12 +128,6 @@ class MemberForm(BootstrapModelForm):
         return obj
 
 
-class MemberFormNoRelations(MemberForm):
-
-    class Meta(MemberForm.Meta):
-        exclude = ('club', 'profile')
-
-
 class MemberDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta:
