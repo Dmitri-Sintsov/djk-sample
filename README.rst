@@ -18,14 +18,23 @@ Installation
 Ubuntu
 ~~~~~~
 
-This is example for Ubuntu 14.04 LTS::
+This is an example for Ubuntu 14.04 / 16.04 LTS::
 
-    sudo apt-get install libxml2-dev libxslt-dev
+    sudo apt-get install git libxml2-dev libxslt-dev
     python3 -m venv djk_sample
     cd djk_sample
     source bin/activate
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
+
+    # In Ubuntu 14.04 either install old version of html5lib or update pip / setuptools, because old pip / setuptools
+    # cannot install webencodings module required to run newer versions of html5lib.
+    if [[ `lsb_release -rs` == "14.04" ]]
+    then
+    # pip3 install html5lib<0.99999999
+    pip3 install -U pip wheel setuptools
+    fi
+
     python3 -m pip install -U -r requirements.txt
     mkdir "$VIRTUAL_ENV/djk-sample/logs/"
     mkdir "$VIRTUAL_ENV/djk-sample/fixtures/"
