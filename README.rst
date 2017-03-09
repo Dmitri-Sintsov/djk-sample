@@ -4,6 +4,7 @@ djk-sample
 
 .. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
 .. _fixtures_order: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=fixtures_order&utf8=%E2%9C%93
+.. _geckodriver: https://github.com/mozilla/geckodriver/releases
 .. _dump_data: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=dump_data&utf8=%E2%9C%93
 .. _has_fixture: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=has_fixture&utf8=%E2%9C%93
 
@@ -87,6 +88,14 @@ Inside project virtual environment install selenium::
 
     pip3 install selenium
 
+Selenium 2.53 works the best, but may cause the following error when used with newer firefox, especially non-ESR
+versions: https://github.com/seleniumhq/selenium/issues/2739
+
+Selenium tests (firefox, interactive)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Selenium 3.0 or newer may require `geckodriver`_ to run with firefox, which should be saved into ``/usr/bin`` directory.
+
 Install latest `Firefox ESR`_. Then run the following command::
 
     python manage.py test
@@ -95,6 +104,39 @@ Close Firefox window when the tests are complete. It should print the following 
 
     OK
     Destroying test database for alias 'default'...
+
+Selenium tests (firefox, remote shell)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using remote shell, one may install Xvfb::
+
+    apt-get instal xvfb
+
+to run tests in console this way::
+
+    Xvfb :99 &
+    export DISPLAY=:99
+    python manage.py test
+
+or this way::
+
+    apt-get instal xvfb
+    xvfb-run python manage.py test
+
+See also:
+
+* http://stackoverflow.com/questions/6183276/how-do-i-run-selenium-in-xvfb
+* https://gist.github.com/alonisser/11192482
+
+
+Selenium tests (phantomjs, remote shell)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+While Firefox is optimal to run the tests interactively in X session, easiest way to run remotely is to use phantomjs::
+
+    apt-get install nodejs nodejs-legacy npm
+    npm -g install phantomjs-prebuilt
+
 
 Tox tests
 ~~~~~~~~~
@@ -111,7 +153,7 @@ In such case remove tox installed via apt-get and install newer version of tox v
     $ deactivate
     $ apt-get remove python-tox
     $ pip3 install tox
-    $ /usr/local/bin/tox -r -e py 35
+    $ tox -r -e py 35
 
 Tips
 ~~~~
