@@ -26,8 +26,6 @@ before_script:
   - pip freeze
 install:
     - mkdir -p $PIP_WHEEL_DIR
-    - mkdir -p "$VIRTUAL_ENV/djk-sample/logs/"
-    - mkdir -p "$VIRTUAL_ENV/djk-sample/fixtures/"
     - pip wheel coveralls tox
     - pip install coveralls tox
     - pip install -r dev-requirements.txt
