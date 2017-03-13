@@ -27,8 +27,9 @@ before_script:
   - pip freeze
 install:
     - mkdir -p $PIP_WHEEL_DIR
+    - pip install -U pip
     - pip wheel coveralls tox
     - pip install coveralls tox
     - pip install -r dev-requirements.txt
 script:
-  - tox
+  - tox -e $TOXENV

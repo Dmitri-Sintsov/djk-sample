@@ -15,7 +15,6 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 # from django.contrib import admin
-from django.views.i18n import javascript_catalog
 
 from club_app.views import (
     ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail,
@@ -138,9 +137,16 @@ js_info_dict = {
     'packages': ('djk_sample',),
 }
 
-urlpatterns.append(
-    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog')
-)
+try:
+    from django.views.i18n import JavaScriptCatalog
+    urlpatterns.append(
+        url(r'^jsi18n/$', JavaScriptCatalog.as_view(**js_info_dict), name='javascript-catalog'),
+    )
+except ImportError:
+    from django.views.i18n import javascript_catalog
+    urlpatterns.append(
+        url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog')
+    )
 
 if settings.DEBUG:
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns, static
