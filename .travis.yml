@@ -26,6 +26,9 @@ before_script:
   - pip freeze
 install:
     - mkdir -p $PIP_WHEEL_DIR
+    - echo "$TRAVIS_BUILD_DIR/djk-sample/logs/"
+    - mkdir -p "$TRAVIS_BUILD_DIR/djk-sample/logs/"
+    - mkdir -p "$TRAVIS_BUILD_DIR/djk-sample/fixtures/"
     - pip wheel coveralls tox
     - pip install coveralls tox
     - pip install -r dev-requirements.txt
