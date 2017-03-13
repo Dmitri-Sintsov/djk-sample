@@ -23,8 +23,8 @@ branches:
   only:
   - master
 before_script:
-  - mkdir "$VIRTUAL_ENV/djk-sample/logs/"
-  - mkdir "$VIRTUAL_ENV/djk-sample/fixtures/"
+  - mkdir -p "$VIRTUAL_ENV/djk-sample/logs/"
+  - mkdir -p "$VIRTUAL_ENV/djk-sample/fixtures/"
   - pip freeze
 install:
     - mkdir -p $PIP_WHEEL_DIR
