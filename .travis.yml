@@ -1,0 +1,33 @@
+language: python
+python:
+  - "3.5"
+  - "3.6"
+env:
+  matrix:
+    - TOXENV=py34-django-18
+    - TOXENV=py34-django-19
+    - TOXENV=py34-django-110
+    - TOXENV=py35-django-18
+    - TOXENV=py35-django-19
+    - TOXENV=py35-django-110
+  global:
+    - PIP_WHEEL_DIR=$HOME/.wheels
+    - PIP_FIND_LINKS=file://$HOME/.wheels
+matrix:
+  include:
+    - python: 3.6
+      env: TOXENV=py36-django-111
+    - python: 3.6
+      env: py36-django-master
+branches:
+  only:
+  - master
+before_script:
+  - pip freeze
+install:
+    - mkdir -p $PIP_WHEEL_DIR
+    - pip wheel coveralls tox
+    - pip install coveralls tox
+    - pip install -r dev-requirements.txt
+script:
+  - tox
