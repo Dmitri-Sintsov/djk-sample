@@ -21,11 +21,13 @@ class Action(models.Model):
         (TYPE_MODIFIED, 'Modified'),
     )
 
-    performer = models.ForeignKey(User, related_name='+', verbose_name='Performer')
+    performer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', verbose_name='Performer')
     date = models.DateTimeField(verbose_name='Date', db_index=True)
     action_type = models.IntegerField(choices=TYPES, verbose_name='Type of action')
-    content_type = models.ForeignKey(ContentType, related_name='related_content', blank=True, null=True,
-                                     verbose_name='Related object')
+    content_type = models.ForeignKey(
+        ContentType, blank=True, null=True, on_delete=models.CASCADE,
+        related_name='related_content', verbose_name='Related object'
+    )
     object_id = models.PositiveIntegerField(blank=True, null=True, verbose_name='Object link')
     content_object = GenericForeignKey('content_type', 'object_id')
 

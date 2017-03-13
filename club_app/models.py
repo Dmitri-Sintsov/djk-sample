@@ -1,10 +1,9 @@
 from collections import OrderedDict
 
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
-from django_jinja_knockout.tpl import format_local_date, flatten_dict, str_dict
+from django_jinja_knockout.tpl import format_local_date, flatten_dict, str_dict, reverse
 
 
 class Profile(models.Model):
@@ -101,8 +100,10 @@ class Equipment(models.Model):
         (CATEGORY_SHUTTLECOCK, 'Shuttlecock'),
         (CATEGORY_OTHER, 'Other type'),
     )
-    club = models.ForeignKey(Club, verbose_name='Club')
-    manufacturer = models.ForeignKey(Manufacturer, null=True, blank=True, verbose_name='Manufacturer')
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, verbose_name='Club')
+    manufacturer = models.ForeignKey(
+        Manufacturer, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Manufacturer'
+    )
     inventory_name = models.CharField(max_length=64, verbose_name='Inventory name')
     category = models.IntegerField(
         choices=CATEGORIES, default=CATEGORY_RACKET, db_index=True, verbose_name='Category'
@@ -153,8 +154,8 @@ class Member(models.Model):
         (ROLE_FOUNDER, 'Founder'),
         (ROLE_MEMBER, 'Member'),
     )
-    profile = models.ForeignKey(Profile, verbose_name='Sportsman')
-    club = models.ForeignKey(Club, blank=True, verbose_name='Club')
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Sportsman')
+    club = models.ForeignKey(Club, blank=True, on_delete=models.CASCADE, verbose_name='Club')
     last_visit = models.DateTimeField(db_index=True, verbose_name='Last visit time')
     plays = models.IntegerField(choices=SPORTS, default=SPORT_ANOTHER, verbose_name='Plays sport')
     role = models.IntegerField(choices=ROLES, default=ROLE_MEMBER, verbose_name='Member role')

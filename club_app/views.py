@@ -1,8 +1,7 @@
-from django.core.urlresolvers import reverse
 from django.utils.html import format_html, mark_safe
 from django.shortcuts import render
 
-from django_jinja_knockout.tpl import format_local_date
+from django_jinja_knockout.tpl import format_local_date, reverse
 from django_jinja_knockout.views import (
     FormDetailView, InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
