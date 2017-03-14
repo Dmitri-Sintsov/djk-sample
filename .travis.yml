@@ -1,50 +1,12 @@
 language: python
 python:
-  - '3.4'
-  - '3.5'
   - '3.6'
 env:
   matrix:
-    - TOXENV=py34-django-18
-    - TOXENV=py34-django-19
-    - TOXENV=py34-django-110
-    - TOXENV=py35-django-19
-    - TOXENV=py35-django-110
-    - TOXENV=py35-django-111
     - TOXENV=py36-django-111
   global:
     - PIP_WHEEL_DIR=$HOME/.wheels
     - PIP_FIND_LINKS=file://$HOME/.wheels
-matrix:
-  exclude:
-    - python: 3.4
-      env: TOXENV=py35-django-19
-    - python: 3.4
-      env: TOXENV=py35-django-110
-    - python: 3.4
-      env: TOXENV=py35-django-111
-    - python: 3.4
-      env: TOXENV=py36-django-111
-    - python: 3.5
-      env: TOXENV=py34-django-18
-    - python: 3.5
-      env: TOXENV=py34-django-19
-    - python: 3.5
-      env: TOXENV=py34-django-110
-    - python: 3.5
-      env: TOXENV=py36-django-111
-    - python: 3.6
-      env: TOXENV=py34-django-18
-    - python: 3.6
-      env: TOXENV=py34-django-19
-    - python: 3.6
-      env: TOXENV=py34-django-110
-    - python: 3.6
-      env: TOXENV=py35-django-19
-    - python: 3.6
-      env: TOXENV=py35-django-110
-    - python: 3.6
-      env: TOXENV=py35-django-111
 branches:
   only:
   - master
