@@ -116,11 +116,12 @@ to run tests in console this way::
 
     Xvfb :99 &
     export DISPLAY=:99
-    python manage.py test
+    DJK_WEBDRIVER='selenium.webdriver.firefox.webdriver' python manage.py test
 
 or this way::
 
     apt-get instal xvfb
+    export DJK_WEBDRIVER='selenium.webdriver.firefox.webdriver'
     xvfb-run python manage.py test
 
 See also:
@@ -136,6 +137,7 @@ While Firefox is optimal to run the tests interactively in X session, easiest wa
 
     apt-get install nodejs nodejs-legacy npm
     npm -g install phantomjs-prebuilt
+    DJK_WEBDRIVER='selenium.webdriver.phantomjs.webdriver' python manage.py test
 
 
 Tox tests
@@ -143,21 +145,17 @@ Tox tests
 
 Testing other Python versions with tox.
 
-Install tox via::
-
-    apt-get install python-tox
-
 Note that python 3.5 tests requires tox 2.3.1 or newer version, while Ubuntu 14.04 LTS has older 1.6 version.
-In such case remove tox installed via apt-get and install newer version of tox via pip3 globally::
+In such case newer version of tox in the project virtual environment::
 
-    $ deactivate
-    $ apt-get remove python-tox
-    $ pip3 install tox
-    $ tox -r -e py 35
+    pip3 install -U tox pip wheel setuptools
+    tox -r -e py35-django-111
 
 Tips
 ~~~~
 
-To skip all or part of already executed tests uncomment one of ``# fixtures =`` definitions before `fixtures_order`_
-list in ``djk_sample/tests.py``. Newly introduced fixtures added via `dump_data`_ Selenium command should be added in
-proper place of `fixtures_order`_ list to retain loading / checking order of `has_fixture`_ method.
+To skip all or part of already executed tests uncomment one of ``# fixtures =`` definitions located before
+`fixtures_order`_ list in ``djk_sample/tests.py``.
+
+Newly introduced fixtures added via `dump_data`_ Selenium command should be added in proper place of `fixtures_order`_
+list to retain proper loading / checking order of `has_fixture`_ method.

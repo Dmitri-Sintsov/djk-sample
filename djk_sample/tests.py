@@ -74,7 +74,9 @@ class DjkSampleTestCase(DjkTestCase):
     ]
 
     def test_all(self):
-        DjkSeleniumCommands(testcase=self).exec_class(
+        DjkSeleniumCommands(
+            testcase=self,
+        ).exec_class(
             DjkSampleCommands(testcase=self).set_context({
                 'username': 'testuser',
                 'password': 'test123',
