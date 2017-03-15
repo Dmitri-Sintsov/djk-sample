@@ -1,9 +1,7 @@
-machine:
-  python:
-    version: 3.4.3 3.5.3 3.6.0
 dependencies:
   override:
-    - pip install -U pip wheel tox setuptools
+    - pip install -U pip wheel tox tox-pyenv setuptools
+    - pyenv local 3.4.3 3.5.3 3.6.0
 test:
   override:
     - tox
