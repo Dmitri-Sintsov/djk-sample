@@ -26,10 +26,10 @@ class EventAppCommands(AutomationCommands):
             'action_list',
             {},
             {
-                'page': 3,
                 'list_filter': to_json({
                     'action_type': 0,
-                })
+                }),
+                'page': 3,
             }
         ),
         'click_by_link_text', ('Sport club member',),
