@@ -1,18 +1,22 @@
 from django_jinja_knockout.viewmodels import to_json
 from django_jinja_knockout.automation import AutomationCommands
+from django_jinja_knockout.testing import DjkSeleniumCommands
+
+for command in DjkSeleniumCommands.yield_command_names():
+    globals()[command] = command
 
 
 class SportClub(AutomationCommands):
 
     def club_base_info(self):
         yield (
-            'click_anchor_by_view', self._.form_view,
+            click_anchor_by_view, self._.form_view,
             # Next one step is optional:
-            'form_by_view', self._.form_view,
+            form_by_view, self._.form_view,
         )
         if hasattr(self._, 'club'):
             yield (
-                'keys_by_id',
+                keys_by_id,
                 ('id_title', self._.club['title']),
                 ('id_foundation_date', self._.club['foundation_date']),
                 'input_as_select_click', ('id_category_1',),
@@ -26,7 +30,7 @@ class SportClubInventory(AutomationCommands):
         self.formset_idx = kwargs.pop('formset_idx')
 
     def new_formset_form(self):
-        yield 'relative_form_button_click', ('Add "Sport club equipment"',),
+        yield relative_form_button_click, ('Add "Sport club equipment"',),
 
     def add_manufacturers(self):
         for key, manufacturer in enumerate(self._.manufacturers):
@@ -35,24 +39,25 @@ class SportClubInventory(AutomationCommands):
 
     def add_manufacturer(self, manufacturer, is_last_manufacturer):
         add_commands = (
-            'dialog_button_click', ('Save',),
-            'assert_field_error', ('id_company_name', 'This field is required.'),
-            'keys_by_id', ('id_company_name', manufacturer['company_name']),
+            dialog_button_click, ('Save',),
+            assert_field_error, ('id_company_name', 'This field is required.'),
+            keys_by_id, ('id_company_name', manufacturer['company_name']),
         )
         if manufacturer['direct_shipping']:
             add_commands += (
-                'by_id', ('id_direct_shipping',),
-                'click',
+                by_id, ('id_direct_shipping',),
+                click,
             )
         select_commands = (
-            'grid_find_data_column', ('Company name', manufacturer['company_name']),
+            grid_find_data_column, ('Company name', manufacturer['company_name']),
         )
         yield (
-            'fk_widget_add_and_select', (
+            fk_widget_add_and_select, (
                 'id_equipment_set-{}-manufacturer'.format(self.formset_idx),
                 add_commands,
                 select_commands
             ),
+            wait_until_dialog_closes,
         )
         for key, inventory in enumerate(manufacturer['inventories']):
             yield from self.add_manufacturer_inventory(inventory)
@@ -60,20 +65,20 @@ class SportClubInventory(AutomationCommands):
             if not is_last_manufacturer or key + 1 < len(manufacturer['inventories']):
                 yield from self.new_formset_form()
                 yield (
-                    'fk_widget_click', ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
+                    fk_widget_click, ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
                 )
                 yield select_commands
                 yield (
-                    'grid_select_current_row',
-                    'dialog_button_click', ('Apply',),
+                    grid_select_current_row,
+                    dialog_button_click, ('Apply',),
                 )
 
     def add_manufacturer_inventory(self, inventory):
         yield (
-            'keys_by_id', (
+            keys_by_id, (
                 'id_equipment_set-{}-inventory_name'.format(self.formset_idx), inventory['name']
             ),
-            'input_as_select_click', (
+            input_as_select_click, (
                 'id_equipment_set-{}-category_{}'.format(self.formset_idx, inventory['category_id']),
             ),
         )
@@ -81,13 +86,14 @@ class SportClubInventory(AutomationCommands):
     def test_formset_removal(self):
         yield from self.new_formset_form()
         yield (
-            'by_id', (
+            by_id, (
                 'id_equipment_set-{}-DELETE'.format(self.formset_idx),
             ),
-            'click',
-            'to_top_bootstrap_dialog',
-            'dialog_button_click', ('Yes',),
-            'form_by_view', self._.form_view,
+            click,
+            to_top_bootstrap_dialog,
+            dialog_button_click, ('Yes',),
+            wait_until_dialog_closes,
+            form_by_view, self._.form_view,
         )
 
 
@@ -109,32 +115,33 @@ class SportClubMembers(AutomationCommands):
     def add_member(self, member, is_last_member):
         yield from self.new_formset_form()
         yield (
-            'fk_widget_add_and_select', (
+            fk_widget_add_and_select, (
                 'id_member_set-{}-profile'.format(self.formset_idx),
                 (
-                    'keys_by_id',
+                    keys_by_id,
                     ('id_first_name', member['first_name']),
                     ('id_last_name', member['last_name']),
                     ('id_birth_date', member['birth_date']),
                 ),
                 (
-                    'grid_find_data_column', ('First name', member['first_name']),
+                    grid_find_data_column, ('First name', member['first_name']),
                 )
             ),
-            'keys_by_id',
+            wait_until_dialog_closes,
+            keys_by_id,
             ('id_member_set-{}-last_visit'.format(self.formset_idx), member['last_visit']),
             ('id_member_set-{}-note'.format(self.formset_idx), member['note']),
-            'input_as_select_click', (
+            input_as_select_click, (
                 'id_member_set-{}-plays_{}'.format(self.formset_idx, member['plays']),
             ),
-            'input_as_select_click', (
+            input_as_select_click, (
                 'id_member_set-{}-role_{}'.format(self.formset_idx, member['role']),
             ),
         )
         if member['is_endorsed']:
             yield (
-                'by_id', ('id_member_set-{}-is_endorsed'.format(self.formset_idx),),
-                'click',
+                by_id, ('id_member_set-{}-is_endorsed'.format(self.formset_idx),),
+                click,
             )
 
 
@@ -147,17 +154,17 @@ class UpdateSportClub(AutomationCommands):
 
     def open_update_form(self):
         return (
-            'click_anchor_by_view', self.update_view,
-            'form_by_view', self.update_view,
+            click_anchor_by_view, self.update_view,
+            form_by_view, self.update_view,
         )
 
 
 class ClubAppCommands(AutomationCommands):
 
     empty_club_list = (
-        'click_anchor_by_view', {'viewname': 'club_list'},
-        'jumbotron_text', ('There is no',),
-        'click_anchor_by_view', (
+        click_anchor_by_view, {'viewname': 'club_list'},
+        jumbotron_text, ('There is no',),
+        click_anchor_by_view, (
             'club_list',
             {},
             {
@@ -166,8 +173,8 @@ class ClubAppCommands(AutomationCommands):
                 })
             }
         ),
-        'jumbotron_text', ('There is no',),
-        'reverse_url', (
+        jumbotron_text, ('There is no',),
+        reverse_url, (
             'club_list',
             {},
             {
@@ -176,7 +183,7 @@ class ClubAppCommands(AutomationCommands):
                 })
             }
         ),
-        'jumbotron_text', ('Not allowed filter field',),
+        jumbotron_text, ('Not allowed filter field',),
     )
 
     def add_sport_club(self):
@@ -242,12 +249,13 @@ class ClubAppCommands(AutomationCommands):
                 }
             ]
         }).add_members()
-        yield ('click_submit_by_view', form_view)
+        yield (click_submit_by_view, form_view)
 
     def details_sport_club(self):
         yield (
-            'button_click', ('Read',),
-            'dialog_button_click', ('OK',),
+            button_click, ('Read',),
+            dialog_button_click, ('OK',),
+            wait_until_dialog_closes,
         )
 
     def update_sport_club(self):
@@ -294,6 +302,6 @@ class ClubAppCommands(AutomationCommands):
             'add_members'
         )
         yield (
-            'click_submit_by_view', (form_view),
-            'dump_data', ('sport_club_updated',)
+            click_submit_by_view, (form_view),
+            dump_data, ('sport_club_updated',)
         )
