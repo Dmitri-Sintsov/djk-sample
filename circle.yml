@@ -5,4 +5,4 @@ dependencies:
     - pyenv local 3.6.0
 test:
   override:
-    - tox
+    - tox -r -e py36-django-111
