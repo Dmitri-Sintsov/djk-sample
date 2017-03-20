@@ -17,13 +17,13 @@ Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sints
 .. image:: https://img.shields.io/travis/Dmitri-Sintsov/djk-sample.svg?style=flat
     :target: https://travis-ci.org/Dmitri-Sintsov/djk-sample
 
-.. highlight:: shell
-
 Installation
 ------------
 
 Ubuntu
 ~~~~~~
+
+.. highlight:: shell
 
 This is an example for Ubuntu 14.04 / 16.04 LTS::
 
