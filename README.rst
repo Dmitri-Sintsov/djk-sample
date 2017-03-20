@@ -11,6 +11,12 @@ djk-sample
 
 Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sintsov/django-jinja-knockout
 
+.. image:: https://circleci.com/gh/Dmitri-Sintsov/djk-sample.svg?style=shield
+    :target: https://circleci.com/gh/Dmitri-Sintsov/djk-sample
+
+.. image:: https://img.shields.io/travis/Dmitri-Sintsov/djk-sample.svg?style=flat
+    :target: https://travis-ci.org/Dmitri-Sintsov/djk-sample
+
 Installation
 ------------
 
