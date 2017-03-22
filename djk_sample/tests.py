@@ -3,6 +3,9 @@ from django_jinja_knockout.testing import AutomationCommands, DjkSeleniumCommand
 from club_app.tests import ClubAppCommands
 from event_app.tests import EventAppCommands
 
+for command in DjkSeleniumCommands.yield_command_names():
+    globals()[command] = command
+
 
 class DjkSampleCommands(AutomationCommands):
 
@@ -12,37 +15,37 @@ class DjkSampleCommands(AutomationCommands):
 
     def register_new_user(self):
         yield (
-            'click_anchor_by_view', {'viewname': 'account_signup'},
-            'keys_by_id',
+            click_anchor_by_view, {'viewname': 'account_signup'},
+            keys_by_id,
             ('id_username', self._.username),
             ('id_password1', self._.password),
             ('id_password2', self._.password),
-            'click_submit_by_view', ('account_signup',),
-            'has_messages_success',
-            'dump_data', ('new_user_registered',)
+            click_submit_by_view, ('account_signup',),
+            has_messages_success,
+            dump_data, ('new_user_registered',)
         )
 
     def logout_user(self):
         yield (
-            'click_anchor_by_view', {'viewname': 'account_logout'},
-            'click_submit_by_view', ('account_logout',),
-            'has_messages_success',
+            click_anchor_by_view, {'viewname': 'account_logout'},
+            click_submit_by_view, ('account_logout',),
+            has_messages_success,
         )
 
     def login_user(self):
         yield (
-            'click_anchor_by_view', {'viewname': 'account_login'},
-            'keys_by_id',
+            click_anchor_by_view, {'viewname': 'account_login'},
+            keys_by_id,
             ('id_login', self._.username),
             ('id_password', self._.password),
-            'click_submit_by_view', ('account_login',),
-            'has_messages_success',
+            click_submit_by_view, ('account_login',),
+            has_messages_success,
         )
 
     def test_all(self):
         yield (
-            'maximize_window',
-            'relative_url', ('/',),
+            maximize_window,
+            relative_url, ('/',),
         )
         if not self.testcase.has_fixture('new_user_registered'):
             yield from self.register_new_user()
