@@ -155,11 +155,10 @@ class ClubListWithComponent(ClubList):
     def get_title_links(self, obj):
         links = super().get_title_links(obj)
         links.append(format_html(
-            '<button class="component" data-event="click" data-component-options="{}">'
+            '<button class="component" data-event="click" data-component-class="App.GridDialog" data-component-options="{component_options}">'
             '<span class="glyphicon glyphicon-user"></span>See inline'
             '</button>',
-            to_json({
-                'classPath': 'App.GridDialog',
+            component_options=to_json({
                 'filterOptions': {
                     'pageRoute': 'club_member_grid',
                     'pageRouteKwargs': {'club_id': obj.pk},
