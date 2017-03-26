@@ -4,44 +4,29 @@
 
 {% block main %}
 
-    {% call(kwargs) ko_grid(
+    {#
+        Overwrites 'ko_grid_body' template to use 'member_ko_grid_body' template for custom display of MemberGrid.
+    #}
+    {{ ko_grid(
         grid_options={
             'pageRoute': view.request.url_name,
         },
-        dom_attrs={
+        wrapper_dom_attrs={
             'id': 'member_grid'
+        },
+        template_dom_attrs={
+            'data-template-options': {
+                'templates': {
+                    'ko_grid_body': 'member_ko_grid_body',
+                }
+            },
         }
-    ) %}
-
-    <div{{ flatatt(kwargs.dom_attrs) }} data-component-options='{{ kwargs._grid_options|escapejs }}'>
-    <a name="{{ kwargs.fragment_name }}"></a>
-        <div data-template-id="member_ko_grid_body" data-template-args='{{ kwargs._template_options|escapejs }}'>
-        </div>
-    </div>
-
-{% endcall %}
+    ) }}
 
 {% endblock main %}
 
 {% block bottom_scripts %}
-    {# Generate standard grid templates for KoGridWidget #}
     {{ ko_grid_body() }}
-
-    {#
-        Overwrites templates for custom display of MemberGrid.
-        has_full_body=True indicates that ko_grid_body() without arguments was already called, generating
-        standard templates, thus only call_ids / template_ids related templates has to be re-generated.
-        It will work without has_full_body=True as well, but duplicate templates with the same id / content
-        would be generated in such case.
-    #}
-    {{
-        ko_grid_body(
-            call_ids={
-                'ko_grid_body': 'member_ko_grid_body',
-            },
-            has_full_body=True
-        )
-    }}
 
     <script type="text/template" id="member_ko_grid_body">
         <div class="panel panel-primary">

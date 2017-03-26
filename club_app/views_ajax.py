@@ -181,6 +181,7 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
 
     template_name = 'club_grid_with_action_logging.htm'
     client_routes = [
+        'user_fk_widget_grid',
         'manufacturer_fk_widget_grid',
         'profile_fk_widget_grid',
         'action_grid',
