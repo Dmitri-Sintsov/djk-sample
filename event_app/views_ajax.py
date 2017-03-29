@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django_jinja_knockout.tpl import format_local_date
 from django_jinja_knockout.views import KoGridView
 
+from club_app.models import Club, Equipment, Manufacturer, Member, Profile
 from .models import Action
 
 
@@ -59,6 +60,8 @@ class ActionGrid(KoGridView):
         'content_type',
         'content_object'
     ]
+    # Autodetection of related_models is impossible because Action model has generic relationships.
+    related_models = [Club, Equipment, Manufacturer, Member, Profile]
     allowed_sort_orders = [
         'performer',
         'date',
