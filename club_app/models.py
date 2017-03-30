@@ -41,7 +41,7 @@ class Manufacturer(models.Model):
         str_fields = OrderedDict([
             ('company_name', self.company_name),
         ])
-        str_fields['direct_shipping'] = 'direct shipping' if self.direct_shipping else 'remote shipping'
+        str_fields['direct_shipping'] = 'Yes (direct)' if self.direct_shipping else 'No (remote)'
         return str_fields
 
     def __str__(self):
