@@ -40,27 +40,36 @@ class SportClubInventory(AutomationCommands):
             yield from self.add_manufacturer(manufacturer, is_last_key)
 
     def add_manufacturer(self, manufacturer, is_last_manufacturer):
-        add_commands = (
-            dialog_button_click, ('Save',),
-            assert_field_error, ('id_company_name', 'This field is required.'),
-            keys_by_id, ('id_company_name', manufacturer['company_name']),
-        )
-        if manufacturer['direct_shipping']:
-            add_commands += (
-                by_id, ('id_direct_shipping',),
-                click,
-            )
         select_commands = (
             grid_find_data_column, ('Company name', manufacturer['company_name']),
         )
-        yield (
-            fk_widget_add_and_select, (
-                'id_equipment_set-{}-manufacturer'.format(self.formset_idx),
-                add_commands,
-                select_commands
-            ),
-            wait_until_dialog_closes,
-        )
+        if manufacturer['_create_']:
+            add_commands = (
+                dialog_button_click, ('Save',),
+                assert_field_error, ('id_company_name', 'This field is required.'),
+                keys_by_id, ('id_company_name', manufacturer['company_name']),
+            )
+            if manufacturer['direct_shipping']:
+                add_commands += (
+                    by_id, ('id_direct_shipping',),
+                    click,
+                )
+            yield (
+                fk_widget_add_and_select, (
+                    'id_equipment_set-{}-manufacturer'.format(self.formset_idx),
+                    add_commands,
+                    select_commands
+                ),
+                wait_until_dialog_closes,
+            )
+        else:
+            yield (
+                fk_widget_click, ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
+            ) + select_commands + (
+                grid_select_current_row,
+                dialog_button_click, ('Apply',),
+                wait_until_dialog_closes,
+            )
         for key, inventory in enumerate(manufacturer['inventories']):
             yield from self.add_manufacturer_inventory(inventory)
             self.formset_idx += 1
@@ -116,20 +125,32 @@ class SportClubMembers(AutomationCommands):
 
     def add_member(self, member, is_last_member):
         yield from self.new_formset_form()
-        yield (
-            fk_widget_add_and_select, (
-                'id_member_set-{}-profile'.format(self.formset_idx),
-                (
-                    keys_by_id,
-                    ('id_first_name', member['first_name']),
-                    ('id_last_name', member['last_name']),
-                    ('id_birth_date', member['birth_date']),
+        select_commands = (
+            grid_find_data_column, ('First name', member['first_name']),
+        )
+        if member['_create_profile_']:
+            yield (
+                fk_widget_add_and_select, (
+                    'id_member_set-{}-profile'.format(self.formset_idx),
+                    (
+                        keys_by_id,
+                        ('id_first_name', member['first_name']),
+                        ('id_last_name', member['last_name']),
+                        ('id_birth_date', member['birth_date']),
+                    ),
+                    select_commands,
                 ),
-                (
-                    grid_find_data_column, ('First name', member['first_name']),
-                )
-            ),
-            wait_until_dialog_closes,
+                wait_until_dialog_closes,
+            )
+        else:
+            yield (
+                fk_widget_click, ('id_member_set-{}-profile'.format(self.formset_idx),),
+            ) + select_commands + (
+                grid_select_current_row,
+                dialog_button_click, ('Apply',),
+                wait_until_dialog_closes,
+            )
+        yield (
             keys_by_id,
             ('id_member_set-{}-last_visit'.format(self.formset_idx), member['last_visit']),
             ('id_member_set-{}-note'.format(self.formset_idx), member['note']),
@@ -203,6 +224,7 @@ class ClubAppCommands(AutomationCommands):
         yield from SportClubInventory(formset_idx=0).set_context({
             'manufacturers': [
                 {
+                    '_create_': True,
                     'company_name': 'Yanix',
                     'direct_shipping': True,
                     'inventories': [
@@ -217,6 +239,7 @@ class ClubAppCommands(AutomationCommands):
                     ]
                 },
                 {
+                    '_create_': True,
                     'company_name': 'Oldidos',
                     'direct_shipping': False,
                     'inventories': [
@@ -233,6 +256,7 @@ class ClubAppCommands(AutomationCommands):
         ).set_context({
             'members': [
                 {
+                    '_create_profile_': True,
                     'first_name': 'Ivan',
                     'last_name': 'Petrov',
                     'birth_date': '1971-07-29',
@@ -243,6 +267,7 @@ class ClubAppCommands(AutomationCommands):
                     'is_endorsed': True,
                 },
                 {
+                    '_create_profile_': True,
                     'first_name': 'Liu',
                     'last_name': 'Zhuang',
                     'birth_date': '1982-05-18',
@@ -275,6 +300,7 @@ class ClubAppCommands(AutomationCommands):
             'form_view': form_view,
             'manufacturers': [
                 {
+                    '_create_': True,
                     'company_name': 'Bubblelat',
                     'direct_shipping': True,
                     'inventories': [
@@ -295,6 +321,7 @@ class ClubAppCommands(AutomationCommands):
         ).set_context({
             'members': [
                 {
+                    '_create_profile_': True,
                     'first_name': 'John',
                     'last_name': 'Smith',
                     'birth_date': '1973-05-19',
@@ -329,4 +356,44 @@ class ClubAppCommands(AutomationCommands):
             },
         }).yield_class_commands(
             'club_base_info'
+        )
+        yield from SportClubInventory(formset_idx=0).set_context({
+            'manufacturers': [
+                {
+                    '_create_': False,
+                    'company_name': 'Yanix',
+                    # 'direct_shipping': True,
+                    'inventories': [
+                        {
+                            'name': 'FeatherSky 2021',
+                            'category_id': 2,
+                        },
+                    ]
+                },
+            ]
+        }).add_manufacturers()
+        yield from SportClubMembers(
+            formset_idx=0
+        ).set_context({
+            'members': [
+                {
+                    '_create_profile_': False,
+                    'first_name': 'John',
+                    'last_name': 'Smith',
+                    # 'birth_date': '1973-05-19',
+                    'last_visit': '2011-10-21 08:59:59',
+                    'note': 'Founder of the most prominent NY badminton club.',
+                    'plays': 0,
+                    'role': 0,
+                    'is_endorsed': True,
+                },
+            ]
+        }).yield_class_commands(
+            # 'new_formset_form',
+            'add_members'
+        )
+        yield (
+            dialog_button_click, ('Save',),
+            wait_until_dialog_closes,
+            dump_data, ('added_club_via_grid',)
         )

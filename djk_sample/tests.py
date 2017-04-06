@@ -59,15 +59,14 @@ class DjkSampleCommands(AutomationCommands):
                 'details_sport_club',
                 'update_sport_club',
             )
-        """
-        yield from EventAppCommands().yield_class_commands(
-            'event_list_navigate',
-            'event_list_preview_member',
-        )
-        """
-        yield from ClubAppCommands().yield_class_commands(
-            'add_club_via_grid',
-        )
+            yield from EventAppCommands().yield_class_commands(
+                'event_list_navigate',
+                'event_list_preview_member',
+            )
+        if not self.testcase.has_fixture('added_club_via_grid'):
+            yield from ClubAppCommands().yield_class_commands(
+                'add_club_via_grid',
+            )
 
 
 class DjkSampleTestCase(DjkTestCase):
@@ -75,10 +74,12 @@ class DjkSampleTestCase(DjkTestCase):
     fixtures = []
     # fixtures = ['0000_new_user_registered.json']
     # fixtures = ['0001_sport_club_updated.json']
+    # fixtures = ['0002_added_club_via_grid.json']
 
     fixtures_order = [
         'new_user_registered',
         'sport_club_updated',
+        'added_club_via_grid'
     ]
 
     def test_all(self):
