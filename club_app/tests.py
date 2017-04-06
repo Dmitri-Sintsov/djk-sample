@@ -8,12 +8,14 @@ for command in DjkSeleniumCommands.yield_command_names():
 
 class SportClub(AutomationCommands):
 
-    def club_base_info(self):
+    def club_form_view(self):
         yield (
             click_anchor_by_view, self._.form_view,
             # Next one step is optional:
             form_by_view, self._.form_view,
         )
+
+    def club_base_info(self):
         if hasattr(self._, 'club'):
             yield (
                 keys_by_id,
@@ -194,7 +196,10 @@ class ClubAppCommands(AutomationCommands):
                 'title': 'Yaroslavl Bears',
                 'foundation_date': '1971-08-29',
             },
-        }).club_base_info()
+        }).yield_class_commands(
+            'club_form_view',
+            'club_base_info'
+        )
         yield from SportClubInventory(formset_idx=0).set_context({
             'manufacturers': [
                 {
@@ -262,7 +267,10 @@ class ClubAppCommands(AutomationCommands):
         form_view = {'viewname': 'club_update', 'kwargs': {'club_id': 1}}
         yield from SportClub().set_context({
             'form_view': form_view,
-        }).club_base_info()
+        }).yield_class_commands(
+            'club_form_view',
+            'club_base_info'
+        )
         yield from SportClubInventory(formset_idx=3).set_context({
             'form_view': form_view,
             'manufacturers': [
@@ -304,4 +312,21 @@ class ClubAppCommands(AutomationCommands):
         yield (
             click_submit_by_view, (form_view),
             dump_data, ('sport_club_updated',)
+        )
+
+    def add_club_via_grid(self):
+        yield [
+            click_anchor_by_view, ('club_grid_editable', {'action': ''}),
+            component_by_classpath, ('App.ko.Grid',),
+            grid_search_substring, ('Yaro',),
+            component_by_classpath, ('App.ko.Grid',),
+            relative_button_click, ('Add',),
+        ]
+        yield from SportClub().set_context({
+            'club': {
+                'title': 'Broadway Singers',
+                'foundation_date': '1983-11-21',
+            },
+        }).yield_class_commands(
+            'club_base_info'
         )

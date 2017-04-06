@@ -59,9 +59,14 @@ class DjkSampleCommands(AutomationCommands):
                 'details_sport_club',
                 'update_sport_club',
             )
+        """
         yield from EventAppCommands().yield_class_commands(
             'event_list_navigate',
             'event_list_preview_member',
+        )
+        """
+        yield from ClubAppCommands().yield_class_commands(
+            'add_club_via_grid',
         )
 
 
