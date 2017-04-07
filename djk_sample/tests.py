@@ -64,7 +64,7 @@ class DjkSampleCommands(AutomationCommands):
                 'event_list_preview_member',
             )
         if not self.testcase.has_fixture('added_club_via_grid'):
-            yield from ClubAppCommands().yield_class_commands(
+            yield from EventAppCommands().yield_class_commands(
                 'add_club_via_grid',
             )
 
@@ -91,4 +91,4 @@ class DjkSampleTestCase(DjkTestCase):
                 'password': 'test123',
             }),
             'test_all'
-        )._default_sleep()
+        )._default_wait()

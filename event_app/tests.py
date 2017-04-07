@@ -1,6 +1,7 @@
 from django_jinja_knockout.viewmodels import to_json
 from django_jinja_knockout.automation import AutomationCommands
 from django_jinja_knockout.testing import DjkSeleniumCommands
+from club_app.testing import SportClub, SportClubInventory, SportClubMembers
 
 for command in DjkSeleniumCommands.yield_command_names():
     globals()[command] = command
@@ -50,3 +51,60 @@ class EventAppCommands(AutomationCommands):
         dialog_button_click, ('OK',),
         wait_until_dialog_closes,
     )
+
+    def add_club_via_grid(self):
+        yield [
+            click_anchor_by_view, ('club_grid_with_action_logging', {'action': ''}),
+            component_by_classpath, ('App.ko.ClubGrid',),
+            grid_search_substring, ('Yaro',),
+            component_by_classpath, ('App.ko.ClubGrid',),
+            relative_button_click, ('Add',),
+        ]
+        yield from SportClub().set_context({
+            'club': {
+                'title': 'Broadway Singers',
+                'foundation_date': '1983-11-21',
+            },
+        }).yield_class_commands(
+            'club_base_info'
+        )
+        yield from SportClubInventory(formset_idx=0).set_context({
+            'manufacturers': [
+                {
+                    '_create_': False,
+                    'company_name': 'Yanix',
+                    # 'direct_shipping': True,
+                    'inventories': [
+                        {
+                            'name': 'FeatherSky 2021',
+                            'category_id': 2,
+                        },
+                    ]
+                },
+            ]
+        }).add_manufacturers()
+        yield from SportClubMembers(
+            formset_idx=0
+        ).set_context({
+            'members': [
+                {
+                    '_create_profile_': False,
+                    'first_name': 'John',
+                    'last_name': 'Smith',
+                    # 'birth_date': '1973-05-19',
+                    'last_visit': '2011-10-21 08:59:59',
+                    'note': 'Founder of the most prominent NY badminton club.',
+                    'plays': 0,
+                    'role': 0,
+                    'is_endorsed': True,
+                },
+            ]
+        }).yield_class_commands(
+            # 'new_formset_form',
+            'add_members'
+        )
+        yield (
+            dialog_button_click, ('Save',),
+            wait_until_dialog_closes,
+            dump_data, ('added_club_via_grid',)
+        )
