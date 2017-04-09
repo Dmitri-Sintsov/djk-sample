@@ -113,5 +113,4 @@ class EventAppCommands(AutomationCommands):
             dialog_button_click, ('OK',),
             wait_until_dialog_closes,
             close_current_window,
-            click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
         )

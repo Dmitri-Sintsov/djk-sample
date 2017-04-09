@@ -67,7 +67,7 @@ class DjkSampleCommands(AutomationCommands):
             yield from EventAppCommands().yield_class_commands(
                 'add_club_via_grid',
             )
-
+        yield from ClubAppCommands().browse_grid_with_raw_query()
 
 class DjkSampleTestCase(DjkTestCase):
 

@@ -165,3 +165,12 @@ class ClubAppCommands(AutomationCommands):
             click_submit_by_view, (form_view),
             dump_data, ('sport_club_updated',)
         )
+
+    def browse_grid_with_raw_query(self):
+        yield (
+            click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
+            component_by_classpath, ('App.ko.Grid',),
+            grid_order_by, ('First name',),
+            grid_order_by, ('First name',),
+            grid_goto_page, ('2',),
+        )
