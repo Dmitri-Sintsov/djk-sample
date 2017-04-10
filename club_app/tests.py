@@ -170,7 +170,10 @@ class ClubAppCommands(AutomationCommands):
         yield (
             click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
             component_by_classpath, ('App.ko.Grid',),
+            # Test JOINed field queries.
             grid_order_by, ('First name',),
             grid_order_by, ('First name',),
             grid_goto_page, ('2',),
+            component_by_classpath, ('App.ko.Grid',),
+            grid_find_data_row, ({'First name': 'Ivan', 'Title': 'Yaroslavl Bears'},),
         )

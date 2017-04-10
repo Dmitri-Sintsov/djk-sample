@@ -40,7 +40,7 @@ class SportClubInventory(AutomationCommands):
 
     def add_manufacturer(self, manufacturer, is_last_manufacturer):
         select_commands = (
-            grid_find_data_column, ('Company name', manufacturer['company_name']),
+            grid_find_data_row, ({'Company name': manufacturer['company_name']},),
         )
         if manufacturer['_create_']:
             add_commands = (
@@ -125,7 +125,7 @@ class SportClubMembers(AutomationCommands):
     def add_member(self, member, is_last_member):
         yield from self.new_formset_form()
         select_commands = (
-            grid_find_data_column, ('First name', member['first_name']),
+            grid_find_data_row, ({'First name': member['first_name']},),
         )
         if member['_create_profile_']:
             yield (
