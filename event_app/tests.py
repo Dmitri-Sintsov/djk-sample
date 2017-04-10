@@ -63,6 +63,7 @@ class EventAppCommands(AutomationCommands):
         yield from SportClub().set_context({
             'club': {
                 'title': 'Broadway Singers',
+                'category_id': 0,
                 'foundation_date': '1983-11-21',
             },
         }).yield_class_commands(

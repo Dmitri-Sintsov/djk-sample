@@ -40,6 +40,7 @@ class ClubAppCommands(AutomationCommands):
             'form_view': form_view,
             'club': {
                 'title': 'Yaroslavl Bears',
+                'category_id': 1,
                 'foundation_date': '1971-08-29',
             },
         }).yield_class_commands(
@@ -176,4 +177,10 @@ class ClubAppCommands(AutomationCommands):
             grid_goto_page, ('2',),
             component_by_classpath, ('App.ko.Grid',),
             grid_find_data_row, ({'First name': 'Ivan', 'Title': 'Yaroslavl Bears'},),
+            component_by_classpath, ('App.ko.Grid',),
+            grid_breadcrumb_filter_choices, ('Category', ['Recreational']),
+            component_by_classpath, ('App.ko.Grid',),
+            grid_breadcrumb_filter_choices, ('Role', ['Owner', 'Member']),
+            component_by_classpath, ('App.ko.Grid',),
+            grid_find_data_row, ({'First name': 'John', 'Title': 'Broadway Singers'},),
         )

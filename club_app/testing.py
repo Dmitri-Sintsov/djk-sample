@@ -20,7 +20,7 @@ class SportClub(AutomationCommands):
                 keys_by_id,
                 ('id_title', self._.club['title']),
                 ('id_foundation_date', self._.club['foundation_date']),
-                'input_as_select_click', ('id_category_1',),
+                'input_as_select_click', ('id_category_{}'.format(self._.club['category_id']),),
             )
 
 
@@ -28,7 +28,7 @@ class SportClubInventory(AutomationCommands):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.formset_idx = kwargs.pop('formset_idx')
+        self.formset_idx = kwargs['formset_idx']
 
     def new_formset_form(self):
         yield relative_form_button_click, ('Add "Sport club equipment"',),
@@ -111,7 +111,7 @@ class SportClubMembers(AutomationCommands):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.formset_idx = kwargs.pop('formset_idx')
+        self.formset_idx = kwargs['formset_idx']
 
     def new_formset_form(self):
         yield 'relative_form_button_click', ('Add "Sport club member"',),
