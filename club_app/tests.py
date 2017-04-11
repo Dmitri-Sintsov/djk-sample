@@ -167,20 +167,50 @@ class ClubAppCommands(AutomationCommands):
             dump_data, ('sport_club_updated',)
         )
 
-    def browse_grid_with_raw_query(self):
+    browse_grid_with_raw_query = (
+        click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
+        component_by_classpath, ('App.ko.Grid',),
+        # Test JOINed field queries.
+        grid_order_by, ('First name',),
+        grid_order_by, ('First name',),
+        grid_goto_page, ('2',),
+        component_by_classpath, ('App.ko.Grid',),
+        grid_find_data_row, ({'First name': 'Ivan', 'Title': 'Yaroslavl Bears'},),
+        component_by_classpath, ('App.ko.Grid',),
+        grid_breadcrumb_filter_choices, ('Category', ['Recreational']),
+        component_by_classpath, ('App.ko.Grid',),
+        grid_breadcrumb_filter_choices, ('Role', ['Owner', 'Member']),
+        component_by_classpath, ('App.ko.Grid',),
+        grid_find_data_row, ({'First name': 'John', 'Title': 'Broadway Singers'},),
+    )
+
+    def grid_interaction_club_equipment(self):
         yield (
-            click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
-            component_by_classpath, ('App.ko.Grid',),
-            # Test JOINed field queries.
-            grid_order_by, ('First name',),
-            grid_order_by, ('First name',),
-            grid_goto_page, ('2',),
-            component_by_classpath, ('App.ko.Grid',),
-            grid_find_data_row, ({'First name': 'Ivan', 'Title': 'Yaroslavl Bears'},),
-            component_by_classpath, ('App.ko.Grid',),
-            grid_breadcrumb_filter_choices, ('Category', ['Recreational']),
-            component_by_classpath, ('App.ko.Grid',),
-            grid_breadcrumb_filter_choices, ('Role', ['Owner', 'Member']),
-            component_by_classpath, ('App.ko.Grid',),
-            grid_find_data_row, ({'First name': 'John', 'Title': 'Broadway Singers'},),
+            click_anchor_by_view, ('club_equipment_grid', {'action': ''}),
+            component_by_classpath, ('App.ko.ClubGrid',),
+            grid_find_data_row, ({'Title': 'Broadway Singers'},),
+            grid_row_glyphicon_action, ('Add club equipment',),
+        )
+        yield from SportClubInventory(formset_idx=None).set_context({
+            'manufacturers': [
+                {
+                    '_create_': True,
+                    'company_name': 'Vector',
+                    'direct_shipping': False,
+                    'inventories': [
+                        {
+                            'name': 'CourageousWave 100',
+                            'category_id': 3,
+                        },
+                    ]
+                },
+            ]
+        }).add_manufacturers()
+        yield (
+            dialog_button_click, ('Save',),
+            wait_until_dialog_closes,
+            click_by_link_text, ('Sport club equipments',),
+            by_id, ('equipment_grid',),
+            grid_find_data_row, ({'Company name': 'Vector', 'Inventory name': 'CourageousWave 100'},),
+            dump_data, ('grid_interaction_club_equipment_done',),
         )

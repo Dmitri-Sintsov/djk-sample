@@ -63,23 +63,30 @@ class DjkSampleCommands(AutomationCommands):
                 'event_list_navigate',
                 'event_list_preview_member',
             )
-        if not self.testcase.has_fixture('added_club_via_grid'):
+        if not self.testcase.has_fixture('grid_interaction_club_actions_done'):
             yield from EventAppCommands().yield_class_commands(
-                'add_club_via_grid',
+                'grid_interaction_club_actions',
             )
-        yield from ClubAppCommands().browse_grid_with_raw_query()
+        if not self.testcase.has_fixture('grid_interaction_club_equipment_done'):
+            yield from ClubAppCommands().yield_class_commands(
+                'browse_grid_with_raw_query',
+                'grid_interaction_club_equipment',
+            )
+
 
 class DjkSampleTestCase(DjkTestCase):
 
     fixtures = []
     # fixtures = ['0000_new_user_registered.json']
     # fixtures = ['0001_sport_club_updated.json']
-    # fixtures = ['0002_added_club_via_grid.json']
+    # fixtures = ['0002_grid_interaction_club_actions_done.json']
+    # fixtures = ['0003_grid_interaction_club_equipment_done.json']
 
     fixtures_order = [
         'new_user_registered',
         'sport_club_updated',
-        'added_club_via_grid'
+        'grid_interaction_club_actions_done',
+        'grid_interaction_club_equipment_done',
     ]
 
     def test_all(self):

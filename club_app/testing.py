@@ -28,6 +28,8 @@ class SportClubInventory(AutomationCommands):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Set to None to automate single manufacturer equipment form.
+        # Set to number to add one or multiple manufacturer equipment inline formsets.
         self.formset_idx = kwargs['formset_idx']
 
     def new_formset_form(self):
@@ -37,6 +39,12 @@ class SportClubInventory(AutomationCommands):
         for key, manufacturer in enumerate(self._.manufacturers):
             is_last_key = key + 1 == len(self._.manufacturers)
             yield from self.add_manufacturer(manufacturer, is_last_key)
+
+    def get_id_for_field(self, fieldname):
+        if self.formset_idx is None:
+            return 'id_{}'.format(fieldname)
+        else:
+            return 'id_equipment_set-{}-{}'.format(self.formset_idx, fieldname)
 
     def add_manufacturer(self, manufacturer, is_last_manufacturer):
         select_commands = (
@@ -55,7 +63,7 @@ class SportClubInventory(AutomationCommands):
                 )
             yield (
                 fk_widget_add_and_select, (
-                    'id_equipment_set-{}-manufacturer'.format(self.formset_idx),
+                    self.get_id_for_field('manufacturer'),
                     add_commands,
                     select_commands
                 ),
@@ -63,7 +71,7 @@ class SportClubInventory(AutomationCommands):
             )
         else:
             yield (
-                fk_widget_click, ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
+                fk_widget_click, (self.get_id_for_field('manufacturer'),),
             ) + select_commands + (
                 grid_select_current_row,
                 dialog_button_click, ('Apply',),
@@ -71,11 +79,15 @@ class SportClubInventory(AutomationCommands):
             )
         for key, inventory in enumerate(manufacturer['inventories']):
             yield from self.add_manufacturer_inventory(inventory)
+            if self.formset_idx is None:
+                if len(manufacturer['inventories']) > 1:
+                    raise ValueError('Single form cannot have multiple inventories')
+                break
             self.formset_idx += 1
             if not is_last_manufacturer or key + 1 < len(manufacturer['inventories']):
                 yield from self.new_formset_form()
                 yield (
-                    fk_widget_click, ('id_equipment_set-{}-manufacturer'.format(self.formset_idx),),
+                    fk_widget_click, (self.get_id_for_field('manufacturer'),),
                 )
                 yield select_commands
                 yield (
@@ -86,10 +98,10 @@ class SportClubInventory(AutomationCommands):
     def add_manufacturer_inventory(self, inventory):
         yield (
             keys_by_id, (
-                'id_equipment_set-{}-inventory_name'.format(self.formset_idx), inventory['name']
+                self.get_id_for_field('inventory_name'), inventory['name']
             ),
             input_as_select_click, (
-                'id_equipment_set-{}-category_{}'.format(self.formset_idx, inventory['category_id']),
+                (self.get_id_for_field('category') + '_{}').format(inventory['category_id']),
             ),
         )
 
@@ -97,7 +109,7 @@ class SportClubInventory(AutomationCommands):
         yield from self.new_formset_form()
         yield (
             by_id, (
-                'id_equipment_set-{}-DELETE'.format(self.formset_idx),
+                self.get_id_for_field('DELETE'),
             ),
             click,
             to_top_bootstrap_dialog,

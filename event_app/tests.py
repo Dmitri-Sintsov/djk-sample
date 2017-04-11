@@ -52,7 +52,7 @@ class EventAppCommands(AutomationCommands):
         wait_until_dialog_closes,
     )
 
-    def add_club_via_grid(self):
+    def grid_interaction_club_actions(self):
         yield [
             click_anchor_by_view, ('club_grid_with_action_logging', {'action': ''}),
             component_by_classpath, ('App.ko.ClubGrid',),
@@ -107,12 +107,6 @@ class EventAppCommands(AutomationCommands):
         yield (
             dialog_button_click, ('Save',),
             wait_until_dialog_closes,
-            click_anchor_by_view, ('club_detail', {'club_id': 2}),
-            switch_to_last_window,
-            button_click, ('Read',),
-            dialog_button_click, ('OK',),
-            wait_until_dialog_closes,
-            close_current_window,
             component_by_classpath, ('App.ko.Grid',),
             # Commented out, because xpath cannot match outerHTML.
             # grid_find_data_row, ({'Related object': '<a href="/equipment-detail-5/" target="_blank">Sport club equipment</a>'},),
@@ -123,5 +117,11 @@ class EventAppCommands(AutomationCommands):
             # grid_select_current_row,
             grid_row_glyphicon_action, ('Remove',),
             dialog_button_click, ('Yes',),
-            dump_data, ('added_club_via_grid',),
+            click_anchor_by_view, ('club_detail', {'club_id': 2}),
+            switch_to_last_window,
+            button_click, ('Read',),
+            dialog_button_click, ('OK',),
+            wait_until_dialog_closes,
+            close_current_window,
+            dump_data, ('grid_interaction_club_actions_done',),
         )
