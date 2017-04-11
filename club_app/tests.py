@@ -36,7 +36,7 @@ class ClubAppCommands(AutomationCommands):
 
     def add_sport_club(self):
         form_view = ('club_create',)
-        yield from SportClub().set_context({
+        yield from SportClub().set_parameters({
             'form_view': form_view,
             'club': {
                 'title': 'Yaroslavl Bears',
@@ -47,7 +47,7 @@ class ClubAppCommands(AutomationCommands):
             'club_form_view',
             'club_base_info'
         )
-        yield from SportClubInventory(formset_idx=0).set_context({
+        yield from SportClubInventory(formset_idx=0).set_parameters({
             'manufacturers': [
                 {
                     '_create_': True,
@@ -79,7 +79,7 @@ class ClubAppCommands(AutomationCommands):
         }).add_manufacturers()
         yield from SportClubMembers(
             formset_idx=0
-        ).set_context({
+        ).set_parameters({
             'members': [
                 {
                     '_create_profile_': True,
@@ -116,13 +116,13 @@ class ClubAppCommands(AutomationCommands):
 
     def update_sport_club(self):
         form_view = {'viewname': 'club_update', 'kwargs': {'club_id': 1}}
-        yield from SportClub().set_context({
+        yield from SportClub().set_parameters({
             'form_view': form_view,
         }).yield_class_commands(
             'club_form_view',
             'club_base_info'
         )
-        yield from SportClubInventory(formset_idx=3).set_context({
+        yield from SportClubInventory(formset_idx=3).set_parameters({
             'form_view': form_view,
             'manufacturers': [
                 {
@@ -144,7 +144,7 @@ class ClubAppCommands(AutomationCommands):
         )
         yield from SportClubMembers(
             formset_idx=2
-        ).set_context({
+        ).set_parameters({
             'members': [
                 {
                     '_create_profile_': True,
@@ -172,16 +172,11 @@ class ClubAppCommands(AutomationCommands):
         component_by_classpath, ('App.ko.Grid',),
         # Test JOINed field queries.
         grid_order_by, ('First name',),
-        grid_order_by, ('First name',),
         grid_goto_page, ('2',),
-        component_by_classpath, ('App.ko.Grid',),
-        grid_find_data_row, ({'First name': 'Ivan', 'Title': 'Yaroslavl Bears'},),
-        component_by_classpath, ('App.ko.Grid',),
+        grid_find_data_row, ({'First name': 'Liu', 'Title': 'Yaroslavl Bears'},),
         grid_breadcrumb_filter_choices, ('Category', ['Recreational']),
-        component_by_classpath, ('App.ko.Grid',),
         grid_breadcrumb_filter_choices, ('Role', ['Owner', 'Member']),
-        component_by_classpath, ('App.ko.Grid',),
-        grid_find_data_row, ({'First name': 'John', 'Title': 'Broadway Singers'},),
+        grid_find_data_row, ({'First name': 'Ivan', 'Title': 'Broadway Singers'},),
     )
 
     def grid_interaction_club_equipment(self):
@@ -191,7 +186,7 @@ class ClubAppCommands(AutomationCommands):
             grid_find_data_row, ({'Title': 'Broadway Singers'},),
             grid_row_glyphicon_action, ('Add club equipment',),
         )
-        yield from SportClubInventory(formset_idx=None).set_context({
+        yield from SportClubInventory(formset_idx=None).set_parameters({
             'manufacturers': [
                 {
                     '_create_': True,
@@ -210,7 +205,12 @@ class ClubAppCommands(AutomationCommands):
             dialog_button_click, ('Save',),
             wait_until_dialog_closes,
             click_by_link_text, ('Sport club equipments',),
-            by_id, ('equipment_grid',),
+            component_by_id, ('equipment_grid',),
             grid_find_data_row, ({'Company name': 'Vector', 'Inventory name': 'CourageousWave 100'},),
             dump_data, ('grid_interaction_club_equipment_done',),
+        )
+
+    def grid_custom_layout_and_custom_actions(self):
+        yield (
+            click_anchor_by_view, ('member_grid_custom_actions', {'action': ''}),
         )

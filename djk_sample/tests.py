@@ -72,6 +72,7 @@ class DjkSampleCommands(AutomationCommands):
                 'browse_grid_with_raw_query',
                 'grid_interaction_club_equipment',
             )
+        yield from ClubAppCommands().grid_custom_layout_and_custom_actions()
 
 
 class DjkSampleTestCase(DjkTestCase):
@@ -93,7 +94,7 @@ class DjkSampleTestCase(DjkTestCase):
         DjkSeleniumCommands(
             testcase=self,
         ).exec_class(
-            DjkSampleCommands(testcase=self).set_context({
+            DjkSampleCommands(testcase=self).set_parameters({
                 'username': 'testuser',
                 'password': 'test123',
             }),
