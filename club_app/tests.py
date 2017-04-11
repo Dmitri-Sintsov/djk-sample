@@ -213,4 +213,9 @@ class ClubAppCommands(AutomationCommands):
     def grid_custom_layout_and_custom_actions(self):
         yield (
             click_anchor_by_view, ('member_grid_custom_actions', {'action': ''}),
+            component_by_id, ('member_grid',),
+            grid_find_data_row, ({'Last visit time': '11/23/2016 2:47 p.m.'},),
+            grid_row_glyphicon_action, ('Quick disendorsement',),
+            # grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.'},),
+            # grid_row_glyphicon_action, ('Quick endorsement',),
         )
