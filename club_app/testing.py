@@ -52,7 +52,7 @@ class SportClubInventory(AutomationCommands):
         )
         if manufacturer['_create_']:
             add_commands = (
-                dialog_button_click, ('Save',),
+                dialog_footer_button_click, ('Save',),
                 assert_field_error, ('id_company_name', 'This field is required.'),
                 keys_by_id, ('id_company_name', manufacturer['company_name']),
             )
@@ -74,7 +74,7 @@ class SportClubInventory(AutomationCommands):
                 fk_widget_click, (self.get_id_for_field('manufacturer'),),
             ) + select_commands + (
                 grid_select_current_row,
-                dialog_button_click, ('Apply',),
+                dialog_footer_button_click, ('Apply',),
                 wait_until_dialog_closes,
             )
         for key, inventory in enumerate(manufacturer['inventories']):
@@ -92,7 +92,7 @@ class SportClubInventory(AutomationCommands):
                 yield select_commands
                 yield (
                     grid_select_current_row,
-                    dialog_button_click, ('Apply',),
+                    dialog_footer_button_click, ('Apply',),
                 )
 
     def add_manufacturer_inventory(self, inventory):
@@ -113,7 +113,7 @@ class SportClubInventory(AutomationCommands):
             ),
             click,
             to_top_bootstrap_dialog,
-            dialog_button_click, ('Yes',),
+            dialog_footer_button_click, ('Yes',),
             wait_until_dialog_closes,
             form_by_view, self._.form_view,
         )
@@ -158,7 +158,7 @@ class SportClubMembers(AutomationCommands):
                 fk_widget_click, ('id_member_set-{}-profile'.format(self.formset_idx),),
             ) + select_commands + (
                 grid_select_current_row,
-                dialog_button_click, ('Apply',),
+                dialog_footer_button_click, ('Apply',),
                 wait_until_dialog_closes,
             )
         yield (

@@ -110,7 +110,7 @@ class ClubAppCommands(AutomationCommands):
     def details_sport_club(self):
         yield (
             button_click, ('Read',),
-            dialog_button_click, ('OK',),
+            dialog_footer_button_click, ('OK',),
             wait_until_dialog_closes,
         )
 
@@ -176,7 +176,7 @@ class ClubAppCommands(AutomationCommands):
         grid_find_data_row, ({'First name': 'Liu', 'Title': 'Yaroslavl Bears'},),
         grid_breadcrumb_filter_choices, ('Category', ['Recreational']),
         grid_breadcrumb_filter_choices, ('Role', ['Owner', 'Member']),
-        grid_find_data_row, ({'First name': 'Ivan', 'Title': 'Broadway Singers'},),
+        grid_find_data_row, ({'First name': 'John', 'Title': 'Broadway Singers'},),
     )
 
     def grid_interaction_club_equipment(self):
@@ -202,7 +202,7 @@ class ClubAppCommands(AutomationCommands):
             ]
         }).add_manufacturers()
         yield (
-            dialog_button_click, ('Save',),
+            dialog_footer_button_click, ('Save',),
             wait_until_dialog_closes,
             click_by_link_text, ('Sport club equipments',),
             component_by_id, ('equipment_grid',),
@@ -210,12 +210,41 @@ class ClubAppCommands(AutomationCommands):
             dump_data, ('grid_interaction_club_equipment_done',),
         )
 
-    def grid_custom_layout_and_custom_actions(self):
+    grid_custom_layout = (
+        click_anchor_by_view, ('member_grid_tabs', {'action': ''}),
+        component_by_classpath, ('App.ko.MemberGrid',),
+        grid_tabs_filter_choices, ('Plays sport', ['Table tennis', 'Another sport']),
+    )
+
+    def grid_custom_actions(self):
+        note_text = 'Chinese player with ultra-fast reaction and speed. Participated in many tournaments.'
         yield (
             click_anchor_by_view, ('member_grid_custom_actions', {'action': ''}),
             component_by_id, ('member_grid',),
             grid_find_data_row, ({'Last visit time': '11/23/2016 2:47 p.m.'},),
             grid_row_glyphicon_action, ('Quick disendorsement',),
-            # grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.'},),
-            # grid_row_glyphicon_action, ('Quick endorsement',),
+            grid_find_data_row, ({'Last visit time': '11/27/2016 7:27 p.m.'},),
+            # phantomjs does not allow to click TR, thus we are selecting suitable TD.
+            grid_row_relative_by_xpath, ('.//td[@data-caption="Sportsman"]',),
+            click,
+            # screenshot, ('grid_custom_actions',),
+            dialog_body_button_click, ('Change',),
+            to_top_bootstrap_dialog,
+            input_as_select_click, ('id_plays_2',),
+            dialog_footer_button_click, ('Save',),
+            grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.'},),
+            grid_row_relative_by_xpath, ('.//td[@data-caption="Sportsman"]',),
+            click,
+            dialog_body_button_click, ('Edit member note',),
+            to_top_bootstrap_dialog,
+            keys_by_id, ('id_note', note_text),
+            dialog_footer_button_click, ('Edit member note',),
+            component_relative_by_xpath, ('.//button[@data-content={}]', note_text),
+            click,
+            grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.'},),
+            grid_row_relative_by_xpath, ('.//input[@type="checkbox"]',),
+            click,
+            component_button_click, ('Change endorsement',),
+            dialog_footer_button_click, ('OK',),
+            dump_data, ('grid_custom_actions_done',),
         )

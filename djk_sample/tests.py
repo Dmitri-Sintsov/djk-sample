@@ -72,7 +72,11 @@ class DjkSampleCommands(AutomationCommands):
                 'browse_grid_with_raw_query',
                 'grid_interaction_club_equipment',
             )
-        yield from ClubAppCommands().grid_custom_layout_and_custom_actions()
+        if not self.testcase.has_fixture('grid_custom_actions_done'):
+            yield from ClubAppCommands().yield_class_commands(
+                'grid_custom_layout',
+                'grid_custom_actions',
+            )
 
 
 class DjkSampleTestCase(DjkTestCase):
@@ -82,12 +86,14 @@ class DjkSampleTestCase(DjkTestCase):
     # fixtures = ['0001_sport_club_updated.json']
     # fixtures = ['0002_grid_interaction_club_actions_done.json']
     # fixtures = ['0003_grid_interaction_club_equipment_done.json']
+    # fixtures = ['0004_grid_custom_actions_done.json']
 
     fixtures_order = [
         'new_user_registered',
         'sport_club_updated',
         'grid_interaction_club_actions_done',
         'grid_interaction_club_equipment_done',
+        'grid_custom_actions_done',
     ]
 
     def test_all(self):
