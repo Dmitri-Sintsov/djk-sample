@@ -21,5 +21,6 @@
 
 {% block bottom_scripts %}
     {% jinja 'ko_grid_body.htm' with _render_=1 %}
+    <script src="{% static 'js/front/formsets.js' %}"></script>
     <script src="{% static 'js/front/ko-grid.js' %}"></script>
 {% endblock bottom_scripts %}
