@@ -54,6 +54,9 @@ class EventAppCommands(AutomationCommands):
         wait_until_dialog_closes,
     )
 
+    # Check multiple grids interaction for updating ActionGrid via result of ClubGrid action,
+    # used as interactive event logging in this test case.
+    # Check ActionGrid row removal.
     def grid_interaction_club_actions(self):
         yield [
             click_anchor_by_view, ('club_grid_with_action_logging', {'action': ''}),
@@ -118,7 +121,7 @@ class EventAppCommands(AutomationCommands):
             component_by_classpath, ('App.ko.Grid',),
             # Commented out, because xpath cannot match outerHTML.
             # grid_find_data_row, ({'Related object': '<a href="/equipment-detail-5/" target="_blank">Sport club equipment</a>'},),
-            relative_by_xpath, (
+            component_relative_by_xpath, (
                 ".//tr [ .//td[@data-caption={}]/a[@href={}] ]",
                 'Related object', '/equipment-detail-5/',
             ),

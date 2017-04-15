@@ -69,6 +69,9 @@ class ClubCreateDTL(ClubCreate):
 
     template_name = 'club_create.html'
 
+    def get_form_action_url(self):
+        return reverse('club_create_dtl')
+
 
 class ClubUpdate(ClubEditMixin, InlineDetailView):
 

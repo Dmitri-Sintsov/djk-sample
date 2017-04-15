@@ -9,6 +9,7 @@ for command in DjkSeleniumCommands.yield_command_names():
 
 class ClubAppCommands(AutomationCommands):
 
+    # Check ListSortingView, including empty list and forged erroneous arguments.
     empty_club_list = (
         click_anchor_by_view, {'viewname': 'club_list'},
         jumbotron_text, ('There is no',),
@@ -34,8 +35,10 @@ class ClubAppCommands(AutomationCommands):
         jumbotron_text, ('Not allowed filter field',),
     )
 
+    # Check form with dynamic inline formsets creation from Django template.
+    # This also tests custom tag library which allows to include Jinja2 macro from DTL templates.
     def add_sport_club(self):
-        form_view = ('club_create',)
+        form_view = ('club_create_dtl',)
         yield from SportClub().set_parameters({
             'form_view': form_view,
             'club': {
@@ -107,6 +110,7 @@ class ClubAppCommands(AutomationCommands):
         }).add_members()
         yield (click_submit_by_view, form_view)
 
+    # Check display-only form with display-only inline formsets with custom field which has popup dialog button.
     def details_sport_club(self):
         yield (
             button_click, ('Read',),
@@ -114,6 +118,7 @@ class ClubAppCommands(AutomationCommands):
             wait_until_dialog_closes,
         )
 
+    # Check form with inline formset updating from Jinja2 macro with dynamic formset removal.
     def update_sport_club(self):
         form_view = {'viewname': 'club_update', 'kwargs': {'club_id': 1}}
         yield from SportClub().set_parameters({
@@ -167,6 +172,7 @@ class ClubAppCommands(AutomationCommands):
             dump_data, ('sport_club_updated',)
         )
 
+    # Check query.FilteredRawQuery usage with KoGridView.
     browse_grid_with_raw_query = (
         click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
         component_by_classpath, ('App.ko.Grid',),
@@ -179,6 +185,9 @@ class ClubAppCommands(AutomationCommands):
         grid_find_data_row, ({'First name': 'John', 'Title': 'Broadway Singers'},),
     )
 
+    # Check multiple grids interaction when ClubGrid action ('Add club equipment')
+    # is used to add related models to ClubEquipmentGrid, which emulates dynamic inline formset
+    # but with AJAX pagination, suitable for very long lists of related models.
     def grid_interaction_club_equipment(self):
         yield (
             click_anchor_by_view, ('club_equipment_grid', {'action': ''}),
@@ -210,12 +219,16 @@ class ClubAppCommands(AutomationCommands):
             dump_data, ('grid_interaction_club_equipment_done',),
         )
 
+    # Check grid with overridden filter choices templates.
     grid_custom_layout = (
         click_anchor_by_view, ('member_grid_tabs', {'action': ''}),
         component_by_classpath, ('App.ko.MemberGrid',),
         grid_tabs_filter_choices, ('Plays sport', ['Table tennis', 'Another sport']),
     )
 
+    # Check MemberGrid custom actions of 'glyphicon' type, 'button' type;
+    # 'click' type action 'change' with server-side ModelForm and
+    # 'click' type action 'Edit member note' with client-side underscore.js / knockout.js form.
     def grid_custom_actions(self):
         note_text = 'Chinese player with ultra-fast reaction and speed. Participated in many tournaments.'
         yield (
