@@ -76,6 +76,7 @@ class DjkSampleCommands(AutomationCommands):
             yield from ClubAppCommands().yield_class_commands(
                 'grid_custom_layout',
                 'grid_custom_actions',
+                'manual_component_invocation',
             )
 
 
