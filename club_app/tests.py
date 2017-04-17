@@ -262,16 +262,29 @@ class ClubAppCommands(AutomationCommands):
             dump_data, ('grid_custom_actions_done',),
         )
 
-    # Check manual component invocation and grid dropdown filter selection.
-    manual_component_invocation = (
+    to_club_member_grid_page = (
         click_anchor_by_view, ('club_list_with_component',),
+    )
+
+    manual_component_invocation = (
+        # Check manual component invocation. Issued twice to check component re-instantiation.
         find_anchor_by_view, ('club_member_grid', {'club_id': 1, 'action': ''},),
         relative_by_xpath, ('following::button[@data-component-class="App.GridDialog"]',),
         click,
         to_top_bootstrap_dialog,
         dialog_is_component,
         grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.',},),
+        # grid dropdown filter selection.
         grid_dropdown_filter_choices, ('Member role', ['Member', 'Owner'],),
         grid_dropdown_filter_click, ('Member role',),
+        # grid foreign key filter selection.
+        grid_dropdown_filter_click, ('Sportsman',),
+        to_top_bootstrap_dialog,
+        dialog_is_component,
+        grid_find_data_row, ({'First name': 'John'},),
+        grid_select_current_row,
+        dialog_footer_button_click, ('Apply',),
+        to_top_bootstrap_dialog,
+        dialog_is_component,
         dialog_footer_button_click, ('Close',),
     )

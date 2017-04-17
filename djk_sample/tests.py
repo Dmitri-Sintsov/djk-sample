@@ -76,6 +76,9 @@ class DjkSampleCommands(AutomationCommands):
             yield from ClubAppCommands().yield_class_commands(
                 'grid_custom_layout',
                 'grid_custom_actions',
+                'to_club_member_grid_page',
+                # Check manual component invocation. Issued twice to check component re-instantiation.
+                'manual_component_invocation',
                 'manual_component_invocation',
             )
 
