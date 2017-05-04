@@ -51,9 +51,6 @@ class ClubEditMixin(ClubNavsMixin):
 
 class ClubCreate(ClubEditMixin, InlineCreateView):
 
-    def get_form_action_url(self):
-        return reverse('club_create')
-
     def get_bs_form_opts(self):
         return {
             'class': 'club',
@@ -69,18 +66,17 @@ class ClubCreateDTL(ClubCreate):
 
     template_name = 'club_create.html'
 
-    def get_form_action_url(self):
-        return reverse('club_create_dtl')
-
 
 class ClubUpdate(ClubEditMixin, InlineDetailView):
 
     format_view_title = True
     pk_url_kwarg = 'club_id'
 
+    # Using UPDATE mode for InlineDetailView.
     def get_form_action_url(self):
         return reverse('club_update', kwargs=self.kwargs)
 
+    # Using UPDATE mode for InlineDetailView.
     def get_success_url(self):
         return reverse('club_detail', kwargs={'club_id': self.object.pk})
 
