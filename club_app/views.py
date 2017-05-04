@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from django_jinja_knockout.tpl import format_local_date, reverse
 from django_jinja_knockout.views import (
-    FormDetailView, InlineCreateView, InlineDetailView, ListSortingView, BsTabsMixin, ContextDataMixin
+    FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
 from django_jinja_knockout.viewmodels import to_json
 
@@ -67,16 +67,11 @@ class ClubCreateDTL(ClubCreate):
     template_name = 'club_create.html'
 
 
-class ClubUpdate(ClubEditMixin, InlineDetailView):
+class ClubUpdate(ClubEditMixin, InlineCrudView):
 
     format_view_title = True
     pk_url_kwarg = 'club_id'
 
-    # Using UPDATE mode for InlineDetailView.
-    def get_form_action_url(self):
-        return reverse('club_update', kwargs=self.kwargs)
-
-    # Using UPDATE mode for InlineDetailView.
     def get_success_url(self):
         return reverse('club_detail', kwargs={'club_id': self.object.pk})
 
