@@ -5,7 +5,15 @@ for command in DjkSeleniumCommands.yield_command_names():
     globals()[command] = command
 
 
-class SportClub(AutomationCommands):
+class FormPrefixMixin:
+
+    def __init__(self, *args, **kwargs):
+        self.prefix = kwargs.get('prefix', '')
+        if self.prefix != '':
+            self.prefix += '-'
+
+
+class SportClub(FormPrefixMixin, AutomationCommands):
 
     def club_form_view(self):
         yield (
@@ -18,13 +26,13 @@ class SportClub(AutomationCommands):
         if hasattr(self._, 'club'):
             yield (
                 keys_by_id,
-                ('id_title', self._.club['title']),
-                ('id_foundation_date', self._.club['foundation_date']),
-                'input_as_select_click', ('id_category_{}'.format(self._.club['category_id']),),
+                ('id_{}title'.format(self.prefix), self._.club['title']),
+                ('id_{}foundation_date'.format(self.prefix), self._.club['foundation_date']),
+                'input_as_select_click', ('id_{}category_{}'.format(self.prefix, self._.club['category_id']),),
             )
 
 
-class SportClubInventory(AutomationCommands):
+class SportClubInventory(FormPrefixMixin, AutomationCommands):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,9 +50,9 @@ class SportClubInventory(AutomationCommands):
 
     def get_id_for_field(self, fieldname):
         if self.formset_idx is None:
-            return 'id_{}'.format(fieldname)
+            return 'id_{}{}'.format(self.prefix, fieldname)
         else:
-            return 'id_equipment_set-{}-{}'.format(self.formset_idx, fieldname)
+            return 'id_{}equipment_set-{}-{}'.format(self.prefix, self.formset_idx, fieldname)
 
     def add_manufacturer(self, manufacturer, is_last_manufacturer):
         select_commands = (
@@ -119,7 +127,7 @@ class SportClubInventory(AutomationCommands):
         )
 
 
-class SportClubMembers(AutomationCommands):
+class SportClubMembers(FormPrefixMixin, AutomationCommands):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -142,7 +150,7 @@ class SportClubMembers(AutomationCommands):
         if member['_create_profile_']:
             yield (
                 fk_widget_add_and_select, (
-                    'id_member_set-{}-profile'.format(self.formset_idx),
+                    'id_{}member_set-{}-profile'.format(self.prefix, self.formset_idx),
                     (
                         keys_by_id,
                         ('id_first_name', member['first_name']),
@@ -155,7 +163,7 @@ class SportClubMembers(AutomationCommands):
             )
         else:
             yield (
-                fk_widget_click, ('id_member_set-{}-profile'.format(self.formset_idx),),
+                fk_widget_click, ('id_{}member_set-{}-profile'.format(self.prefix, self.formset_idx),),
             ) + select_commands + (
                 grid_select_current_row,
                 dialog_footer_button_click, ('Apply',),
@@ -163,17 +171,17 @@ class SportClubMembers(AutomationCommands):
             )
         yield (
             keys_by_id,
-            ('id_member_set-{}-last_visit'.format(self.formset_idx), member['last_visit']),
-            ('id_member_set-{}-note'.format(self.formset_idx), member['note']),
+            ('id_{}member_set-{}-last_visit'.format(self.prefix, self.formset_idx), member['last_visit']),
+            ('id_{}member_set-{}-note'.format(self.prefix, self.formset_idx), member['note']),
             input_as_select_click, (
-                'id_member_set-{}-plays_{}'.format(self.formset_idx, member['plays']),
+                'id_{}member_set-{}-plays_{}'.format(self.prefix, self.formset_idx, member['plays']),
             ),
             input_as_select_click, (
-                'id_member_set-{}-role_{}'.format(self.formset_idx, member['role']),
+                'id_{}member_set-{}-role_{}'.format(self.prefix, self.formset_idx, member['role']),
             ),
         )
         if member['is_endorsed']:
             yield (
-                by_id, ('id_member_set-{}-is_endorsed'.format(self.formset_idx),),
+                by_id, ('id_{}member_set-{}-is_endorsed'.format(self.prefix, self.formset_idx),),
                 click,
             )

@@ -39,7 +39,9 @@ class ClubAppCommands(AutomationCommands):
     # This also tests custom tag library which allows to include Jinja2 macro from DTL templates.
     def add_sport_club(self):
         form_view = ('club_create_dtl',)
-        yield from SportClub().set_parameters({
+        yield from SportClub(
+            prefix='test'
+        ).set_parameters({
             'form_view': form_view,
             'club': {
                 'title': 'Yaroslavl Bears',
@@ -50,7 +52,10 @@ class ClubAppCommands(AutomationCommands):
             'club_form_view',
             'club_base_info'
         )
-        yield from SportClubInventory(formset_idx=0).set_parameters({
+        yield from SportClubInventory(
+            formset_idx=0,
+            prefix='test'
+        ).set_parameters({
             'manufacturers': [
                 {
                     '_create_': True,
@@ -81,7 +86,8 @@ class ClubAppCommands(AutomationCommands):
             ]
         }).add_manufacturers()
         yield from SportClubMembers(
-            formset_idx=0
+            formset_idx=0,
+            prefix='test'
         ).set_parameters({
             'members': [
                 {
@@ -121,13 +127,18 @@ class ClubAppCommands(AutomationCommands):
     # Check form with inline formset updating from Jinja2 macro with dynamic formset removal.
     def update_sport_club(self):
         form_view = {'viewname': 'club_update', 'kwargs': {'club_id': 1}}
-        yield from SportClub().set_parameters({
+        yield from SportClub(
+            prefix='test'
+        ).set_parameters({
             'form_view': form_view,
         }).yield_class_commands(
             'club_form_view',
             'club_base_info'
         )
-        yield from SportClubInventory(formset_idx=3).set_parameters({
+        yield from SportClubInventory(
+            formset_idx=3,
+            prefix='test'
+        ).set_parameters({
             'form_view': form_view,
             'manufacturers': [
                 {
@@ -148,7 +159,8 @@ class ClubAppCommands(AutomationCommands):
             'add_manufacturers',
         )
         yield from SportClubMembers(
-            formset_idx=2
+            formset_idx=2,
+            prefix='test'
         ).set_parameters({
             'members': [
                 {
@@ -195,7 +207,9 @@ class ClubAppCommands(AutomationCommands):
             grid_find_data_row, ({'Title': 'Broadway Singers'},),
             grid_row_glyphicon_action, ('Add club equipment',),
         )
-        yield from SportClubInventory(formset_idx=None).set_parameters({
+        yield from SportClubInventory(
+            formset_idx=None
+        ).set_parameters({
             'manufacturers': [
                 {
                     '_create_': True,
