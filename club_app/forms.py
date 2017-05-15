@@ -192,6 +192,7 @@ class ClubFormWithInlineFormsets(FormWithInlineFormsets):
 
     FormClass = ClubForm
     FormsetClasses = [ClubEquipmentFormSet, ClubMemberFormSet]
+    prefix = 'test'
 
 
 class ClubDisplayFormWithInlineFormsets(FormWithInlineFormsets):
