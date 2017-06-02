@@ -3,7 +3,7 @@ from collections import OrderedDict
 from django.utils.html import format_html
 from django.contrib.auth.models import User
 
-from django_jinja_knockout.tpl import format_local_date
+from django_jinja_knockout.tpl import format_local_date, Str
 from django_jinja_knockout.views import KoGridView
 
 from club_app.models import Club, Equipment, Manufacturer, Member, Profile
@@ -130,8 +130,8 @@ class ActionGrid(KoGridView):
         if str_fields is None:
             str_fields = {}
         # Add formatted display of virtual field.
-        if hasattr(obj.content_object, 'get_canonical_link'):
-            desc, link = obj.content_object.get_canonical_link()
+        if hasattr(obj.content_object, 'get_absolute_url'):
+            link = obj.content_object.get_absolute_url()
             str_fields['content_type'] = format_html(
                 '<a href="{}" target="_blank">{}</a>',
                 link,

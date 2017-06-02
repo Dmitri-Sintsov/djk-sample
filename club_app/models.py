@@ -3,7 +3,7 @@ from collections import OrderedDict
 from django.db import models
 from django.utils import timezone
 
-from django_jinja_knockout.tpl import format_local_date, flatten_dict, str_dict, reverse
+from django_jinja_knockout.tpl import format_local_date, flatten_dict, str_dict, reverse, Str
 
 
 class Profile(models.Model):
@@ -74,8 +74,10 @@ class Club(models.Model):
             self.last_update = timezone.now()
         super().save(*args, **kwargs)
 
-    def get_canonical_link(self):
-        return str(self.title), reverse('club_detail', kwargs={'club_id': self.pk})
+    def get_absolute_url(self):
+        url = Str(reverse('club_detail', kwargs={'club_id': self.pk}))
+        url.text = str(self.title)
+        return url
 
     def get_str_fields(self):
         return OrderedDict([
@@ -113,8 +115,10 @@ class Equipment(models.Model):
         verbose_name = 'Sport club equipment'
         verbose_name_plural = 'Sport club equipments'
 
-    def get_canonical_link(self):
-        return str(self.inventory_name), reverse('equipment_detail', kwargs={'equipment_id': self.pk})
+    def get_absolute_url(self):
+        url = Str(reverse('equipment_detail', kwargs={'equipment_id': self.pk}))
+        url.text = str(self.inventory_name)
+        return url
 
     def get_str_fields(self):
         str_fields = OrderedDict([
@@ -167,10 +171,11 @@ class Member(models.Model):
         verbose_name = 'Sport club member'
         verbose_name_plural = 'Sport club members'
 
-    def get_canonical_link(self):
+    def get_absolute_url(self):
+        url = Str(reverse('member_detail', kwargs={'member_id': self.pk}))
         str_fields = flatten_dict(self.get_str_fields(), enclosure_fmt=None)
-        return ' / '.join([str_fields['profile'], str_fields['club']]), \
-               reverse('member_detail', kwargs={'member_id': self.pk})
+        url.text = ' / '.join([str_fields['profile'], str_fields['club']])
+        return url
 
     def get_str_fields(self):
         parts = OrderedDict([
