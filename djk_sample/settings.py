@@ -63,7 +63,9 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
 )
 
+# For simple cases it is enough to include original middleware (commented out).
 DJK_MIDDLEWARE = 'djk_sample.middleware.ContextMiddleware'
+# DJK_MIDDLEWARE = 'django_jinja_knockout.middleware.ContextMiddleware'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -133,7 +135,9 @@ TEMPLATES = [
             "app_dirname": "jinja2",
             'context_processors': [
                 i18n,
+                # For simple cases it is enough to include original template context processor (commented out).
                 'djk_sample.context_processors.template_context_processor'
+                # 'django_jinja_knockout.context_processors.template_context_processor'
             ]
         },
     },
