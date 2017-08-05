@@ -10,6 +10,14 @@
         </a>
     </li>
     <li>
+        <a class="component" href="#"
+           data-event="click"
+           data-component-class="App.ModelFormDialog"
+           data-component-options="{{ tpl.to_json({'route': 'user_change'}) }}">
+            {{ _('User settings') }}
+        </a>
+    </li>
+    <li>
         <a href="{{ url('club_create') }}">
             {{ _('Add sport club') }}
         </a>

@@ -16,6 +16,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 # from django.contrib import admin
 
+from djk_sample.views import UserChangeView
 from club_app.views import (
     ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail,
     ClubList, ClubListWithComponent, ClubListDTL,
@@ -50,6 +51,7 @@ else:
 
 urlpatterns += [
     # Class-based views.
+    url(r'^user-change(?P<action>/?\w*)/$', UserChangeView.as_view(), name='user_change'),
 
     # Club
     url(r'^$', main_page, name='club_main_page',

@@ -8,6 +8,7 @@ class TemplateContextProcessor(BaseContextProcessor):
         # This is a good idea if some client-side route is frequently used.
         # Alternatively one can specify client route url names per view.
         # Second element of each tuple defines whether client-side route should be available to anonymous users.
+        ('user_change', True),
         ('equipment_grid', True),
     )
 

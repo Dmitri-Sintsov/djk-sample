@@ -7,6 +7,7 @@
  */
 App.ClubGridActions = function(options) {
     $.inherit(App.GridActions.prototype, this);
+    $.inherit(App.Actions.prototype, this);
     this.init(options);
 };
 

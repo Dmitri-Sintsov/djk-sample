@@ -68,6 +68,7 @@ App.ko.MemberGridRow = function(options) {
 
 App.MemberGridActions = function(options) {
     $.inherit(App.GridActions.prototype, this);
+    $.inherit(App.Actions.prototype, this);
     this.init(options);
 };
 
