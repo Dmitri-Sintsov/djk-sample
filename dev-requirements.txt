@@ -1,3 +1,3 @@
 django-allauth
-selenium>=3.4
+selenium<3.0
 git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
