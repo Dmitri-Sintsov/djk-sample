@@ -49,7 +49,7 @@ App.ClubGridActions = function(options) {
     ClubGridActions.callback_save_equipment = function(viewModel) {
         var equipmentGridView = viewModel.equipment_grid_view;
         delete viewModel.equipment_grid_view;
-        this.grid.updatePage(viewModel);
+        this.ownerComponent.updatePage(viewModel);
         // Get client-side class of EquipmentGrid component by id (instance of App.ko.Grid or derived class).
         var equipmentGrid = $('#equipment_grid').component();
         if (equipmentGrid !== null) {
