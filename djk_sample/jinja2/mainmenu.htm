@@ -12,8 +12,8 @@
     <li>
         <a class="component" href="#"
            data-event="click"
-           data-component-class="App.ModelFormDialog"
-           data-component-options="{{ tpl.to_json({'route': 'user_change'}) }}">
+           data-component-class="App.EditForm"
+           data-component-options="{{ tpl.to_json({'route': 'user_change', 'pkVal': request.user.pk}) }}">
             {{ _('User settings') }}
         </a>
     </li>
