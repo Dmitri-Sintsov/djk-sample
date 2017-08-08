@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserChangeForm
 
 from django_jinja_knockout.views import ModelFormActionsView
+
+from .forms import UserPreferencesForm
 
 
 class UserChangeView(ModelFormActionsView):
 
-    model = User
-    form = UserChangeForm
+    form = UserPreferencesForm

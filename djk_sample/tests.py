@@ -42,6 +42,22 @@ class DjkSampleCommands(AutomationCommands):
             has_messages_success,
         )
 
+    def user_preferences(self):
+        yield (
+            component_by_classpath, ('App.EditForm',),
+            click,
+            to_top_bootstrap_dialog,
+            keys_by_id,
+            ('id_first_name', 'Dmitriy'),
+            ('id_last_name', 'Sintsov'),
+            ('id_email', 'questpc256@gmail.com'),
+            dialog_footer_button_click, ('Save',),
+            wait_until_dialog_closes,
+            to_top_bootstrap_dialog,
+            dialog_footer_button_click, ('OK',),
+            wait_until_dialog_closes,
+        )
+
     def test_all(self):
         yield (
             maximize_window,
@@ -51,6 +67,7 @@ class DjkSampleCommands(AutomationCommands):
             yield from self.register_new_user()
             yield from self.logout_user()
         yield from self.login_user()
+        yield from self.user_preferences()
 
         if not self.testcase.has_fixture('sport_club_updated'):
             yield from ClubAppCommands().yield_class_commands(
