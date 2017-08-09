@@ -151,7 +151,7 @@ App.ko.MemberGrid = function(options) {
     };
 
     MemberGrid.onChangeEndorsementButtonClick = function(data, ev) {
-        this.gridActions.perform('endorse_members');
+        this.actions.perform('endorse_members');
     };
 
 })(App.ko.MemberGrid.prototype);

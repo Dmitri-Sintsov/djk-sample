@@ -18,7 +18,7 @@ App.ClubGridActions = function(options) {
         var grid = $(selector).component();
         if (grid !== null) {
             // Update dependent grid.
-            grid.gridActions.perform('update');
+            grid.actions.perform('update');
         }
     };
 
