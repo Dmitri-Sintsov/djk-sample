@@ -76,12 +76,12 @@ App.MemberGridActions = function(options) {
 
     // Generates data for AJAX call.
     MemberGridActions.queryargs_endorse_members = function(options) {
-        options['member_ids'] = JSON.stringify(this.owner.getEndorsedMemberIds());
+        options['member_ids'] = JSON.stringify(this.grid.getEndorsedMemberIds());
         return options;
     };
 
     MemberGridActions.callback_endorse_members = function(viewModel) {
-        this.owner.updatePage(viewModel);
+        this.grid.updatePage(viewModel);
         if (viewModel.update_rows.length > 0) {
             var vm = {
                 title: 'Changed member endorsements',
@@ -94,33 +94,33 @@ App.MemberGridActions = function(options) {
                 'message': 'Please invert some checkbox first.'
             };
         }
-        // this.owner.updateMeta(viewModel.meta);
+        // this.grid.updateMeta(viewModel.meta);
         new App.Dialog(vm).alert();
     };
 
     MemberGridActions.callback_quick_endorse = function(viewModel) {
-        this.owner.updatePage(viewModel);
+        this.grid.updatePage(viewModel);
     };
 
     MemberGridActions.callback_quick_disendorse = function(viewModel) {
-        this.owner.updatePage(viewModel);
+        this.grid.updatePage(viewModel);
     };
 
     // Client-side invocation of the action.
     MemberGridActions.perform_edit_note = function(queryArgs, ajaxCallback) {
         var actionDialog = new App.ActionTemplateDialog({
             template: 'member_note_form',
-            owner: this.owner,
+            owner: this.grid,
             meta: {
                 noteLabel: 'Member note',
-                note: this.owner.lastClickedKoRow.getValue('note')
+                note: this.grid.lastClickedKoRow.getValue('note')
             },
         });
         actionDialog.show();
     };
 
     MemberGridActions.callback_edit_note = function(viewModel) {
-        this.owner.updatePage(viewModel);
+        this.grid.updatePage(viewModel);
     };
 
 })(App.MemberGridActions.prototype);
