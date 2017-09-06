@@ -56,7 +56,7 @@ App.ClubGridActions = function(options) {
             // Update rows of MemberGrid component (instance of App.ko.Grid or derived class).
             equipmentGrid.updatePage(equipmentGridView);
             // Highlight equipment tab so the user will know it has updated list page.
-            new App.TabPane().highlight('#equipment_tab');
+            App.TabPane().highlight('#equipment_tab');
             // Switch to equipment grid tab to show equipment changes.
             // window.location.hash = '#equipment_tab';
         }
