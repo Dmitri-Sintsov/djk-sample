@@ -46,6 +46,7 @@ class ClubEditMixin(ClubNavsMixin):
         'profile_fk_widget_grid'
     ]
     template_name = 'club_edit.htm'
+    model = Club
     form_with_inline_formsets = ClubFormWithInlineFormsets
 
 
@@ -71,6 +72,13 @@ class ClubUpdate(ClubEditMixin, InlineCrudView):
 
     format_view_title = True
     pk_url_kwarg = 'club_id'
+
+    def get_form_with_inline_formsets(self, request, create=False):
+        if create:
+            self.object = None
+        else:
+            self.object = self.get_object_from_url()
+        return self.form_with_inline_formsets(request, create=True, current_club=self.object)
 
     def get_success_url(self):
         return reverse('club_detail', kwargs={'club_id': self.object.pk})

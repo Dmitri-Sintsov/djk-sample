@@ -2,11 +2,12 @@ from django.utils.html import format_html
 from django import forms
 from django.forms.models import BaseInlineFormSet
 
-from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget
+from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget, PrefillWidget
 from django_jinja_knockout.forms import (
     BootstrapModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
     FormWithInlineFormsets, ko_inlineformset_factory
 )
+from django_jinja_knockout.query import ListQuerySet
 from django_jinja_knockout.viewmodels import to_json
 
 from djk_sample.middleware import ContextMiddleware
@@ -111,6 +112,22 @@ class MemberForm(BootstrapModelForm):
             'role': forms.RadioSelect()
         }
 
+    def __init__(self, *args, **kwargs):
+        self.current_club = None
+        super().__init__(*args, **kwargs)
+
+    def set_current_club(self, club):
+        related_members_qs = ListQuerySet(
+            Member.objects.filter(
+                club=club
+            )
+        )
+        if related_members_qs.count() > 1:
+            self.fields['note'].widget = PrefillWidget(
+                data_widget=self.fields['note'].widget,
+                choices=related_members_qs.prefill_choices('note')
+            )
+
     def clean(self):
         super().clean()
         role = self.cleaned_data.get('role')
@@ -195,6 +212,16 @@ class ClubFormWithInlineFormsets(FormWithInlineFormsets):
     FormClass = ClubForm
     FormsetClasses = [ClubEquipmentFormSet, ClubMemberFormSet]
     prefix = 'test'
+
+    def __init__(self, *args, **kwargs):
+        self.current_club = kwargs.pop('current_club', None)
+        super().__init__(*args, **kwargs)
+
+    def prepare_formset(self, formset, method):
+        if method == 'GET':
+            for form in formset.forms:
+                if isinstance(form, MemberForm):
+                    form.set_current_club(self.current_club)
 
 
 class ClubDisplayFormWithInlineFormsets(FormWithInlineFormsets):
