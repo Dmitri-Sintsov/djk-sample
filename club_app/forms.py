@@ -135,7 +135,9 @@ class MemberDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=Disp
         def get_note(self, value):
             # self.instance.accepted_license.version
             if self.instance is None or self.instance.note.strip() == '':
-                return 'No note'
+                # Do not display empty row.
+                self.skip_output = True
+                return None
             return format_html(
                 '<button class="btn btn-info dialog-button" data-options=\'{}\'>Read</button>',
                 to_json({
