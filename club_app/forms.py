@@ -2,11 +2,13 @@ from django.utils.html import format_html
 from django import forms
 from django.forms.models import BaseInlineFormSet
 
-from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget
+from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget, PrefillWidget
 from django_jinja_knockout.forms import (
     BootstrapModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
     FormWithInlineFormsets, ko_inlineformset_factory
 )
+from djk_sample.middleware import ContextMiddleware
+from django_jinja_knockout.query import ListQuerySet
 from django_jinja_knockout.viewmodels import to_json
 
 from djk_sample.middleware import ContextMiddleware
@@ -163,6 +165,25 @@ ClubDisplayEquipmentFormSet = ko_inlineformset_factory(
 
 
 class ClubMemberFormSetCls(BaseInlineFormSet):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Not a nice way to load widget data, but formset factories are a bit too inflexible.
+        # todo: Load with AJAX calls can be implemented in cleaner way.
+        request = ContextMiddleware.get_request()
+        self.related_members_qs = ListQuerySet(
+            Member.objects.filter(
+                club__id=request.view_kwargs.get('club_id', None)
+            )
+        )
+
+    def add_fields(self, form, index):
+        super().add_fields(form, index)
+        if self.related_members_qs.count() > 1 and isinstance(form, MemberForm):
+            form.fields['note'].widget = PrefillWidget(
+                data_widget=form.fields['note'].widget,
+                choices=self.related_members_qs.prefill_choices('note')
+            )
 
     def clean(self):
         if any(self.errors):
