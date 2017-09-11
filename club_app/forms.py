@@ -7,7 +7,6 @@ from django_jinja_knockout.forms import (
     BootstrapModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
     FormWithInlineFormsets, ko_inlineformset_factory
 )
-from djk_sample.middleware import ContextMiddleware
 from django_jinja_knockout.query import ListQuerySet
 from django_jinja_knockout.viewmodels import to_json
 
