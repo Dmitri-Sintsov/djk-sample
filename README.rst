@@ -2,11 +2,14 @@
 djk-sample
 ==========
 
+.. _Chrome: https://www.google.com/chrome/
+.. _ChromeDriver: https://sites.google.com/a/chromium.org/chromedriver/
 .. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
 .. _fixtures_order: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=fixtures_order&utf8=%E2%9C%93
 .. _geckodriver: https://github.com/mozilla/geckodriver/releases
 .. _dump_data: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=dump_data&utf8=%E2%9C%93
 .. _has_fixture: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=has_fixture&utf8=%E2%9C%93
+.. _djk_sample/tests.py: https://github.com/Dmitri-Sintsov/djk-sample/blob/master/djk_sample/tests.py
 
 
 Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sintsov/django-jinja-knockout
@@ -52,9 +55,9 @@ This is an example for Ubuntu 14.04 / 16.04 LTS::
 Windows
 ~~~~~~~
 
-Example for Windows 32 bit.
+Example for Windows 32 bit (64 bit is similar but needs 64-bit versions of Python package wheels).
 
-* Download and install Python 3.4 or 3.5 (download and install KB2999226 if Python 3.5 installation freezes).
+* Download and install Python 3.4 or 3.5 (download and install KB2999226 in case Python 3.5 installation freezes).
 * Make sure ``python.exe`` / ``pip3.exe`` are in your `PATH`.
 * Download appropriate lxml wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml for example:
 
@@ -90,28 +93,49 @@ Unit tests
 Selenium tests
 ~~~~~~~~~~~~~~
 
-Inside project virtual environment install selenium::
+Inside project virtual environment install selenium 3.4 or newer::
 
-    pip3 install selenium
+    pip3 install -r dev-requirements.txt
 
-Selenium 2.53 works the best, but may cause the following error when used with newer firefox, especially non-ESR
-versions: https://github.com/seleniumhq/selenium/issues/2739
+django-jinja-knockout version 0.6.0 release tests were performed with:
 
-Selenium tests (firefox, interactive)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Ubuntu Linux 14.04 LTS 64bit
+* Selenium 3.5
+* Google Chrome 61.0.3163.79
+* ChromeDriver 2.32.498513.
 
-Selenium 3.0 or newer may require `geckodriver`_ to run with firefox, which should be saved into ``/usr/bin`` directory.
+Selenium tests (Chrome, interactive)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Preferable method of interactive running Selenium tests is to use recent version of `Chrome`_ with compatible version of
+`ChromeDriver`_. `ChromeDriver`_ binary should be extracted to one of the ``PATH`` directories or into
+``$VIRTUAL_ENV/bin`` directory.
 
-Install latest `Firefox ESR`_. Then run the following command::
+Install latest versions of `Chrome`_ / `ChromeDriver`_. Then run the following command::
+
+    DJK_WEBDRIVER='selenium.webdriver.chrome.webdriver' python manage.py test
+
+or, simply (will use default Selenium webdriver)::
 
     python manage.py test
 
-Close Firefox window when the tests are complete. It should print the following message in console::
+Close ``Chrome`` window when the tests are complete. It should print the following message in the console::
 
     OK
     Destroying test database for alias 'default'...
 
-Selenium tests (firefox, remote shell)
+Selenium tests (Firefox, interactive)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Not every version of `Firefox ESR`_ runs Selenium tests successfully due to bugs / incompatibilities of `geckodriver`_,
+so it's not an recommended method to run interactive tests anymore, but you can try.
+
+Selenium 3.0 or newer requires `geckodriver`_ to run with Firefox, which should be extracted to one of the ``PATH``
+directories or into ``$VIRTUAL_ENV/bin`` directory.
+
+Run the tests with the following command::
+
+    DJK_WEBDRIVER='selenium.webdriver.firefox.webdriver' python manage.py test
+
+Selenium tests (Chrome, remote shell)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When using remote shell, one may install Xvfb::
@@ -122,12 +146,12 @@ to run tests in console this way::
 
     Xvfb :99 &
     export DISPLAY=:99
-    DJK_WEBDRIVER='selenium.webdriver.firefox.webdriver' python manage.py test
+    python manage.py test
 
 or this way::
 
     apt-get instal xvfb
-    export DJK_WEBDRIVER='selenium.webdriver.firefox.webdriver'
+    export DJK_WEBDRIVER='selenium.webdriver.chrome.webdriver'
     xvfb-run python manage.py test
 
 See also:
@@ -139,7 +163,7 @@ See also:
 Selenium tests (phantomjs, remote shell)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While Firefox is optimal to run the tests interactively in X session, easiest way to run remotely is to use phantomjs::
+While Chrome is optimal to run the tests interactively in X session, easiest way to run remotely is to use phantomjs::
 
     apt-get install nodejs nodejs-legacy npm
     npm -g install phantomjs-prebuilt
@@ -152,7 +176,7 @@ Tox tests
 Testing other Python versions with tox.
 
 Note that python 3.5 tests requires tox 2.3.1 or newer version, while Ubuntu 14.04 LTS has older 1.6 version.
-In such case newer version of tox in the project virtual environment::
+In such case install newer version of tox in the project virtual environment::
 
     pip3 install -U tox pip wheel setuptools
     tox -r -e py35-django-111
@@ -161,7 +185,7 @@ Tips
 ~~~~
 
 To skip all or part of already executed tests uncomment one of ``# fixtures =`` definitions located before
-`fixtures_order`_ list in ``djk_sample/tests.py``.
+`fixtures_order`_ list in `djk_sample/tests.py`_.
 
-Newly introduced fixtures added via `dump_data`_ Selenium command should be added in proper place of `fixtures_order`_
-list to retain proper loading / checking order of `has_fixture`_ method.
+Newly introduced fixtures saved with `dump_data`_ Selenium command should be added in the proper place of
+`fixtures_order`_ list to retain proper loading / checking order of the `has_fixture`_ method.
