@@ -1,5 +1,7 @@
 import random
 from django.utils import timezone
+from django.utils.version import get_version
+from distutils.version import LooseVersion
 
 """
 Django settings for djk_sample project.
@@ -67,17 +69,23 @@ INSTALLED_APPS = (
 DJK_MIDDLEWARE = 'djk_sample.middleware.ContextMiddleware'
 # DJK_MIDDLEWARE = 'django_jinja_knockout.middleware.ContextMiddleware'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    DJK_MIDDLEWARE,
-)
+]
+if LooseVersion(get_version()) >= LooseVersion('1.11'):
+    MIDDLEWARE.append(DJK_MIDDLEWARE)
+else:
+    MIDDLEWARE_CLASSES = MIDDLEWARE
+    MIDDLEWARE.extend([
+        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+        DJK_MIDDLEWARE,
+    ])
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
