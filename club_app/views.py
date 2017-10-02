@@ -119,7 +119,9 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
             reverse('club_detail', kwargs={'club_id': obj.pk}),
             obj.title
         )]
-        if ContextMiddleware.get_request().user.is_authenticated():
+        is_authenticated = ContextMiddleware.get_request().user.is_authenticated
+        # is_authenticated is not callable in Django 2.0.
+        if is_authenticated() if callable(is_authenticated) else is_authenticated:
             links.append(format_html(
                 '<a href="{}"><span class="glyphicon glyphicon-edit"></span></a>',
                 reverse('club_update', kwargs={'club_id': obj.pk})
