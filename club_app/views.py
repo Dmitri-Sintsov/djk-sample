@@ -1,11 +1,10 @@
 from django.utils.html import format_html, mark_safe
 from django.shortcuts import render
 
-from django_jinja_knockout.tpl import format_local_date, reverse
+from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs
 from django_jinja_knockout.views import (
     FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
-from django_jinja_knockout.viewmodels import to_json
 
 from djk_sample.middleware import ContextMiddleware
 
@@ -150,20 +149,24 @@ class ClubListWithComponent(ClubList):
 
     def get_title_links(self, obj):
         links = super().get_title_links(obj)
-        links.append(format_html(
-            ' <button class="component btn btn-sm btn-info" '
-            'data-event="click" data-component-class="App.GridDialog" data-component-options="{component_options}">'
+        links.append(format_html_attrs(
+            ' <button {attrs}>'
             '<span class="glyphicon glyphicon-user"></span> See inline'
             '</button>',
-            component_options=to_json({
-                'filterOptions': {
-                    'pageRoute': 'club_member_grid',
-                    'pageRouteKwargs': {'club_id': obj.pk},
-                    'fkGridOptions': {
-                        'profile': 'profile_fk_widget_grid',
+            attrs={
+                'class': 'component btn btn-sm btn-info',
+                'data-event': 'click',
+                'data-component-class': 'App.GridDialog',
+                'data-component-options': {
+                    'filterOptions': {
+                        'pageRoute': 'club_member_grid',
+                        'pageRouteKwargs': {'club_id': obj.pk},
+                        'fkGridOptions': {
+                            'profile': 'profile_fk_widget_grid',
+                        }
                     }
                 }
-            })
+            }
         ))
         return links
 
