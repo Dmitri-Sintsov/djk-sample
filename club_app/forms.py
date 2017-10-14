@@ -8,7 +8,7 @@ from django_jinja_knockout.forms import (
     FormWithInlineFormsets, ko_inlineformset_factory
 )
 from django_jinja_knockout.query import ListQuerySet
-from django_jinja_knockout.viewmodels import to_json
+from django_jinja_knockout.tpl import format_html_attrs
 
 from djk_sample.middleware import ContextMiddleware
 from event_app.models import Action
@@ -139,13 +139,16 @@ class MemberDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=Disp
                 # Do not display empty row.
                 self.skip_output = True
                 return None
-            return format_html(
-                '<button class="btn btn-info dialog-button" data-options=\'{}\'>Read</button>',
-                to_json({
-                    'title': '<b>Note for </b> <i>{}</i>'.format(self.instance.profile),
-                    'message': format_html('<div class="preformatted">{}</div>', self.instance.note),
-                    'method': 'alert'
-                })
+            return format_html_attrs(
+                '<button {attrs}>Read</button>',
+                attrs={
+                    'class': 'btn btn-info dialog-button',
+                    'data-options': {
+                        'title': '<b>Note for </b> <i>{}</i>'.format(self.instance.profile),
+                        'message': format_html('<div class="preformatted">{}</div>', self.instance.note),
+                        'method': 'alert'
+                    }
+                }
             )
 
         model = Member
