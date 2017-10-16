@@ -127,12 +127,12 @@ LOGGING = {
 ROOT_URLCONF = 'djk_sample.urls'
 
 try:
-    from django.core.context_processors import i18n
-    i18n = 'django.core.context_processors.i18n'
-except ImportError:
     # Django > 1.9
     from django.template.context_processors import i18n
-    i18n = 'django.template.context_processors.i18n'
+    i18n_processor = 'django.template.context_processors.i18n'
+except ImportError:
+    from django.core.context_processors import i18n
+    i18n_processor = 'django.core.context_processors.i18n'
 
 TEMPLATES = [
     {
@@ -142,7 +142,7 @@ TEMPLATES = [
             "match_extension": ".htm",
             "app_dirname": "jinja2",
             'context_processors': [
-                i18n,
+                i18n_processor,
                 # For simple cases it is enough to include original template context processor (commented out).
                 'djk_sample.context_processors.template_context_processor'
                 # 'django_jinja_knockout.context_processors.template_context_processor'
