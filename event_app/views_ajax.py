@@ -73,7 +73,7 @@ class ActionGrid(KoGridView):
     enable_deletion = True
     grid_options = {
         'selectMultipleRows': True,
-        'highlightMode': 1,
+        'highlightMode': 'linearRows',
         # Use fkGridOptions to setup allowed_filter_fields['performer'].
         'fkGridOptions': {
             'performer': {
