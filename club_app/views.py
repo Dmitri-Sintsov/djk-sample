@@ -1,6 +1,7 @@
 from django.utils.html import format_html, mark_safe
 from django.shortcuts import render
 
+from django_jinja_knockout.utils.sdv import call_prop
 from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs
 from django_jinja_knockout.views import (
     FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView, BsTabsMixin, ContextDataMixin
@@ -118,9 +119,8 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
             reverse('club_detail', kwargs={'club_id': obj.pk}),
             obj.title
         )]
-        is_authenticated = ContextMiddleware.get_request().user.is_authenticated
         # is_authenticated is not callable in Django 2.0.
-        if is_authenticated() if callable(is_authenticated) else is_authenticated:
+        if call_prop(ContextMiddleware.get_request().user.is_authenticated):
             links.append(format_html(
                 '<a href="{}"><span class="glyphicon glyphicon-edit"></span></a>',
                 reverse('club_update', kwargs={'club_id': obj.pk})
