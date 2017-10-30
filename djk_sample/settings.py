@@ -30,6 +30,9 @@ SECRET_KEY = 'r2d9#(n2%*)&15vt-+5&o3rkqg(@%b5$&agqy_vqw(t4ax(_wh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+JS_ERRORS_ALERT = True
+JS_ERRORS_LOGGING = False
+
 ALLOWED_HOSTS = []
 
 
