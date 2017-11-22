@@ -212,7 +212,7 @@ class ClubEquipmentGrid(EditableClubGrid):
         }
         actions['glyphicon']['add_equipment'] = {
             'localName': _('Add club equipment'),
-            'class': 'glyphicon-wrench',
+            'css': 'glyphicon-wrench',
             'enabled': True
         }
         return actions
@@ -436,17 +436,17 @@ class MemberGridCustomActions(MemberGrid):
         actions['built_in']['endorse_members'] = {'enabled': True}
         actions['click']['edit_note'] = {
             'localName': _('Edit member note'),
-            'class': 'btn-warning',
+            'css': 'btn-warning',
             'enabled': True
         }
         actions['glyphicon']['quick_endorse'] = {
             'localName': _('Quick endorsement'),
-            'class': 'glyphicon-cloud-upload',
+            'css': 'glyphicon-cloud-upload',
             'enabled': True
         }
         actions['glyphicon']['quick_disendorse'] = {
             'localName': _('Quick disendorsement'),
-            'class': 'glyphicon-cloud-download',
+            'css': 'glyphicon-cloud-download',
             'enabled': True
         }
         return actions
