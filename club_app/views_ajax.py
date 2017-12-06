@@ -11,6 +11,7 @@ from django_jinja_knockout.models import get_choice_str
 from django_jinja_knockout.query import FilteredRawQuerySet
 from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin, ContextDataMixin
 from django_jinja_knockout.viewmodels import vm_list
+from django_jinja_knockout.utils.sdv import nested_update
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
 from .forms import (
@@ -207,13 +208,10 @@ class ClubEquipmentGrid(EditableClubGrid):
 
     def get_actions(self):
         actions = super().get_actions()
-        actions['built_in']['save_equipment'] = {
-            'enabled': True
-        }
+        actions['built_in']['save_equipment'] = {}
         actions['glyphicon']['add_equipment'] = {
             'localName': _('Add club equipment'),
             'css': 'glyphicon-wrench',
-            'enabled': True
         }
         return actions
 
@@ -433,22 +431,27 @@ class MemberGridCustomActions(MemberGrid):
 
     def get_actions(self):
         actions = super().get_actions()
-        actions['built_in']['endorse_members'] = {'enabled': True}
-        actions['click']['edit_note'] = {
-            'localName': _('Edit member note'),
-            'css': 'btn-warning',
-            'enabled': True
-        }
-        actions['glyphicon']['quick_endorse'] = {
-            'localName': _('Quick endorsement'),
-            'css': 'glyphicon-cloud-upload',
-            'enabled': True
-        }
-        actions['glyphicon']['quick_disendorse'] = {
-            'localName': _('Quick disendorsement'),
-            'css': 'glyphicon-cloud-download',
-            'enabled': True
-        }
+        nested_update(actions, {
+            'built_in': {
+                'endorse_members': {},
+            },
+            'click': {
+                'edit_note': {
+                    'localName': _('Edit member note'),
+                    'css': 'btn-warning',
+                },
+            },
+            'glyphicon': {
+                'quick_endorse': {
+                    'localName': _('Quick endorsement'),
+                    'css': 'glyphicon-cloud-upload',
+                },
+                'quick_disendorse': {
+                    'localName': _('Quick disendorsement'),
+                    'css': 'glyphicon-cloud-download',
+                }
+            }
+        })
         return actions
 
     def action_endorse_members(self):
