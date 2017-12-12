@@ -49,9 +49,9 @@ class UserFkWidgetGrid(KoGridView):
 
 class ActionGrid(KoGridView):
 
-    client_routes = [
+    client_routes = {
         'user_fk_widget_grid'
-    ]
+    }
     model = Action
     grid_fields = [
         'performer',

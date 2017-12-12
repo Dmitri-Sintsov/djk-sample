@@ -41,10 +41,10 @@ class ClubNavsMixin(BsTabsMixin):
 
 class ClubEditMixin(ClubNavsMixin):
 
-    client_routes = [
+    client_routes = {
         'manufacturer_fk_widget_grid',
         'profile_fk_widget_grid'
-    ]
+    }
     template_name = 'club_edit.htm'
     form_with_inline_formsets = ClubFormWithInlineFormsets
 
@@ -141,10 +141,10 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
 
 class ClubListWithComponent(ClubList):
 
-    client_routes = [
+    client_routes = {
         'club_member_grid',
         'profile_fk_widget_grid',
-    ]
+    }
     template_name = 'club_list_with_component.htm'
 
     def get_title_links(self, obj):

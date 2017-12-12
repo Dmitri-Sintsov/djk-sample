@@ -44,10 +44,10 @@ class EditableClubGrid(KoGridInline, SimpleClubGrid):
     search_fields = [
         ('title', 'icontains')
     ]
-    client_routes = [
+    client_routes = {
         'manufacturer_fk_widget_grid',
         'profile_fk_widget_grid'
-    ]
+    }
     enable_deletion = True
     form_with_inline_formsets = ClubFormWithInlineFormsets
 
@@ -181,12 +181,12 @@ class ClubGridWithVirtualField(SimpleClubGrid):
 class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
 
     template_name = 'club_grid_with_action_logging.htm'
-    client_routes = [
+    client_routes = {
         'user_fk_widget_grid',
         'manufacturer_fk_widget_grid',
         'profile_fk_widget_grid',
         'action_grid',
-    ]
+    }
     grid_options = {
         # Note: 'classPath' is not required for standard App.ko.Grid.
         'classPath': 'App.ko.ClubGrid',
@@ -195,13 +195,13 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
 
 class ClubEquipmentGrid(EditableClubGrid):
 
-    client_routes = [
+    client_routes = {
         # Injected in djk_sample.context_processors.TemplateContextProcessor.CLIENT_ROUTES,
         # just for the test of global route injection.
         # 'equipment_grid',
         'club_grid_simple',
         'manufacturer_fk_widget_grid',
-    ]
+    }
     template_name = 'club_equipment.htm'
     form = ClubForm
     form_with_inline_formsets = None
@@ -301,11 +301,11 @@ class EquipmentGrid(KoGridView):
 
 class MemberGrid(KoGridView):
 
-    client_routes = [
+    client_routes = {
         'member_grid',
         'profile_fk_widget_grid',
         'club_grid_simple'
-    ]
+    }
     template_name = 'member_grid.htm'
     model = Member
     grid_fields = [
