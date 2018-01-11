@@ -32,7 +32,7 @@
         <div class="panel panel-primary">
             <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
             <div class="panel-body">
-                <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
+                <!-- ko if: meta.hasSearch || gridFilters().length > 0 -->
                 <div data-template-id="ko_grid_nav"></div>
                 <!-- /ko -->
                 <div data-template-id="ko_grid_table"></div>

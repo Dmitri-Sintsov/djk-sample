@@ -41,7 +41,7 @@
         <div class="panel panel-primary">
             <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
             <div class="panel-body">
-                <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
+                <!-- ko if: meta.hasSearch || gridFilters().length > 0 -->
                 <div data-template-id="member_ko_grid_nav"></div>
                 <!-- /ko -->
                 <div data-template-id="ko_grid_table"></div>
@@ -63,8 +63,8 @@
                     <div class="navbar-header"><a class="navbar-brand" href="##" data-bind="text: name"></a></div>
                     <ul class="nav navbar-nav">
                         <!-- ko foreach: choices -->
-                        <li data-bind="css: {active: is_active()}">
-                            <a data-bind="css: {bold: is_active()}, text: name, grid_filter_choice, click: onLoadFilter.bind($data)" name="#"></a>
+                        <li data-bind="css: {active: is_active}">
+                            <a data-bind="css: {bold: is_active}, text: name, grid_filter_choice, click: onLoadFilter.bind($data)" name="#"></a>
                         </li>
                         <!-- /ko -->
                     </ul>
