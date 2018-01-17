@@ -10,8 +10,9 @@ class UserChangeView(ModelFormActionsView):
 
     form = UserPreferencesForm
 
-    def action_edit_form(self):
-        obj = self.get_object_for_action()
+    def action_edit_form(self, obj=None):
+        if obj is None:
+            obj = self.get_object_for_action()
         if self.request.user.is_superuser or obj == self.request.user:
             return super().action_edit_form(obj)
         else:

@@ -128,7 +128,7 @@ class EventAppCommands(AutomationCommands):
             # Commented out, because xpath cannot match outerHTML.
             # grid_find_data_row, ({'Related object': '<a href="/equipment-detail-5/" target="_blank">Sport club equipment</a>'},),
             component_relative_by_xpath, (
-                ".//tr [ .//td[@data-caption={}]/a[@href={}] ]",
+                ".//tr [ .//td[@data-caption={}]//a[@href={}] ]",
                 'Related object', '/equipment-detail-5/',
             ),
             element_is_grid_row,

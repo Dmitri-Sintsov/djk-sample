@@ -54,9 +54,11 @@ class ActionGrid(KoGridView):
     }
     model = Action
     grid_fields = [
-        'performer',
-        'date',
-        'action_type',
+        [
+            'performer',
+            'date',
+            'action_type',
+        ],
         'content_type',
         'content_object'
     ]

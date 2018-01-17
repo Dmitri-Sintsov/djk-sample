@@ -25,7 +25,7 @@ App.ko.MemberGridRow = function(options) {
             break;
         case 'note':
             // Display field value as bootstrap clickable popover.
-            var gridColumn = this.ownerGrid.getKoGridColumn(field);
+            var gridColumnOrder = this.ownerGrid.getKoGridColumn(field).order;
             if (this.values[field] !== '') {
                 displayValue = $('<button>', {
                     'class': 'btn btn-info',
@@ -33,7 +33,7 @@ App.ko.MemberGridRow = function(options) {
                     'data-toggle': 'popover',
                     'data-trigger': 'click',
                     'data-placement': 'bottom',
-                    'title': gridColumn.name,
+                    'title': gridColumnOrder.name,
                 }).text('Full text');
             }
             break;
