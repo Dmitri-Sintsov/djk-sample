@@ -14,15 +14,22 @@ class UserFkWidgetGrid(KoGridView):
 
     model = User
     grid_fields = [
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'is_superuser',
-        'is_staff',
-        'is_active',
-        'last_login',
-        'date_joined',
+        # Compound columns:
+        [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        ],
+        [
+            'is_superuser',
+            'is_staff',
+            'is_active',
+        ],
+        [
+            'last_login',
+            'date_joined',
+        ]
     ]
     search_fields = [
         ('username', 'contains'),
@@ -54,6 +61,7 @@ class ActionGrid(KoGridView):
     }
     model = Action
     grid_fields = [
+        # Compound columns:
         [
             'performer',
             'date',

@@ -311,11 +311,14 @@ class MemberGrid(KoGridView):
     grid_fields = [
         'profile',
         'club',
-        # Will join 'category' field from related 'Club' table automatically via Django ORM.
-        'club__category',
-        'last_visit',
-        'plays',
-        'role',
+        # Compound columns:
+        [
+            # Will join 'category' field from related 'Club' table automatically via Django ORM.
+            'club__category',
+            'last_visit',
+            'plays',
+            'role',
+        ],
         'note',
         'is_endorsed'
     ]
@@ -416,6 +419,12 @@ class MemberGridTabs(MemberGrid):
         ('role', None),
         ('is_endorsed', None),
     ])
+
+    @classmethod
+    def get_grid_options(cls):
+        grid_options = super().get_grid_options()
+        grid_options['highlightMode'] = 'cycleColumns'
+        return grid_options
 
     # Do not allow to delete Member instances with role=Member.ROLE_FOUNDER:
     def action_delete_is_allowed(self, objects):
