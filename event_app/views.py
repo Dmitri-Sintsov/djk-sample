@@ -8,8 +8,11 @@ class ActionList(ContextDataMixin, ListSortingView):
     always_visible_links = True
     model = Action
     grid_fields = [
-        'performer',
-        'date',
+        [
+            'performer',
+            'performer__is_superuser',
+            'date',
+        ],
         'action_type',
         'content_object'
     ]
