@@ -8,12 +8,15 @@ jobs:
     steps:
       - checkout
       - run: |
-          # pyenv local 3.6.4
-          # pyenv local 3.4.3 3.5.2 3.6.2
-          python3 --version
+          git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+	  export PYENV_ROOT="$HOME/.pyenv"
+	  export PATH="$PYENV_ROOT/bin:$PATH"
+	  pyenv init -
+	  pyenv install 3.6.4
+          $(pyenv root)/versions/3.6.4/bin/python --version
           # https://stackoverflow.com/questions/27849412/permissionerror-with-pip3
-          python3 -m pip install -U pip wheel tox tox-pyenv setuptools --user
-          python3 -m tox -r -e py36-django-111
+          $(pyenv root)/versions/3.6.4/bin/python -m pip install -U pip wheel tox tox-pyenv setuptools --user
+          $(pyenv root)/versions/3.6.4/bin/python -m tox -r -e py36-django-111
 workflows:
   version: 2
   all_steps:
