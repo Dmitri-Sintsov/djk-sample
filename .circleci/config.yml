@@ -1,15 +1,20 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
     - image: circleci/python:latest-browsers
     environment:
       CHROME_BIN: "/usr/bin/google-chrome"
-  steps:
-    - checkout
-    - run: |
-        pyenv local 3.6.4
-        # pyenv local 3.4.3 3.5.2 3.6.2
-        python3 -m pip install -U pip wheel tox tox-pyenv setuptools
-        python3 -m tox -r -e py36-django-111
+    steps:
+      - checkout
+      - run: |
+          pyenv local 3.6.4
+          # pyenv local 3.4.3 3.5.2 3.6.2
+          python3 -m pip install -U pip wheel tox tox-pyenv setuptools
+          python3 -m tox -r -e py36-django-111
+workflows:
+  version: 2
+  all_steps:
+    jobs:
+      - test
 
