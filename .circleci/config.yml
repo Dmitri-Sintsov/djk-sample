@@ -7,14 +7,9 @@ jobs:
       CHROME_BIN: "/usr/bin/google-chrome"
   steps:
     - checkout
-    - run:
-      name: Install Python
-      # - pyenv local 3.4.3 3.5.2 3.6.2
-      command: pyenv local 3.6.4
-    - run:
-      name: Update pypi tools
-      command: python3 -m pip install -U pip wheel tox tox-pyenv setuptools
-    - run:
-      name: tox tests
-      command: python3 -m tox -r -e py36-django-111
+    - run: |
+      pyenv local 3.6.4
+      # pyenv local 3.4.3 3.5.2 3.6.2
+      python3 -m pip install -U pip wheel tox tox-pyenv setuptools
+      python3 -m tox -r -e py36-django-111
 
