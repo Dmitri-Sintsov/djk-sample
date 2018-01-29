@@ -104,6 +104,7 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
     extra_context_data = {
         'format_local_date': format_local_date
     }
+    highlight_mode = 'linearRows'
     allowed_filter_fields = {
         'category': None,
     }
@@ -146,6 +147,12 @@ class ClubListWithComponent(ClubList):
         'profile_fk_widget_grid',
     }
     template_name = 'club_list_with_component.htm'
+    highlight_mode = 'cycleColumns'
+
+    def get_table_attrs(self):
+        return {
+            'class': 'table table-bordered table-collapse rows-strong-border display-block-condition',
+        }
 
     def get_title_links(self, obj):
         links = super().get_title_links(obj)
