@@ -2,7 +2,7 @@ from django.utils.html import format_html, mark_safe
 from django.shortcuts import render
 
 from django_jinja_knockout.utils.sdv import call_prop
-from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs
+from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs, add_css_classes_to_dict
 from django_jinja_knockout.views import (
     FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView, BsTabsMixin, ContextDataMixin
 )
@@ -150,9 +150,9 @@ class ClubListWithComponent(ClubList):
     highlight_mode = 'cycleColumns'
 
     def get_table_attrs(self):
-        return {
-            'class': 'table table-bordered table-collapse rows-strong-border display-block-condition',
-        }
+        table_attrs = super().get_table_attrs()
+        add_css_classes_to_dict(table_attrs, 'rows-strong-border')
+        return table_attrs
 
     def get_title_links(self, obj):
         links = super().get_title_links(obj)
