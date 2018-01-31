@@ -382,11 +382,15 @@ class ClubMemberGrid(FormatTitleMixin, MemberGrid):
     format_view_title = True
     grid_fields = [
         'profile',
-        'last_visit',
-        'plays',
-        'role',
+        [
+            'plays',
+            'role',
+        ],
+        [
+            'last_visit',
+            'is_endorsed'
+        ],
         'note',
-        'is_endorsed'
     ]
     allowed_filter_fields = OrderedDict([
         ('profile', None),
