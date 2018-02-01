@@ -125,6 +125,14 @@ class EventAppCommands(AutomationCommands):
             wait_until_dialog_closes,
             close_current_window,
             component_by_classpath, ('App.ko.Grid',),
+            grid_pagination_action, ('Highlight mode',),
+            grid_pagination_action, ('Highlight mode',),
+            grid_pagination_action, ('Rows per page',),
+            to_top_bootstrap_dialog,
+            dialog_input_range_right, (3,),
+            dialog_footer_button_click, ('Ok',),
+            wait_until_dialog_closes,
+            component_by_classpath, ('App.ko.Grid',),
             # Commented out, because xpath cannot match outerHTML.
             # grid_find_data_row, ({'Related object': '<a href="/equipment-detail-5/" target="_blank">Sport club equipment</a>'},),
             component_relative_by_xpath, (
