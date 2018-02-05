@@ -97,12 +97,12 @@ Inside project virtual environment install selenium 3.4 or newer::
 
     pip3 install -r dev-requirements.txt
 
-django-jinja-knockout version 0.6.0 release tests were performed with:
+django-jinja-knockout version 0.7.0 release tests were performed with:
 
-* Ubuntu Linux 14.04 LTS 64bit
-* Selenium 3.5
-* Google Chrome 61.0.3163.79
-* ChromeDriver 2.32.498513.
+* Ubuntu Linux 18.04 LTS 64bit
+* Selenium 3.8.1
+* Google Chrome 64.0.3282.140 (Official Build) (64-bit)
+* ChromeDriver 2.35.528139 (47ead77cb35ad2a9a83248b292151462a66cd881)
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
