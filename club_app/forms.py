@@ -142,8 +142,10 @@ class MemberDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=Disp
             return format_html_attrs(
                 '<button {attrs}>Read</button>',
                 attrs={
-                    'class': 'btn btn-info dialog-button',
-                    'data-options': {
+                    'class': 'component btn btn-info',
+                    'data-component-class': 'App.Dialog',
+                    'data-event': 'click',
+                    'data-component-options': {
                         'title': '<b>Note for </b> <i>{}</i>'.format(self.instance.profile),
                         'message': format_html('<div class="preformatted">{}</div>', self.instance.note),
                         'method': 'alert'

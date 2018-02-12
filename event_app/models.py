@@ -13,6 +13,24 @@ from django_jinja_knockout.admin import empty_value_display
 from djk_sample.middleware import ContextMiddleware
 
 
+def user__get_str_fields(self):
+    str_fields = OrderedDict([
+        ('username', self.username),
+    ])
+    if self.first_name:
+        str_fields['first_name'] = self.first_name
+    if self.last_name:
+        str_fields['last_name'] = self.last_name
+    if self.email:
+        str_fields['email'] = self.email
+    return str_fields
+
+
+# Monkey patch User model to support .get_str_fields(), used by ModelFormActionsView / KoGridView.
+# It's not required, just serves an example and improves User interface.
+User.get_str_fields = user__get_str_fields
+
+
 class Action(models.Model):
 
     TYPE_CREATED = 0

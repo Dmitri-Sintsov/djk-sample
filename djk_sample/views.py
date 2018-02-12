@@ -9,6 +9,7 @@ from .forms import UserPreferencesForm
 class UserChangeView(ModelFormActionsView):
 
     form = UserPreferencesForm
+    model_fields_i18n = True
 
     def action_edit_form(self, obj=None):
         if obj is None:
