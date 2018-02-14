@@ -28,7 +28,7 @@ Ubuntu
 
 .. highlight:: shell
 
-This is an example for Ubuntu 14.04 / 16.04 LTS::
+Tested in Ubuntu 14.04 / 16.04 / 18.04 LTS::
 
     sudo apt-get install git libxml2-dev libxslt-dev
     python3 -m venv djk_sample
@@ -37,8 +37,8 @@ This is an example for Ubuntu 14.04 / 16.04 LTS::
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
 
-    # In Ubuntu 14.04 either install old version of html5lib or update pip / setuptools, because old pip / setuptools
-    # cannot install webencodings module required to run newer versions of html5lib.
+    # In Ubuntu 14.04 either install old version of html5lib or update pip / setuptools, because distributed versions of
+    # pip / setuptools cannot install webencodings module required to run newer versions of html5lib.
     if [[ `lsb_release -rs` == "14.04" ]]
     then
     # pip3 install html5lib<0.99999999
@@ -55,14 +55,13 @@ This is an example for Ubuntu 14.04 / 16.04 LTS::
 Windows
 ~~~~~~~
 
-Example for Windows 32 bit (64 bit is similar but needs 64-bit versions of Python package wheels).
+Windows x64 (x86 is similar but needs 32-bit versions of Python package wheels).
 
-* Download and install Python 3.4 or 3.5 (download and install KB2999226 in case Python 3.5 installation freezes).
+* Download and install Python 3.4, 3.5 or 3.6 (download and install KB2999226 in case Python 3.5 installation freezes).
 * Make sure ``python.exe`` / ``pip3.exe`` are in your `PATH`.
 * Download appropriate lxml wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml for example:
 
-  * ``lxml-3.4.4-cp34-none-win32.whl`` for Python 3.4.3 32 bit
-  * ``lxml-3.7.2-cp35-cp35m-win32.whl`` for Python 3.5.2 32 bit
+  * ``lxml-4.1.0-cp36-cp36m-win_amd64.whl`` for Python 3.6 64 bit
 
 Then issue the following commands::
 
@@ -70,7 +69,7 @@ Then issue the following commands::
     cd djk_sample
     Scripts\activate.bat
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
-    pip3 install --use-wheel --no-index lxml-3.4.4-cp34-none-win32.whl
+    pip3 install --use-wheel --no-index lxml-4.1.0-cp36-cp36m-win_amd64.whl
     cd djk-sample
     pip3 install -r requirements.txt
     mkdir "%VIRTUAL_ENV%\djk-sample\logs"
@@ -99,6 +98,7 @@ Inside project virtual environment install selenium 3.4 or newer::
 
 django-jinja-knockout version 0.7.0 release tests were performed with:
 
+* Python 3.6.4 / Python 3.7.0b1
 * Ubuntu Linux 18.04 LTS 64bit
 * Selenium 3.8.1
 * Google Chrome 64.0.3282.140 (Official Build) (64-bit)
@@ -159,11 +159,17 @@ See also:
 * http://stackoverflow.com/questions/6183276/how-do-i-run-selenium-in-xvfb
 * https://gist.github.com/alonisser/11192482
 
+Selenium tests (headless Chrome)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Easiest way to run Selenium tests remotely is to use built-in headless Chrome driver. Headless mode is supported by
+recent versions of Chrome browser::
+
+    DJK_WEBDRIVER='django_jinja_knockout.webdriver.headless_chrome.webdriver' python manage.py test
 
 Selenium tests (phantomjs, remote shell)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While Chrome is optimal to run the tests interactively in X session, easiest way to run remotely is to use phantomjs::
+Phantomjs became unsupported and outdated, so it's not a recommended way to run Selenium tests anymore, but one may try::
 
     apt-get install nodejs nodejs-legacy npm
     npm -g install phantomjs-prebuilt
