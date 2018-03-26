@@ -151,7 +151,5 @@ except ImportError:
     )
 
 if settings.DEBUG:
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns, static
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
     urlpatterns += staticfiles_urlpatterns()
-    # media_static = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    # urlpatterns += media_static

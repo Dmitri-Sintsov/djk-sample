@@ -246,7 +246,7 @@ class ClubEquipmentGrid(EditableClubGrid):
         # to update it's row via grid viewmodel 'prepend_rows' key value.
         equipment_grid = EquipmentGrid()
         equipment_grid.request = self.request
-        equipment_grid.init_class(equipment_grid)
+        equipment_grid.init_class()
         return vm_list({
             'update_rows': self.postprocess_qs([club]),
             # return grid rows for client-side EquipmentGrid component .updatePage(),
