@@ -31,7 +31,7 @@ class ManufacturerForm(BootstrapModelForm):
 
 class ClubForm(BootstrapModelForm):
 
-    class Meta:
+    class Meta(BootstrapModelForm.Meta):
         model = Club
         fields = '__all__'
         exclude = ('last_update',)

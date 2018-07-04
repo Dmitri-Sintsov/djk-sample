@@ -1,9 +1,25 @@
-from django.contrib.auth.models import User
-
+from django.shortcuts import render
+from django_jinja_knockout.forms import Renderer
 from django_jinja_knockout.viewmodels import vm_list
 from django_jinja_knockout.views import ModelFormActionsView
 
 from .forms import UserPreferencesForm
+
+
+def renderer_test(request):
+    child_obj = {
+        'd': 4
+    }
+    renderer_child = Renderer(request, {'obj': child_obj})
+    renderer_child.template = 'renderer_child.htm'
+    top_obj = {
+        'a': 1,
+        'b': 2,
+        'child': renderer_child,
+    }
+    renderer_top = Renderer(request, {'obj': top_obj, 'c': 3})
+    renderer_top.template = 'renderer_top.htm'
+    return render(request, 'renderer_test.htm', {'renderer_top': renderer_top})
 
 
 class UserChangeView(ModelFormActionsView):
