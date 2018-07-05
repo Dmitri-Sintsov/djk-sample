@@ -1,4 +1,5 @@
 import random
+import hashlib
 from django.utils import timezone
 from django.utils.version import get_version
 from distutils.version import LooseVersion
@@ -224,7 +225,8 @@ STATICFILES_FINDERS = (
 
 # Next setting is required so multiple Django instances running at the same host/IP with different ports
 # do not interfere each other (apollo13).
-SESSION_COOKIE_NAME = 'djk_sessionid'
+hash_obj = hashlib.md5(BASE_DIR.encode('utf-8'))
+SESSION_COOKIE_NAME = 'djk_sessionid_{}'.format(hash_obj.hexdigest())
 
 # As this is the test application, registration with SMTP confirmation is not supported.
 # Use:
