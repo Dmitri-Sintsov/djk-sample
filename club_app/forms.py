@@ -57,6 +57,8 @@ class ClubDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
 
 class EquipmentForm(BootstrapModelForm):
 
+    inline_template = 'render_inline_equipment_form.htm'
+
     class Meta:
         model = Equipment
         fields = '__all__'
@@ -163,6 +165,7 @@ class MemberDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=Disp
 ClubEquipmentFormSet = ko_inlineformset_factory(
     Club, Equipment, form=EquipmentForm, extra=0, min_num=1, max_num=5, can_delete=True
 )
+ClubEquipmentFormSet.template = 'render_club_equipment_formset.htm'
 ClubDisplayEquipmentFormSet = ko_inlineformset_factory(
     Club, Equipment, form=EquipmentDisplayForm
 )
