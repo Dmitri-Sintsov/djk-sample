@@ -33,7 +33,6 @@ class UserChangeView(ModelFormActionsView):
             return super().action_edit_form(obj)
         else:
             return vm_list({
-                    'view': 'alert_error',
-                    'message': 'You do not have the rights to edit another user preferences.'
-                }
-            )
+                'view': 'alert_error',
+                'message': 'You do not have the rights to edit another user preferences.'
+            })

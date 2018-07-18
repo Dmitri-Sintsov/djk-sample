@@ -62,8 +62,7 @@ INSTALLED_APPS = (
     'django_jinja.contrib._humanize',
     'django_jinja_knockout',
     'django_jinja_knockout._allauth',
-) + DJK_APPS + \
-(
+) + DJK_APPS + (
     'allauth',
     'allauth.account',
     # Required for socialaccount template tag library despite we do not use social login
