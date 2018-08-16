@@ -7,17 +7,16 @@ from .forms import UserPreferencesForm
 
 
 def renderer_test(request):
-    child_obj = {
-        'd': 4
-    }
-    renderer_child = Renderer(request, {'obj': child_obj})
+    renderer_child = Renderer(request, {
+        'd': 4,
+    })
     renderer_child.template = 'renderer_child.htm'
-    top_obj = {
+    renderer_top = Renderer(request, {
         'a': 1,
         'b': 2,
         'child': renderer_child,
-    }
-    renderer_top = Renderer(request, {'obj': top_obj, 'c': 3})
+        'c': 3,
+    })
     renderer_top.template = 'renderer_top.htm'
     return render(request, 'renderer_test.htm', {'renderer_top': renderer_top})
 
