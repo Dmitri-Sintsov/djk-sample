@@ -7,11 +7,10 @@ from django.utils.translation import gettext as _
 from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
-from django_jinja_knockout.models import get_choice_str
 from django_jinja_knockout.query import FilteredRawQuerySet
 from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin, ContextDataMixin
 from django_jinja_knockout.viewmodels import vm_list
-from django_jinja_knockout.utils.sdv import nested_update
+from django_jinja_knockout.utils.sdv import get_choice_str, nested_update
 
 from .models import Club, Manufacturer, Profile, Member, Equipment
 from .forms import (
