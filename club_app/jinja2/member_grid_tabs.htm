@@ -51,6 +51,26 @@
                         Change endorsement
                     </button>
                 </div>
+                <!-- Nested components isolation -->
+                <div class="component">
+                    <!-- Should display OK, not binding to the outer component. -->
+                    Rows displayed: <span data-bind="text: gridRows().length">OK</span>
+                </div>
+                {# ko_grid(
+                    grid_options={
+                        'pageRoute': 'action_grid',
+                    },
+                    template_args={
+                        'vscroll': True,
+                    },
+                    template_dom_attrs={
+                        'test': 'ok',
+                        'data-template-args-nesting': False,
+                    },
+                    wrapper_dom_attrs={
+                        'id': 'action_grid',
+                    }
+                ) #}
             </div>
             <div data-template-id="ko_grid_pagination"></div>
         </div>
