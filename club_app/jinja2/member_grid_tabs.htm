@@ -15,7 +15,7 @@
             'separateMeta': True,
         },
         template_args={
-            'vscroll': True
+            'vscroll': True,
         },
         wrapper_dom_attrs={
             'id': 'member_grid'
@@ -56,21 +56,32 @@
                     <!-- Should display OK, not binding to the outer component. -->
                     Rows displayed: <span data-bind="text: gridRows().length">OK</span>
                 </div>
-                {# ko_grid(
-                    grid_options={
-                        'pageRoute': 'action_grid',
-                    },
-                    template_args={
-                        'vscroll': True,
-                    },
-                    template_dom_attrs={
-                        'test': 'ok',
-                        'data-template-args-nesting': False,
-                    },
-                    wrapper_dom_attrs={
-                        'id': 'action_grid',
-                    }
-                ) #}
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                        Nested component (inner datatable inside outer datatable)
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ ko_grid(
+                            grid_options={
+                                'pageRoute': 'action_grid',
+                            },
+                            template_dom_attrs={
+                                'data-template-args-nesting': False,
+                                'data-template-options': {
+                                    'templates': {
+                                        'ko_grid_body': 'ko_grid_body',
+                                        'ko_grid_filter_choices': 'ko_grid_filter_choices',
+                                    }
+                                },
+                            },
+                            wrapper_dom_attrs={
+                                'id': 'action_grid',
+                            }
+                        ) }}
+                    </div>
+                </div>
             </div>
             <div data-template-id="ko_grid_pagination"></div>
         </div>
