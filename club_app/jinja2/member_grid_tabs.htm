@@ -42,9 +42,9 @@
             <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
             <div class="panel-body">
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
-                <div data-template-id="member_ko_grid_nav"></div>
+                <tpl _id="member_ko_grid_nav"></tpl>
                 <!-- /ko -->
-                <div data-template-id="ko_grid_table"></div>
+                <tpl _id="ko_grid_table"></tpl>
                 <div class="default-padding">
                     <button
                             data-bind="click: onChangeEndorsementButtonClick.bind($data)" type="button" class="btn btn-warning">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div data-template-id="ko_grid_pagination"></div>
+            <tpl _id="ko_grid_pagination"></tpl>
         </div>
     </script>
 
