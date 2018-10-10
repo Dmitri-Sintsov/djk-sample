@@ -3,6 +3,19 @@
 {% extends 'base.htm' %}
 
 {% block main %}
+    <panel-warning>
+        <panel-heading>
+            <panel-title>
+            This is panel heading.
+            </panel-title>
+        </panel-heading>
+        <panel-body>
+            This is panel body.
+        </panel-body>
+        <panel-footer>
+            This is panel footer.
+        </panel-footer>
+    </panel-warning>
     {#
         'separateMeta' is required because Django grid specifies 'active_choices' field filter value.
     #}
@@ -38,13 +51,13 @@
     {{ ko_grid_body() }}
 
     <script type="text/template" id="member_ko_grid_body">
-        <div class="panel panel-primary">
-            <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
-            <div class="panel-body">
+        <panel-primary>
+            <panel-heading data-bind="text: meta.verboseNamePlural"></panel-heading>
+            <panel-body>
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
-                <tpl _id="member_ko_grid_nav"></tpl>
+                <tpl t-id="member_ko_grid_nav"></tpl>
                 <!-- /ko -->
-                <tpl _id="ko_grid_table"></tpl>
+                <tpl t-id="ko_grid_table"></tpl>
                 <div class="default-padding">
                     <button
                             data-bind="click: onChangeEndorsementButtonClick.bind($data)" type="button" class="btn btn-warning">
@@ -56,13 +69,13 @@
                     <!-- Should display OK, not binding to the outer component. -->
                     Rows displayed: <span data-bind="text: gridRows().length">OK</span>
                 </div>
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
+                <panel-success>
+                    <panel-heading>
+                        <panel-title>
                         Nested component (inner datatable inside outer datatable)
-                        </h3>
-                    </div>
-                    <div class="panel-body">
+                        </panel-title>
+                    </panel-heading>
+                    <panel-body>
                         {{ ko_grid(
                             grid_options={
                                 'pageRoute': 'action_grid',
@@ -80,11 +93,11 @@
                                 'id': 'action_grid',
                             }
                         ) }}
-                    </div>
-                </div>
-            </div>
-            <tpl _id="ko_grid_pagination"></tpl>
-        </div>
+                    </panel-body>
+                </panel-success>
+            </panel-body>
+            <tpl t-id="ko_grid_pagination"></tpl>
+        </panel-primary>
     </script>
 
     <script type="text/template" id="member_ko_grid_filter_choices">
