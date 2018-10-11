@@ -30,10 +30,8 @@
         template_args={
             'vscroll': True,
         },
-        wrapper_dom_attrs={
-            'id': 'member_grid'
-        },
-        template_dom_attrs={
+        dom_attrs={
+            'id': 'member_grid',
             'data-template-options': {
                 'templates': {
                     'ko_grid_body': 'member_ko_grid_body',
@@ -80,7 +78,8 @@
                             grid_options={
                                 'pageRoute': 'action_grid',
                             },
-                            template_dom_attrs={
+                            dom_attrs={
+                                'id': 'action_grid',
                                 'data-template-args-nesting': False,
                                 'data-template-options': {
                                     'templates': {
@@ -89,9 +88,6 @@
                                     }
                                 },
                             },
-                            wrapper_dom_attrs={
-                                'id': 'action_grid',
-                            }
                         ) }}
                     </panel-body>
                 </panel-success>

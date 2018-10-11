@@ -11,10 +11,8 @@
         grid_options={
             'pageRoute': view.request.url_name,
         },
-        wrapper_dom_attrs={
-            'id': 'member_grid'
-        },
-        template_dom_attrs={
+        dom_attrs={
+            'id': 'member_grid',
             'data-template-options': {
                 'templates': {
                     'ko_grid_body': 'member_ko_grid_body',
