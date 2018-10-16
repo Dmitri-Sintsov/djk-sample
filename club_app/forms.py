@@ -4,7 +4,7 @@ from django.forms.models import BaseInlineFormSet
 
 from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget, PrefillWidget
 from django_jinja_knockout.forms import (
-    BootstrapModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
+    RendererModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
     FormWithInlineFormsets, ko_inlineformset_factory
 )
 from django_jinja_knockout.query import ListQuerySet
@@ -15,23 +15,23 @@ from event_app.models import Action
 from .models import Profile, Manufacturer, Club, Equipment, Member
 
 
-class ProfileForm(BootstrapModelForm):
+class ProfileForm(RendererModelForm):
 
     class Meta:
         model = Profile
         fields = '__all__'
 
 
-class ManufacturerForm(BootstrapModelForm):
+class ManufacturerForm(RendererModelForm):
 
     class Meta:
         model = Manufacturer
         fields = '__all__'
 
 
-class ClubForm(BootstrapModelForm):
+class ClubForm(RendererModelForm):
 
-    class Meta(BootstrapModelForm.Meta):
+    class Meta(RendererModelForm.Meta):
         model = Club
         fields = '__all__'
         exclude = ('last_update',)
@@ -47,7 +47,7 @@ class ClubForm(BootstrapModelForm):
         return obj
 
 
-class ClubDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
+class ClubDisplayForm(RendererModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta(ClubForm.Meta):
         widgets = {
@@ -55,7 +55,7 @@ class ClubDisplayForm(BootstrapModelForm, metaclass=DisplayModelMetaclass):
         }
 
 
-class EquipmentForm(BootstrapModelForm):
+class EquipmentForm(RendererModelForm):
 
     inline_template = 'inline_equipment_form.htm'
 
@@ -78,7 +78,7 @@ class EquipmentForm(BootstrapModelForm):
 
 
 # WidgetInstancesMixin is used to automatically render club via self.club.instance.get_str_fields().
-class EquipmentDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=DisplayModelMetaclass):
+class EquipmentDisplayForm(WidgetInstancesMixin, RendererModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta:
         model = Equipment
@@ -97,7 +97,7 @@ class ClubEquipmentForm(EquipmentForm):
         }
 
 
-class MemberForm(BootstrapModelForm):
+class MemberForm(RendererModelForm):
 
     class Meta:
         model = Member
@@ -131,7 +131,7 @@ class MemberForm(BootstrapModelForm):
         return obj
 
 
-class MemberDisplayForm(WidgetInstancesMixin, BootstrapModelForm, metaclass=DisplayModelMetaclass):
+class MemberDisplayForm(WidgetInstancesMixin, RendererModelForm, metaclass=DisplayModelMetaclass):
 
     class Meta:
 
