@@ -29,6 +29,11 @@
         }
     ) }}
 
+{% do request.custom_scripts.extend([
+    'djk/js/grid.js',
+    'js/member-grid.js',
+]) -%}
+
 {% endblock main %}
 
 {% block bottom_scripts %}
@@ -100,6 +105,4 @@
         </li>
     </script>
 
-    <script src="{{ static('djk/js/grid.js') }}"></script>
-    <script src="{{ static('js/member-grid.js') }}"></script>
 {% endblock bottom_scripts %}

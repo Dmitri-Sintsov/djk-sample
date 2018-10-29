@@ -2,9 +2,12 @@
 {# required for ForeignKeyGridWidget to work #}
 {% from 'ko_grid_body.htm' import ko_grid_body with context %}
 
+{# required for ForeignKeyGridWidget to work #}
+{% do request.custom_scripts.extend([
+    'djk/js/formsets.js',
+    'djk/js/grid.js',
+]) -%}
+
 {% block bottom_scripts %}
-    <script src="{{ static('djk/js/formsets.js') }}"></script>
-    {# required for ForeignKeyGridWidget to work #}
     {{ ko_grid_body() }}
-    <script src="{{ static('djk/js/grid.js') }}"></script>
 {% endblock bottom_scripts %}

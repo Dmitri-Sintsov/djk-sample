@@ -14,10 +14,13 @@ ko_grid(
 )
 }}
 
+{% do request.custom_scripts.extend([
+    'djk/js/grid.js',
+    'js/member-grid.js',
+]) -%}
+
 {% endblock main %}
 
 {% block bottom_scripts %}
     {{ ko_grid_body() }}
-    <script src="{{ static('djk/js/grid.js') }}"></script>
-    <script src="{{ static('js/member-grid.js') }}"></script>
 {% endblock bottom_scripts %}

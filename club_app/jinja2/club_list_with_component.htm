@@ -6,6 +6,7 @@
 {% extends 'cbv_list.htm' %}
 
 {% block main -%}
+
 {% call(has_filters, has_pagination) bs_list(view, object_list, is_paginated, page_obj) -%}
     {% if has_filters -%}
         {% for field in view.allowed_filter_fields -%}
@@ -17,9 +18,11 @@
         {{ bs_pagination(cbv=view, page_obj=page_obj) }}
     {% endif -%}
 {% endcall -%}
+
+{% do request.custom_scripts.append('djk/js/grid.js') -%}
+
 {% endblock main -%}
 
 {% block bottom_scripts %}
     {{ ko_grid_body() }}
-    <script src="{{ static('djk/js/grid.js') }}"></script>
 {% endblock bottom_scripts %}
