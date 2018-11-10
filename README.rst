@@ -20,6 +20,17 @@ Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sints
 .. image:: https://img.shields.io/travis/Dmitri-Sintsov/djk-sample.svg?style=flat
     :target: https://travis-ci.org/Dmitri-Sintsov/djk-sample
 
+.. image:: http://www.icoph.org/img/ic-youtube.png
+    :alt: Watch selenium tests recorded videos.
+    :target: https://www.youtube.com/channel/UCZTrByxVSXdyW0z3e3qjTsQ
+
+Screenshot:
+
+.. image:: https://raw.githubusercontent.com/wiki/Dmitri-Sintsov/djk-sample/djk_change_or_create_foreign_key_for_inline_form.png
+   :width: 740px
+
+Recorded video: https://www.youtube.com/watch?v=0eLsIsp7gQM&t=13s
+
 Installation
 ------------
 
