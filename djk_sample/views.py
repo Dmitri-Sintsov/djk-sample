@@ -10,14 +10,14 @@ def renderer_test(request):
     renderer_child = Renderer(request, {
         'd': 4,
     })
-    renderer_child.template = 'renderer_child.htm'
+    renderer_child.template = 'child.htm'
     renderer_top = Renderer(request, {
         'a': 1,
         'b': 2,
         'child': renderer_child,
         'c': 3,
     })
-    renderer_top.template = 'renderer_top.htm'
+    renderer_top.template = 'top.htm'
     return render(request, 'renderer_test.htm', {'renderer_top': renderer_top})
 
 

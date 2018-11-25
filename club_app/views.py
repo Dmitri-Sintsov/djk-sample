@@ -90,6 +90,10 @@ class ClubDetail(ClubNavsMixin, InlineDetailView):
     template_name = 'club_edit.htm'
     form_with_inline_formsets = ClubDisplayFormWithInlineFormsets
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        return context_data
+
     def get_bs_form_opts(self):
         return {
             'class': 'club',
