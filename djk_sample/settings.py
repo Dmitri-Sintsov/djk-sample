@@ -46,6 +46,12 @@ DJK_APPS = (
     'event_app',
 )
 
+try:
+    import djk_ui
+    DJK_UI = ('djk_ui',)
+except ImportError:
+    DJK_UI = ()
+
 # Order of installed apps is important for Django Template loader to find 'djk_sample/templates/base.html'
 # before original allauth 'base.html' is found, when allauth DTL templates are used instead of built-in
 # 'django_jinja_knockout._allauth' Jinja2 templates, thus DJK_APPS are included before 'allauth'.
@@ -60,6 +66,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_jinja',
     'django_jinja.contrib._humanize',
+) + DJK_UI + (
     'django_jinja_knockout',
     'django_jinja_knockout._allauth',
 ) + DJK_APPS + (
