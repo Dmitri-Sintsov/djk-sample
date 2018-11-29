@@ -411,7 +411,10 @@ class ClubMemberGrid(FormatTitleMixin, MemberGrid):
 
 class MemberGridTabs(MemberGrid):
 
-    client_routes = {'action_grid'}
+    client_routes = {
+        'action_grid',
+        'profile_fk_widget_grid'
+    }
     template_name = 'member_grid_tabs.htm'
     enable_deletion = True
 

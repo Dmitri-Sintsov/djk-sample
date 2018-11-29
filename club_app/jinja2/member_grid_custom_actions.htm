@@ -32,7 +32,7 @@
     {{ ko_grid_body() }}
 
     <script type="text/template" id="member_ko_grid_body">
-        <div class="panel panel-primary">
+        <card-primary>
             <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
             <div class="panel-body">
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
@@ -47,11 +47,11 @@
                 </div>
             </div>
             <div data-template-id="ko_grid_pagination"></div>
-        </div>
+        </card-primary>
     </script>
 
     <script type="text/template" id="member_note_form">
-        <div class="panel panel-default">
+        <card-default>
             <div class="panel-body">
                 <form class="ajax-form" enctype="multipart/form-data" method="post" role="form" data-bind="attr: {'data-url': actions.getLastActionUrl()}">
                     <input type="hidden" name="csrfmiddlewaretoken" data-bind="value: actions.getCsrfToken()">
@@ -64,7 +64,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </card-default>
     </script>
 
 {% endblock bottom_scripts %}

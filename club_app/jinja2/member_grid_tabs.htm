@@ -41,7 +41,7 @@
     {{ ko_grid_body() }}
 
     <script type="text/template" id="member_ko_grid_body">
-        <panel-primary>
+        <card-primary>
             <panel-heading data-bind="text: meta.verboseNamePlural"></panel-heading>
             <panel-body>
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
@@ -59,7 +59,7 @@
                     <!-- Should display OK, not binding to the outer component. -->
                     Rows displayed: <span data-bind="text: gridRows().length">OK</span>
                 </div>
-                <panel-success>
+                <card-success>
                     <panel-heading>
                         <panel-title>
                         Nested component (inner datatable inside outer datatable)
@@ -82,10 +82,10 @@
                             },
                         ) }}
                     </panel-body>
-                </panel-success>
+                </card-success>
             </panel-body>
             <tpl t-id="ko_grid_pagination"></tpl>
-        </panel-primary>
+        </card-primary>
     </script>
 
     <script type="text/template" id="member_ko_grid_filter_choices">
