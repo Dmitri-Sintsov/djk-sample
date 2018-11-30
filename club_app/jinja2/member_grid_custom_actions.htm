@@ -33,8 +33,8 @@
 
     <script type="text/template" id="member_ko_grid_body">
         <card-primary>
-            <div data-bind="text: meta.verboseNamePlural" class="panel-heading"></div>
-            <div class="panel-body">
+            <card-header data-bind="text: meta.verboseNamePlural"></card-header>
+            <card-body>
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
                 <div data-template-id="ko_grid_nav"></div>
                 <!-- /ko -->
@@ -45,14 +45,14 @@
                         Change endorsement
                     </button>
                 </div>
-            </div>
+            </card-body>
             <div data-template-id="ko_grid_pagination"></div>
         </card-primary>
     </script>
 
     <script type="text/template" id="member_note_form">
         <card-default>
-            <div class="panel-body">
+            <card-body>
                 <form class="ajax-form" enctype="multipart/form-data" method="post" role="form" data-bind="attr: {'data-url': actions.getLastActionUrl()}">
                     <input type="hidden" name="csrfmiddlewaretoken" data-bind="value: actions.getCsrfToken()">
                     <input type="hidden" name="pk_val" data-bind="value: getLastPkVal()">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </card-body>
         </card-default>
     </script>
 

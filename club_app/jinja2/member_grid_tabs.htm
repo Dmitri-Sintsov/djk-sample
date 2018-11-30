@@ -42,8 +42,8 @@
 
     <script type="text/template" id="member_ko_grid_body">
         <card-primary>
-            <panel-heading data-bind="text: meta.verboseNamePlural"></panel-heading>
-            <panel-body>
+            <card-header data-bind="text: meta.verboseNamePlural"></card-header>
+            <card-body>
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
                 <tpl t-id="member_ko_grid_nav"></tpl>
                 <!-- /ko -->
@@ -60,12 +60,12 @@
                     Rows displayed: <span data-bind="text: gridRows().length">OK</span>
                 </div>
                 <card-success>
-                    <panel-heading>
+                    <card-header>
                         <panel-title>
                         Nested component (inner datatable inside outer datatable)
                         </panel-title>
-                    </panel-heading>
-                    <panel-body>
+                    </card-header>
+                    <card-body>
                         {{ ko_grid(
                             grid_options={
                                 'pageRoute': 'action_grid',
@@ -81,9 +81,9 @@
                                 },
                             },
                         ) }}
-                    </panel-body>
+                    </card-body>
                 </card-success>
-            </panel-body>
+            </card-body>
             <tpl t-id="ko_grid_pagination"></tpl>
         </card-primary>
     </script>

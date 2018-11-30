@@ -12,10 +12,10 @@
 {% endif %}
 
 <card-primary>
-    <div class="panel-heading">{{ view.get_heading }}</div>
-    <div class="panel-body">
+    <card-header>{{ view.get_heading }}</card-header>
+    <card-body>
     {% jinja 'bs_inline_formsets.htm' with _render_=1 related_form=form formsets=formsets action=view.get_form_action_url opts=view.get_bs_form_opts %}
-    </div>
+    </card-body>
 </card-primary>
 {% endblock main %}
 
