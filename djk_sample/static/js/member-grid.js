@@ -31,6 +31,7 @@ App.ko.MemberGridRow = function(options) {
                     'class': 'btn btn-info',
                     'data-content': this.values[field],
                     'data-toggle': 'popover',
+                    'data-html': false,
                     'data-trigger': 'click',
                     'data-placement': 'bottom',
                     'title': gridColumnOrder.name,
