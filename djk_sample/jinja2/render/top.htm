@@ -2,3 +2,46 @@
 <div>b = {{ b }}</div>
 <div>child = {{ child() }}</div>
 <div>c = {{ c }}</div>
+
+{% set card_types = ['default', 'primary', 'success', 'info', 'warning', 'danger', 'secondary', 'light', 'dark',] -%}
+
+<navbar-default>
+    {% for card_type in card_types -%}
+    <card-{{ card_type }}>
+        <card-header>
+            <card-title>{{ card_type|capitalize }} card title</card-title>
+        </card-header>
+        <card-body>{{ card_type|capitalize }} card body</card-body>
+        <card-footer>{{ card_type|capitalize }} card footer</card-footer>
+    </card-{{ card_type}}>
+    {% endfor -%}
+</navbar-default>
+
+{% set print_data = [{
+    'aaaa' : 1111,
+    'bbbb': {
+        'cccc': 2222,
+        'dddd': 3333,
+    },
+}, {
+    'eeee': {
+        'ffff': 4444,
+        'gggg': 5555,
+    },
+    'hhhh': 6666,
+}] -%}
+
+<h3>Labels</h3>
+{{ tpl.print_bs_labels(print_data, show_keys=tpl.PRINT_REPEATED_KEYS) }}
+
+<h3>Badges</h3>
+{{ tpl.print_bs_badges(print_data, show_keys=tpl.PRINT_REPEATED_KEYS) }}
+
+<h3>Well</h3>
+{{ tpl.print_bs_well(print_data, show_keys=tpl.PRINT_REPEATED_KEYS) }}
+
+<h3>List group</h3>
+{{ tpl.print_list_group(print_data, show_keys=tpl.PRINT_REPEATED_KEYS) }}
+
+<h3>Badge list group</h3>
+{{ tpl.print_badge_list_group(print_data, show_keys=tpl.PRINT_REPEATED_KEYS) }}
