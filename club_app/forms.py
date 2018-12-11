@@ -186,7 +186,7 @@ class ClubMemberFormSetCls(BaseInlineFormSet):
 
     def add_fields(self, form, index):
         super().add_fields(form, index)
-        if self.related_members_qs.count() > 1 and isinstance(form, MemberForm):
+        if isinstance(form, MemberForm) and self.related_members_qs.count() > 1:
             form.fields['note'].widget = PrefillWidget(
                 data_widget=form.fields['note'].widget,
                 choices=self.related_members_qs.prefill_choices('note')
