@@ -16,11 +16,11 @@ App.ko.MemberGridRow = function(options) {
             // Display field value as bootstrap label.
             var types = ['success', 'info', 'primary'];
             displayValue = $('<span>', {
-                'class': 'label preformatted'
+                'class': App.ui.labelClass + ' preformatted'
             })
             .text(displayValue)
             .addClass(
-                'label-' + (this.values[field] < types.length ? types[this.values[field]] : 'info')
+                App.ui.labelClass + '-' + (this.values[field] < types.length ? types[this.values[field]] : 'info')
             );
             break;
         case 'note':
