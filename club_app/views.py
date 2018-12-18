@@ -127,11 +127,11 @@ class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
         # is_authenticated is not callable in Django 2.0.
         if call_prop(ContextMiddleware.get_request().user.is_authenticated):
             links.append(format_html(
-                '<a href="{}"><span class="glyphicon glyphicon-edit"></span></a>',
+                '<a href="{}"><span class="iconui iconui-edit"></span></a>',
                 reverse('club_update', kwargs={'club_id': obj.pk})
             ))
             links.append(format_html(
-                '<a href="{}"><span class="glyphicon glyphicon-user"></span></a>',
+                '<a href="{}"><span class="iconui iconui-user"></span></a>',
                 reverse('club_member_grid', kwargs={'action': '', 'club_id': obj.pk})
             ))
         return links
@@ -162,7 +162,7 @@ class ClubListWithComponent(ClubList):
         links = super().get_title_links(obj)
         links.append(format_html_attrs(
             ' <button {attrs}>'
-            '<span class="glyphicon glyphicon-user"></span> See inline'
+            '<span class="iconui iconui-user"></span> See inline'
             '</button>',
             attrs={
                 'class': 'component btn btn-sm btn-info',
