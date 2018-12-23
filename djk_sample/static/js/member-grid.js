@@ -9,8 +9,8 @@ App.ko.MemberGridRow = function(options) {
 
     MemberGridRow.useInitClient = true;
 
-    MemberGridRow.toDisplayValue = function(value, field) {
-        var displayValue = this._super._call('toDisplayValue', value, field);
+    MemberGridRow.display = function(field) {
+        var displayValue = this._super._call('display', field);
         switch (field) {
         case 'role':
             // Display field value as bootstrap label.
