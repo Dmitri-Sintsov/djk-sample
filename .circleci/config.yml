@@ -33,9 +33,10 @@ workflows:
   version: 2
   all_steps:
     jobs:
+      - "checkout_code"
       - "bootstrap3":
           requires:
             - "checkout_code"
-      - bootstrap4:
+      - "bootstrap4":
           requires:
             - "checkout_code"
