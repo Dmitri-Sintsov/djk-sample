@@ -37,7 +37,6 @@ JS_ERRORS_LOGGING = not DEBUG
 
 # ALLOWED_HOSTS = []
 
-
 # Application definition
 
 DJK_APPS = (
@@ -45,12 +44,6 @@ DJK_APPS = (
     'club_app',
     'event_app',
 )
-
-try:
-    import djk_ui
-    DJK_UI = ('djk_ui',)
-except ImportError:
-    DJK_UI = ()
 
 # Order of installed apps is important for Django Template loader to find 'djk_sample/templates/base.html'
 # before original allauth 'base.html' is found, when allauth DTL templates are used instead of built-in
@@ -66,7 +59,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_jinja',
     'django_jinja.contrib._humanize',
-) + DJK_UI + (
+    'djk_ui',
     'django_jinja_knockout',
     'django_jinja_knockout._allauth',
 ) + DJK_APPS + (

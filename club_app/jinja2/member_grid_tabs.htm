@@ -41,9 +41,9 @@
     {{ ko_grid_body() }}
 
     <script type="text/template" id="member_ko_grid_body">
-        <panel-primary>
-            <panel-heading data-bind="text: meta.verboseNamePlural"></panel-heading>
-            <panel-body>
+        <card-primary>
+            <card-header data-bind="text: meta.verboseNamePlural"></card-header>
+            <card-body>
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
                 <tpl t-id="member_ko_grid_nav"></tpl>
                 <!-- /ko -->
@@ -59,13 +59,11 @@
                     <!-- Should display OK, not binding to the outer component. -->
                     Rows displayed: <span data-bind="text: gridRows().length">OK</span>
                 </div>
-                <panel-success>
-                    <panel-heading>
-                        <panel-title>
-                        Nested component (inner datatable inside outer datatable)
-                        </panel-title>
-                    </panel-heading>
-                    <panel-body>
+                <card-success>
+                    <card-header>
+                        <card-title>Nested component (inner datatable inside outer datatable)</card-title>
+                    </card-header>
+                    <card-body>
                         {{ ko_grid(
                             grid_options={
                                 'pageRoute': 'action_grid',
@@ -81,11 +79,13 @@
                                 },
                             },
                         ) }}
-                    </panel-body>
-                </panel-success>
-            </panel-body>
-            <tpl t-id="ko_grid_pagination"></tpl>
-        </panel-primary>
+                    </card-body>
+                </card-success>
+            </card-body>
+            <card-footer>
+                <tpl t-id="ko_grid_pagination"></tpl>
+            </card-footer>
+        </card-primary>
     </script>
 
     <script type="text/template" id="member_ko_grid_filter_choices">
@@ -95,8 +95,8 @@
                     <div class="navbar-header"><a class="navbar-brand" href="##" data-bind="text: name"></a></div>
                     <ul class="nav navbar-nav">
                         <!-- ko foreach: choices -->
-                        <li data-bind="css: {active: is_active()}">
-                            <a data-bind="css: {bold: is_active()}, text: name, grid_filter_choice, click: onLoadFilter.bind($data)" name="#"></a>
+                        <li data-bind="css: {active: is_active(), 'nav-item': true}">
+                            <a data-bind="css: {bold: is_active(), 'nav-link': true}, text: name, grid_filter_choice, click: onLoadFilter.bind($data)" name="#"></a>
                         </li>
                         <!-- /ko -->
                     </ul>

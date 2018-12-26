@@ -208,9 +208,9 @@ class ClubEquipmentGrid(EditableClubGrid):
     def get_actions(self):
         actions = super().get_actions()
         actions['built_in']['save_equipment'] = {}
-        actions['glyphicon']['add_equipment'] = {
+        actions['iconui']['add_equipment'] = {
             'localName': _('Add club equipment'),
-            'css': 'glyphicon-wrench',
+            'css': 'iconui-wrench',
         }
         return actions
 
@@ -411,7 +411,10 @@ class ClubMemberGrid(FormatTitleMixin, MemberGrid):
 
 class MemberGridTabs(MemberGrid):
 
-    client_routes = {'action_grid'}
+    client_routes = {
+        'action_grid',
+        'profile_fk_widget_grid'
+    }
     template_name = 'member_grid_tabs.htm'
     enable_deletion = True
 
@@ -454,14 +457,14 @@ class MemberGridCustomActions(MemberGrid):
                     'css': 'btn-warning',
                 },
             },
-            'glyphicon': {
+            'iconui': {
                 'quick_endorse': {
                     'localName': _('Quick endorsement'),
-                    'css': 'glyphicon-cloud-upload',
+                    'css': 'iconui-cloud-upload',
                 },
                 'quick_disendorse': {
                     'localName': _('Quick disendorsement'),
-                    'css': 'glyphicon-cloud-download',
+                    'css': 'iconui-cloud-download',
                 }
             }
         })

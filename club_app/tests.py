@@ -205,7 +205,7 @@ class ClubAppCommands(AutomationCommands):
             click_anchor_by_view, ('club_equipment_grid', {'action': ''}),
             component_by_classpath, ('App.ko.ClubGrid',),
             grid_find_data_row, ({'Title': 'Broadway Singers'},),
-            grid_row_glyphicon_action, ('Add club equipment',),
+            grid_row_iconui_action, ('Add club equipment',),
         )
         yield from SportClubInventory(
             formset_idx=None
@@ -240,7 +240,7 @@ class ClubAppCommands(AutomationCommands):
         grid_tabs_filter_choices, ('Plays sport', ['Table tennis', 'Another sport']),
     )
 
-    # Check MemberGrid custom actions of 'glyphicon' type, 'button' type;
+    # Check MemberGrid custom actions of 'iconui' type, 'button' type;
     # 'click' type action 'change' with server-side ModelForm and
     # 'click' type action 'Edit member note' with client-side underscore.js / knockout.js form.
     def grid_custom_actions(self):
@@ -249,7 +249,7 @@ class ClubAppCommands(AutomationCommands):
             click_anchor_by_view, ('member_grid_custom_actions', {'action': ''}),
             component_by_id, ('member_grid',),
             grid_find_data_row, ({'Last visit time': '11/23/2016 2:47 p.m.'},),
-            grid_row_glyphicon_action, ('Quick disendorsement',),
+            grid_row_iconui_action, ('Quick disendorsement',),
             grid_find_data_row, ({'Last visit time': '11/27/2016 7:27 p.m.'},),
             # phantomjs does not allow to click TR, thus we are selecting suitable TD.
             grid_row_relative_by_xpath, ('.//td[@data-caption="Sportsman"]',),

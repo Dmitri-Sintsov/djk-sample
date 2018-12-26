@@ -2,6 +2,8 @@
 djk-sample
 ==========
 
+.. _Bootstrap 3: https://getbootstrap.com/docs/3.3/
+.. _Bootstrap 4: https://getbootstrap.com/docs/4.1/
 .. _Chrome: https://www.google.com/chrome/
 .. _ChromeDriver: https://sites.google.com/a/chromium.org/chromedriver/
 .. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
@@ -39,7 +41,7 @@ Ubuntu
 
 .. highlight:: shell
 
-Tested in Ubuntu 14.04 / 16.04 / 18.04 LTS::
+Tested in Ubuntu 18.04 LTS::
 
     sudo apt-get install git libxml2-dev libxslt-dev
     python3 -m venv djk_sample
@@ -48,20 +50,23 @@ Tested in Ubuntu 14.04 / 16.04 / 18.04 LTS::
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
 
-    # In Ubuntu 14.04 either install old version of html5lib or update pip / setuptools, because distributed versions of
-    # pip / setuptools cannot install webencodings module required to run newer versions of html5lib.
-    if [[ `lsb_release -rs` == "14.04" ]]
-    then
-    # pip3 install html5lib<0.99999999
-    pip3 install -U pip wheel setuptools
-    fi
+To use `Bootstrap 3`_ version::
 
-    python3 -m pip install -U -r requirements.txt
+    python3 -m pip install -U -r requirements-bs3.txt
+
+To use `Bootstrap 4`_ version::
+
+    python3 -m pip install -U -r requirements-bs4.txt
+
+then::
+
     mkdir "$VIRTUAL_ENV/djk-sample/logs/"
     mkdir "$VIRTUAL_ENV/djk-sample/fixtures/"
     python manage.py makemigrations club_app event_app
     python manage.py migrate
     python manage.py runserver
+
+Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly.
 
 Windows
 ~~~~~~~
@@ -82,7 +87,17 @@ Then issue the following commands::
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     pip3 install --use-wheel --no-index lxml-4.1.0-cp36-cp36m-win_amd64.whl
     cd djk-sample
-    pip3 install -r requirements.txt
+
+To use `Bootstrap 3`_ version::
+
+    python3 -m pip install -U -r requirements-bs3.txt
+
+To use `Bootstrap 4`_ version::
+
+    python3 -m pip install -U -r requirements-bs4.txt
+
+then::
+
     mkdir "%VIRTUAL_ENV%\djk-sample\logs"
     mkdir "%VIRTUAL_ENV%\djk-sample\fixtures"
     python manage.py makemigrations club_app event_app
@@ -94,7 +109,7 @@ Mac OS X
 
 Use brew:
 
-* Install Python3 from http://brew.sh/
+* Install Python3 from https://brew.sh/
 * Follow Ubuntu instructions with the exception that ``libxml2-dev`` ``libxslt-dev`` are already installed.
 
 Unit tests
@@ -106,6 +121,14 @@ Selenium tests
 Inside project virtual environment install selenium 3.4 or newer::
 
     pip3 install -r dev-requirements.txt
+
+To use `Bootstrap 3`_ version::
+
+    ./3bs.sh
+
+To use `Bootstrap 4`_ version::
+
+    ./4bs.sh
 
 django-jinja-knockout version 0.7.0 release tests were performed with:
 
@@ -196,7 +219,10 @@ Note that python 3.5 tests requires tox 2.3.1 or newer version, while Ubuntu 14.
 In such case install newer version of tox in the project virtual environment::
 
     pip3 install -U tox pip wheel setuptools
-    tox -r -e py35-django-111
+
+To run the test::
+
+    tox -r -e py36-django-111-bs3
 
 Tips
 ~~~~

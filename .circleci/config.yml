@@ -1,13 +1,13 @@
 version: 2
 jobs:
-  test:
+  checkout_code:
     docker:
     - image: circleci/python:latest-browsers
     environment:
       CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - checkout
-      - run: |
+      - prepare: |
           # Install pyenv to use exact version of Python.
           git clone https://github.com/pyenv/pyenv.git ~/.pyenv
           export PYENV_ROOT="$HOME/.pyenv"
@@ -16,15 +16,23 @@ jobs:
           pyenv install 3.7.0
           echo Version of Python installed in the python:latest-browsers image.
           python3 --version
-          export PATH="$(pyenv root)/versions/3.6.4/bin/:$PATH"
+          export PATH="$(pyenv root)/versions/3.7.0/bin/:$PATH"
           echo Version of Python used to run the tests.
           python3 --version
           # https://stackoverflow.com/questions/27849412/permissionerror-with-pip3
           python3 -m pip install -U pip wheel tox tox-pyenv setuptools --user
-          python3 -m tox -r -e py37-django-21
+  bootstrap3:
+      - run: |
+          python3 -m tox -r -e py37-django-21-bs3
+  bootstrap4:
+      - run: |
+          python3 -m tox -r -e py37-django-21-bs4
 workflows:
   version: 2
   all_steps:
     jobs:
-      - test
+      - bootstrap3
+          requires: checkout_code
+      - bootstrap4
+          requires: checkout_code
 

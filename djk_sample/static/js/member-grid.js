@@ -9,18 +9,18 @@ App.ko.MemberGridRow = function(options) {
 
     MemberGridRow.useInitClient = true;
 
-    MemberGridRow.toDisplayValue = function(value, field) {
-        var displayValue = this._super._call('toDisplayValue', value, field);
+    MemberGridRow.display = function(field) {
+        var displayValue = this._super._call('display', field);
         switch (field) {
         case 'role':
             // Display field value as bootstrap label.
             var types = ['success', 'info', 'primary'];
             displayValue = $('<span>', {
-                'class': 'label preformatted'
+                'class': App.ui.labelClass + ' preformatted'
             })
             .text(displayValue)
             .addClass(
-                'label-' + (this.values[field] < types.length ? types[this.values[field]] : 'info')
+                App.ui.labelClass + '-' + (this.values[field] < types.length ? types[this.values[field]] : 'info')
             );
             break;
         case 'note':
@@ -31,6 +31,7 @@ App.ko.MemberGridRow = function(options) {
                     'class': 'btn btn-info',
                     'data-content': this.values[field],
                     'data-toggle': 'popover',
+                    'data-html': false,
                     'data-trigger': 'click',
                     'data-placement': 'bottom',
                     'title': gridColumnOrder.name,

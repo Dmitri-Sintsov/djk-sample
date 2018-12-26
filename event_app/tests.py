@@ -141,7 +141,7 @@ class EventAppCommands(AutomationCommands):
             ),
             element_is_grid_row,
             # grid_select_current_row,
-            grid_row_glyphicon_action, ('Remove',),
+            grid_row_iconui_action, ('Remove',),
             dialog_footer_button_click, ('Yes',),
             dump_data, ('grid_interaction_club_actions_done',),
         )
