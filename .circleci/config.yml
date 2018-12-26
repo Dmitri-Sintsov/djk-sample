@@ -8,6 +8,8 @@ jobs:
     steps:
       - checkout
       - run: |
+          pwd
+          ls
           .circleci/env.sh
           python3 -m tox -r -e py37-django-21-bs3
   "bootstrap4":
@@ -17,6 +19,8 @@ jobs:
       CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - run: |
+          pwd
+          ls
           .circleci/env.sh
           python3 -m tox -r -e py37-django-21-bs4
 workflows:
