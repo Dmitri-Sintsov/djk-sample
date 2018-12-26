@@ -7,7 +7,7 @@ jobs:
       CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - checkout
-      - prepare: |
+      - run: |
           # Install pyenv to use exact version of Python.
           git clone https://github.com/pyenv/pyenv.git ~/.pyenv
           export PYENV_ROOT="$HOME/.pyenv"
