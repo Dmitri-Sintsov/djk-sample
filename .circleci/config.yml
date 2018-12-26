@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          .circleci/circleci_env.sh
+          .circleci/env.sh
           python3 -m tox -r -e py37-django-21-bs3
   "bootstrap4":
     docker:
@@ -17,7 +17,7 @@ jobs:
       CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - run: |
-          .circleci/circleci_env.sh
+          .circleci/env.sh
           python3 -m tox -r -e py37-django-21-bs4
 workflows:
   version: 2
