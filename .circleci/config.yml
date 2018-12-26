@@ -1,15 +1,10 @@
 version: 2
-
-executors:
-  py-latest-executor:
-    docker:
-      - image: circleci/python:latest-browsers
-    environment:
-      CHROME_BIN: "/usr/bin/google-chrome"
-
 jobs:
   "checkout_code":
-    executor: py-latest-executor
+    docker:
+    - image: circleci/python:latest-browsers
+    environment:
+      CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - checkout
       - run: |
@@ -27,12 +22,18 @@ jobs:
           # https://stackoverflow.com/questions/27849412/permissionerror-with-pip3
           python3 -m pip install -U pip wheel tox tox-pyenv setuptools --user
   "bootstrap3":
-    executor: py-latest-executor
+    docker:
+    - image: circleci/python:latest-browsers
+    environment:
+      CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - run: |
           python3 -m tox -r -e py37-django-21-bs3
   "bootstrap4":
-    executor: py-latest-executor
+    docker:
+    - image: circleci/python:latest-browsers
+    environment:
+      CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - run: |
           python3 -m tox -r -e py37-django-21-bs4
