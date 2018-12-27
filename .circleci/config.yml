@@ -1,21 +1,21 @@
 version: 2
+defaults: &defaults
+  docker:
+  - image: circleci/python:latest-browsers
+  environment:
+    CHROME_BIN: "/usr/bin/google-chrome"
 jobs:
   "bootstrap3":
-    docker:
-    - image: circleci/python:latest-browsers
-    environment:
-      CHROME_BIN: "/usr/bin/google-chrome"
+    <<: *defaults
     steps:
       - checkout
       - run: |
           .circleci/env.sh
           python3 -m tox -r -e py37-django-21-bs3
   "bootstrap4":
-    docker:
-    - image: circleci/python:latest-browsers
-    environment:
-      CHROME_BIN: "/usr/bin/google-chrome"
+    <<: *defaults
     steps:
+      - checkout
       - run: |
           .circleci/env.sh
           python3 -m tox -r -e py37-django-21-bs4
