@@ -2,8 +2,8 @@
 djk-sample
 ==========
 
-.. _Bootstrap 3: https://getbootstrap.com/docs/3.3/
-.. _Bootstrap 4: https://getbootstrap.com/docs/4.1/
+.. _Bootstrap 3: https://github.com/Dmitri-Sintsov/djk-bootstrap3
+.. _Bootstrap 4: https://github.com/Dmitri-Sintsov/djk-bootstrap4
 .. _Chrome: https://www.google.com/chrome/
 .. _ChromeDriver: https://sites.google.com/a/chromium.org/chromedriver/
 .. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
