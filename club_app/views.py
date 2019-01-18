@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django_jinja_knockout.utils.sdv import call_prop
 from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs, add_css_classes_to_dict
 from django_jinja_knockout.views import (
-    FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView, BsTabsMixin, ContextDataMixin
+    FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView,
+    BsTabsMixin, ContextDataMixin, NavsList
 )
 
 from djk_sample.middleware import ContextMiddleware
@@ -21,10 +22,10 @@ def main_page(request):
 class ClubNavsMixin(BsTabsMixin):
 
     def get_main_navs(self, request, object_id=None):
-        main_navs = [
+        main_navs = NavsList([
             {'url': reverse('club_list'), 'text': 'List of clubs'},
             {'url': reverse('club_create'), 'text': 'Create new club'}
-        ]
+        ])
         if object_id is not None:
             main_navs.extend([
                 {
