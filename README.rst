@@ -2,8 +2,8 @@
 djk-sample
 ==========
 
-.. _Bootstrap 3: https://getbootstrap.com/docs/3.3/
-.. _Bootstrap 4: https://getbootstrap.com/docs/4.1/
+.. _Bootstrap 3: https://github.com/Dmitri-Sintsov/djk-bootstrap3
+.. _Bootstrap 4: https://github.com/Dmitri-Sintsov/djk-bootstrap4
 .. _Chrome: https://www.google.com/chrome/
 .. _ChromeDriver: https://sites.google.com/a/chromium.org/chromedriver/
 .. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
@@ -50,11 +50,11 @@ Tested in Ubuntu 18.04 LTS::
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
 
-To use `Bootstrap 3`_ version::
+To use the current stable `Bootstrap 3`_ version of djk_ui::
 
     python3 -m pip install -U -r requirements-bs3.txt
 
-To use `Bootstrap 4`_ version::
+To use the current stable `Bootstrap 4`_ version of djk_ui::
 
     python3 -m pip install -U -r requirements-bs4.txt
 
@@ -66,7 +66,8 @@ then::
     python manage.py migrate
     python manage.py runserver
 
-Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly.
+Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
+(not always stable) version of djk_ui.
 
 Windows
 ~~~~~~~
@@ -88,13 +89,13 @@ Then issue the following commands::
     pip3 install --use-wheel --no-index lxml-4.1.0-cp36-cp36m-win_amd64.whl
     cd djk-sample
 
-To use `Bootstrap 3`_ version::
+To use the current stable `Bootstrap 3`_ version of djk_ui::
 
-    python3 -m pip install -U -r requirements-bs3.txt
+    python -m pip install -U -r requirements-bs3.txt
 
-To use `Bootstrap 4`_ version::
+To use the current stable `Bootstrap 4`_ version of djk_ui::
 
-    python3 -m pip install -U -r requirements-bs4.txt
+    python -m pip install -U -r requirements-bs4.txt
 
 then::
 
