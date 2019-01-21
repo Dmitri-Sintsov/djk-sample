@@ -21,7 +21,7 @@ def main_page(request):
 
 class ClubNavsMixin(BsTabsMixin):
 
-    def get_main_navs(self, request, object_id=None):
+    def get_main_navs(self, object_id=None):
         main_navs = NavsList([
             {'url': reverse('club_list'), 'text': 'List of clubs'},
             {'url': reverse('club_create'), 'text': 'Create new club'}
