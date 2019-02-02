@@ -31,7 +31,7 @@ Screenshot:
 .. image:: https://raw.githubusercontent.com/wiki/Dmitri-Sintsov/djk-sample/djk_change_or_create_foreign_key_for_inline_form.png
    :width: 740px
 
-Recorded video: https://www.youtube.com/watch?v=0eLsIsp7gQM&t=13s
+Recorded video: https://www.youtube.com/watch?v=CJLdtFaXhKo
 
 Installation
 ------------
