@@ -50,11 +50,11 @@ Tested in Ubuntu 18.04 LTS::
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
 
-To use the current stable `Bootstrap 3`_ version of djk_ui::
+To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
     python3 -m pip install -U -r requirements-bs3.txt
 
-To use the current stable `Bootstrap 4`_ version of djk_ui::
+To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
     python3 -m pip install -U -r requirements-bs4.txt
 
@@ -67,7 +67,7 @@ then::
     python manage.py runserver
 
 Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
-(not always stable) version of djk_ui.
+(not always stable) version of ``djk_ui``.
 
 Windows
 ~~~~~~~
@@ -89,11 +89,11 @@ Then issue the following commands::
     pip3 install --use-wheel --no-index lxml-4.1.0-cp36-cp36m-win_amd64.whl
     cd djk-sample
 
-To use the current stable `Bootstrap 3`_ version of djk_ui::
+To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
     python -m pip install -U -r requirements-bs3.txt
 
-To use the current stable `Bootstrap 4`_ version of djk_ui::
+To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
     python -m pip install -U -r requirements-bs4.txt
 

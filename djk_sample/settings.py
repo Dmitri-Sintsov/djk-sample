@@ -48,7 +48,8 @@ DJK_APPS = (
 # Order of installed apps is important for Django Template loader to find 'djk_sample/templates/base.html'
 # before original allauth 'base.html' is found, when allauth DTL templates are used instead of built-in
 # 'django_jinja_knockout._allauth' Jinja2 templates, thus DJK_APPS are included before 'allauth'.
-# For the same reason, djk_ui app is included before django_jinja_knockout, to make it possivble to override
+#
+# For the same reason, djk_ui app is included before django_jinja_knockout, to make it possible to override
 # any of django_jinja_knockout template / macro.
 INSTALLED_APPS = (
     'django.contrib.admin',
