@@ -123,7 +123,7 @@ class DjkSampleTestCase(DjkTestCase):
         ).exec_class(
             DjkSampleCommands(testcase=self).set_parameters({
                 'username': 'testuser',
-                'password': 'test123',
+                'password': 'djk12345',
             }),
             'test_all'
         )._default_wait()
