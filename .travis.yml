@@ -7,8 +7,6 @@ python:
   - '3.6'
 env:
   matrix:
-    - TOXENV=py36-django-22-bs3
-    - TOXENV=py36-django-22-bs4
     - TOXENV=py36-django-21-bs3
     - TOXENV=py36-django-21-bs4
     - TOXENV=py36-django-20-bs3
