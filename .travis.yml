@@ -12,6 +12,8 @@ env:
     - TOXENV=py36-django-20-bs4
     - TOXENV=py36-django-21-bs3
     - TOXENV=py36-django-21-bs4
+    - TOXENV=py36-django-22-bs3
+    - TOXENV=py36-django-22-bs4
   global:
     - PIP_WHEEL_DIR=$HOME/.wheels
     - PIP_FIND_LINKS=file://$HOME/.wheels
