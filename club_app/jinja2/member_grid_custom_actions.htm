@@ -9,7 +9,7 @@
     #}
     {{ ko_grid(
         grid_options={
-            'pageRoute': view.request.resolver_match.url_name,
+            'pageRoute': view.request.resolver_match.view_name,
         },
         dom_attrs={
             'id': 'member_grid',
