@@ -11,7 +11,7 @@ class ContextMiddleware(BaseContextMiddleware):
         for args in self.__class__.yield_out_instances('actions'):
             Action.do(*args)
 
-    def djk_view(self, view_func, view_args, view_kwargs):
-        result = super().djk_view(view_func, view_args, view_kwargs)
+    def djk_view(self, request, view_func, view_args, view_kwargs):
+        result = super().djk_view(request, view_func, view_args, view_kwargs)
         self.save_actions()
         return result
