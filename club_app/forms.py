@@ -180,7 +180,7 @@ class ClubMemberFormSetCls(BaseInlineFormSet):
         request = ContextMiddleware.get_request()
         self.related_members_qs = ListQuerySet(
             Member.objects.filter(
-                club__id=request.view_kwargs.get('club_id', None)
+                club__id=request.resolver_match.kwargs.get('club_id', None)
             )
         )
 
