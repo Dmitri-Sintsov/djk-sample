@@ -80,6 +80,9 @@ class DjkSampleCommands(AutomationCommands):
                 'event_list_navigate',
                 'event_list_preview_member',
             )
+            yield from ClubAppCommands().yield_class_commands(
+                'browse_preloaded_dtl_grid',
+            )
         if not self.testcase.has_fixture('grid_interaction_club_actions_done'):
             yield from EventAppCommands().yield_class_commands(
                 'grid_interaction_club_actions',

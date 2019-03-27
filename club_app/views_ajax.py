@@ -29,11 +29,13 @@ class SimpleClubGrid(KoGridView):
 
 class SimpleClubGridDTL(ContextDataMixin, SimpleClubGrid):
     template_name = 'club_grid.html'
+    # Next line is not required, it's a feature check.
+    preload_meta_list = True
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['club_grid_options'] = {
-            'pageRoute': self.request.url_name
+            'pageRoute': self.request.resolver_match.view_name
         }
         return context_data
 

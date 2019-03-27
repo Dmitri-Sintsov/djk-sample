@@ -184,6 +184,14 @@ class ClubAppCommands(AutomationCommands):
             dump_data, ('sport_club_updated',)
         )
 
+    browse_preloaded_dtl_grid = (
+        click_anchor_by_view, ('club_grid_simple_dtl', {'action': ''}),
+        component_by_classpath, ('App.ko.Grid',),
+        # Test JOINed field queries.
+        grid_order_by, ('Foundation date',),
+        grid_find_data_row, ({'Title': 'Yaroslavl Bears'},),
+    )
+
     # Check query.FilteredRawQuery usage with KoGridView.
     browse_grid_with_raw_query = (
         click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
