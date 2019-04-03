@@ -11,5 +11,5 @@ python3 --version
 echo Version of Python used to run the tests.
 python3 --version
 # https://stackoverflow.com/questions/27849412/permissionerror-with-pip3
-python3 -m pip install -U pip wheel tox tox-pyenv setuptools --user
+python3 -m pip install -U pip wheel tox tox-pyenv setuptools pysqlite3 --user
 
