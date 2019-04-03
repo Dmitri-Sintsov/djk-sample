@@ -4,5 +4,5 @@ fixtures/
 __pycache__/
 *.pyc
 migrations/
-db.sqlite3
+*.sqlite3
 
