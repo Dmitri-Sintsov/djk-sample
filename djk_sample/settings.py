@@ -156,13 +156,18 @@ WSGI_APPLICATION = 'djk_sample.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+TEST_DB_NAME = os.environ.get('DJK_TEST_DB_NAME')
+if TEST_DB_NAME is None:
+    TEST_DB_NAME = ':memory:'
+else:
+    TEST_DB_NAME = os.path.join(BASE_DIR, TEST_DB_NAME)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'TEST': {
-            # 'NAME': ':memory:',
-            'NAME': os.path.join(BASE_DIR, 'test.sqlite3'),
+            'NAME': TEST_DB_NAME,
         },
     }
 }
