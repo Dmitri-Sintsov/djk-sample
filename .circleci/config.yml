@@ -10,14 +10,14 @@ jobs:
     steps:
       - checkout
       - run: |
-          # .circleci/env.sh
+          .circleci/env.sh
           python3 -m tox -r -e py37-django-22-bs3
   "bootstrap4":
     <<: *defaults
     steps:
       - checkout
       - run: |
-          # .circleci/env.sh
+          .circleci/env.sh
           python3 -m tox -r -e py37-django-22-bs4
 workflows:
   version: 2
