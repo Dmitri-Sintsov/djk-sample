@@ -156,21 +156,20 @@ WSGI_APPLICATION = 'djk_sample.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-TEST_DB_NAME = os.environ.get('DJK_TEST_DB_NAME')
-if TEST_DB_NAME is None:
-    TEST_DB_NAME = ':memory:'
-else:
-    TEST_DB_NAME = os.path.join(BASE_DIR, TEST_DB_NAME)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'TEST': {
-            'NAME': TEST_DB_NAME,
-        },
+        'TEST': {},
     }
 }
+TEST_DB_NAME = os.environ.get('DJK_TEST_DB_NAME')
+if TEST_DB_NAME is None:
+    DATABASES['default']['NAME'] = os.path.join(BASE_DIR, 'db.sqlite3')
+    DATABASES['default']['TEST']['NAME'] = ':memory:'
+else:
+    TEST_DB_NAME = os.path.join(BASE_DIR, TEST_DB_NAME)
+    DATABASES['default']['NAME'] = TEST_DB_NAME
+    DATABASES['default']['TEST']['NAME'] = TEST_DB_NAME
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
