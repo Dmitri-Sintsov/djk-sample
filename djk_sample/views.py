@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django_jinja_knockout.forms import Renderer
+from django_jinja_knockout import tpl
 from django_jinja_knockout.viewmodels import vm_list
 from django_jinja_knockout.views import ModelFormActionsView
 
@@ -7,11 +7,11 @@ from .forms import UserPreferencesForm
 
 
 def renderer_test(request):
-    renderer_child = Renderer(request, {
+    renderer_child = tpl.Renderer(request, {
         'd': 4,
     })
     renderer_child.template = 'child.htm'
-    renderer_top = Renderer(request, {
+    renderer_top = tpl.Renderer(request, {
         'a': 1,
         'b': 2,
         'child': renderer_child,
