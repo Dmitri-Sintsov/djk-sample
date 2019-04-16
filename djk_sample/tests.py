@@ -62,6 +62,7 @@ class DjkSampleCommands(AutomationCommands):
         yield (
             maximize_window,
             relative_url, ('/',),
+            click_anchor_by_view, {'viewname': 'renderer_test'},
         )
         if not self.testcase.has_fixture('new_user_registered'):
             yield from self.register_new_user()

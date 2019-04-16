@@ -27,6 +27,9 @@
 }] -%}
 {% else %}
 {% set navs = [{
+    'url': url('renderer_test'),
+    'text': _('Renderer test'),
+}, {
     'url': url('account_login'),
     'text': _('Sign In'),
 }, {
