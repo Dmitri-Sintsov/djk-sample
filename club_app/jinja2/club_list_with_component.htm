@@ -1,6 +1,7 @@
 {% from 'ko_grid_body.htm' import ko_grid_body with context %}
 {% from 'bs_breadcrumbs.htm' import bs_breadcrumbs with context -%}
 {% from 'bs_dropdown.htm' import bs_dropdown with context -%}
+{% from 'bs_navs.htm' import bs_navs with context -%}
 {% from 'bs_list.htm' import bs_list with context -%}
 {% from 'bs_pagination.htm' import bs_pagination with context -%}
 {% extends 'cbv_list.htm' %}
@@ -10,8 +11,12 @@
 {% call(has_filters, has_pagination) bs_list(view, object_list, is_paginated, page_obj) -%}
     {% if has_filters -%}
         {% for field in view.allowed_filter_fields -%}
-            {{ bs_breadcrumbs(*view.get_filter_args(field)) }}
-            {{ bs_dropdown(*view.get_filter_args(field)) }}
+            <div class="label label-primary">Demonstration of bs_navs</div>
+            {{ bs_navs(**view.get_filter_kwargs(field)) }}
+            <div class="label label-info">Demonstration of bs_breadcrumbs</div>
+            {{ bs_breadcrumbs(**view.get_filter_kwargs(field)) }}
+            <div class="label label-success">Demonstration of bs_dropdown</div>
+            {{ bs_dropdown(**view.get_filter_kwargs(field)) }}
         {% endfor -%}
     {% elif has_pagination -%}
         <div class="alert alert-info">Sample of pagination override</div>
