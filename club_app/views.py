@@ -166,7 +166,7 @@ class ClubListWithComponent(ClubList):
             '<span class="iconui iconui-user"></span> See inline'
             '</button>',
             attrs={
-                'class': 'component btn btn-sm btn-info',
+                'class': 'component btn btn-sm btn-light',
                 'data-event': 'click',
                 'data-component-class': 'App.GridDialog',
                 'data-component-options': {

@@ -11,11 +11,17 @@
 {% call(has_filters, has_pagination) bs_list(view, object_list, is_paginated, page_obj) -%}
     {% if has_filters -%}
         {% for field in view.allowed_filter_fields -%}
-            <div class="label label-primary">Demonstration of bs_navs</div>
+            <div class="alert alert-secondary">
+                <div class="badge badge-primary">Demonstration of bs_navs</div>
+            </div>
             {{ bs_navs(**view.get_filter_kwargs(field)) }}
-            <div class="label label-info">Demonstration of bs_breadcrumbs</div>
+            <div class="alert alert-light">
+                <div class="badge badge-info">Demonstration of bs_breadcrumbs</div>
+            </div>
             {{ bs_breadcrumbs(**view.get_filter_kwargs(field)) }}
-            <div class="label label-success">Demonstration of bs_dropdown</div>
+            <div class="alert alert-dark">
+                <div class="badge badge-success">Demonstration of bs_dropdown</div>
+            </div>
             {{ bs_dropdown(**view.get_filter_kwargs(field)) }}
         {% endfor -%}
     {% elif has_pagination -%}
