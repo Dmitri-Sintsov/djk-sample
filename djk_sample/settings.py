@@ -37,6 +37,15 @@ DJK_APPS = [
     'event_app',
 ]
 
+try:
+    import django_jinja
+    DJANGO_JINJA_APPS = [
+        'django_jinja',
+        'django_jinja.contrib._humanize',
+    ]
+except ImportError:
+    DJANGO_JINJA_APPS = []
+
 # Order of installed apps is important for Django Template loader to find 'djk_sample/templates/base.html'
 # before original allauth 'base.html' is found, when allauth DTL templates are used instead of built-in
 # 'django_jinja_knockout._allauth' Jinja2 templates, thus DJK_APPS are included before 'allauth'.
@@ -52,8 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'sites' is required by allauth
     'django.contrib.sites',
-    'django_jinja',
-    'django_jinja.contrib._humanize',
+] + DJANGO_JINJA_APPS + [
     'djk_ui',
     'django_jinja_knockout',
     'django_jinja_knockout._allauth',
@@ -118,21 +126,49 @@ LOGGING = {
 
 ROOT_URLCONF = 'djk_sample.urls'
 
-TEMPLATES = [
-    {
-        "BACKEND": "django_jinja.backend.Jinja2",
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "match_extension": ".htm",
-            "app_dirname": "jinja2",
-            'context_processors': [
-                'django.template.context_processors.i18n',
-                # For simple cases it is enough to include original template context processor (commented out).
-                'djk_sample.context_processors.template_context_processor'
-                # 'django_jinja_knockout.context_processors.template_context_processor'
-            ]
+TEMPLATES = []
+
+try:
+    # Optional support for django_jinja package, may be removed in the future in case there is no updates for it.
+    import django_jinja
+    TEMPLATES.append(
+        {
+            "BACKEND": "django_jinja.backend.Jinja2",
+            "APP_DIRS": True,
+            "OPTIONS": {
+                "environment": "django_jinja_knockout.jinja2.CompatibleEnvironment",
+                "match_extension": ".htm",
+                "app_dirname": "jinja2",
+                'context_processors': [
+                    'django.template.context_processors.i18n',
+                    # For simple cases it is enough to include original template context processor (commented out).
+                    'djk_sample.context_processors.template_context_processor'
+                    # 'django_jinja_knockout.context_processors.template_context_processor'
+                ]
+            },
         },
-    },
+    )
+except ImportError:
+    # Default, use Django Jinja2 backend with custom environment.
+    # One may inherit from EnvironmentPackage class to tweak the environment.
+    TEMPLATES.append(
+        {
+            "BACKEND": "django.template.backends.jinja2.Jinja2",
+            "APP_DIRS": True,
+            "OPTIONS": {
+                'environment': 'django_jinja_knockout.jinja2.environment',
+                'context_processors': [
+                    'django.template.context_processors.i18n',
+                    # For simple cases it is enough to include original template context processor (commented out).
+                    'djk_sample.context_processors.template_context_processor'
+                    # 'django_jinja_knockout.context_processors.template_context_processor'
+                ]
+            },
+        },
+    )
+
+
+TEMPLATES.append(
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -148,7 +184,7 @@ TEMPLATES = [
             ],
         },
     },
-]
+)
 
 WSGI_APPLICATION = 'djk_sample.wsgi.application'
 

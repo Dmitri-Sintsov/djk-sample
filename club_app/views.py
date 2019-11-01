@@ -14,7 +14,7 @@ from .models import Club, Equipment, Member
 from .forms import EquipmentDisplayForm, MemberDisplayForm, ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
 
 
-def main_page(request):
+def main_page(request, **kwargs):
     if request.method == 'GET':
         return render(request, 'main.htm')
 
