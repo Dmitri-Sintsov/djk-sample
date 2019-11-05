@@ -128,7 +128,7 @@ ROOT_URLCONF = 'djk_sample.urls'
 
 TEMPLATES = []
 
-try:
+if len(DJANGO_JINJA_APPS) > 0:
     # Optional support for django_jinja package, may be removed in the future in case there is no updates for it.
     import django_jinja
     TEMPLATES.append(
@@ -148,7 +148,7 @@ try:
             },
         },
     )
-except ImportError:
+else:
     # Default, use Django Jinja2 backend with custom environment.
     # One may inherit from EnvironmentPackage class to tweak the environment.
     TEMPLATES.append(

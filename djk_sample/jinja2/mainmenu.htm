@@ -1,10 +1,10 @@
 {% from 'bs_nav_items.htm' import bs_nav_items with context -%}
 {% if client_conf.userId != 0 %}
 {% set navs = [{
-    'url': url('account_email'),
+    'url': tpl.url('account_email'),
     'text': _('Change E-mail'),
 }, {
-    'url': url('account_logout'),
+    'url': tpl.url('account_logout'),
     'text': _('Sign Out'),
 }, {
     'atts': {
@@ -16,71 +16,71 @@
     'url': '#',
     'text': _('User settings'),
 }, {
-    'url': url('club_create'),
+    'url': tpl.url('club_create'),
     'text': _('Add sport club'),
 }, {
-    'url': url('club_create_perms_check'),
+    'url': tpl.url('club_create_perms_check'),
     'text': _('Add sport club, checking current user has required permissions'),
 }, {
-    'url': url('club_create_dtl'),
+    'url': tpl.url('club_create_dtl'),
     'text': _('Add sport club (Django Template Language)'),
 }] -%}
 {% else %}
 {% set navs = [{
-    'url': url('renderer_test'),
+    'url': tpl.url('renderer_test'),
     'text': _('Renderer test'),
 }, {
-    'url': url('account_login'),
+    'url': tpl.url('account_login'),
     'text': _('Sign In'),
 }, {
-    'url': url('account_signup'),
+    'url': tpl.url('account_signup'),
     'text': _('Sign Up'),
 }] -%}
 {% endif %}
 {% do navs.extend([{
-    'url': url('action_list'),
+    'url': tpl.url('action_list'),
     'text': _('Log of performed actions'),
 }, {
-    'url': url('action_grid', action=''),
+    'url': tpl.url('action_grid', action=''),
     'text': _('Grid with performed actions'),
 }, {
-    'url': url('club_list'),
+    'url': tpl.url('club_list'),
     'text': _('List of sport clubs'),
 }, {
-    'url': url('club_list_with_component'),
+    'url': tpl.url('club_list_with_component'),
     'text': _('List of sport clubs with their members in-line'),
 }, {
-    'url': url('club_list_dtl'),
+    'url': tpl.url('club_list_dtl'),
     'text': _('List of sport clubs (Django Template Language)'),
 }, {
-    'url': url('club_grid_simple', action=''),
+    'url': tpl.url('club_grid_simple', action=''),
     'text': _('Simple club grid'),
 }, {
-    'url': url('club_grid_simple_dtl', action=''),
+    'url': tpl.url('club_grid_simple_dtl', action=''),
     'text': _('Simple club grid (Django Template Language)'),
 }, {
-    'url': url('club_grid_editable', action=''),
+    'url': tpl.url('club_grid_editable', action=''),
     'text': _('Editable club grid'),
 }, {
-    'url': url('club_grid_raw_query', action=''),
+    'url': tpl.url('club_grid_raw_query', action=''),
     'text': _('Club grid raw query'),
 }, {
-    'url': url('club_grid_with_virtual_field', action=''),
+    'url': tpl.url('club_grid_with_virtual_field', action=''),
     'text': _('Club grid with virtual field'),
 }, {
-    'url': url('club_grid_with_action_logging', action=''),
+    'url': tpl.url('club_grid_with_action_logging', action=''),
     'text': _('Club grid with action logging'),
 }, {
-    'url': url('club_equipment_grid', action=''),
+    'url': tpl.url('club_equipment_grid', action=''),
     'text': _('Club grid with Equipment grid interaction'),
 }, {
-    'url': url('member_grid', action=''),
+    'url': tpl.url('member_grid', action=''),
     'text': _('Members grid with client-side formatting'),
 }, {
-    'url': url('member_grid_tabs', action=''),
+    'url': tpl.url('member_grid_tabs', action=''),
     'text': _('Members grid with custom layout'),
 }, {
-    'url': url('member_grid_custom_actions', action=''),
+    'url': tpl.url('member_grid_custom_actions', action=''),
     'text': _('Members grid with custom actions')
 }]) -%}
 {{ bs_nav_items(navs) }}
