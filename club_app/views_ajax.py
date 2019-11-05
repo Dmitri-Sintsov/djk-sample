@@ -186,7 +186,7 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
         'user_fk_widget_grid',
         'manufacturer_fk_widget_grid',
         'profile_fk_widget_grid',
-        'action_grid',
+        'action:grid',
     }
     grid_options = {
         # Note: 'classPath' is not required for standard App.ko.Grid.
@@ -414,7 +414,7 @@ class ClubMemberGrid(FormatTitleMixin, MemberGrid):
 class MemberGridTabs(MemberGrid):
 
     client_routes = {
-        'action_grid',
+        'action:grid',
         'profile_fk_widget_grid'
     }
     template_name = 'member_grid_tabs.htm'

@@ -30,8 +30,7 @@ from club_app.views_ajax import (
     MemberGrid, ClubMemberGrid, MemberGridTabs, MemberGridCustomActions,
     ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
 )
-from event_app.views import ActionList
-from event_app.views_ajax import UserFkWidgetGrid, ActionGrid
+from event_app.views_ajax import UserFkWidgetGrid
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
@@ -75,11 +74,8 @@ urlpatterns += [
     url(r'^club-list-dtl/$', ClubListDTL.as_view(), name='club_list_dtl',
         kwargs={'view_title': 'List of sport clubs (Django Template Language)', 'allow_anonymous': True}),
 
-    # Action
-    url(r'^action-list/$', ActionList.as_view(), name='action_list',
-        kwargs={'view_title': 'Log of actions'}),
-    url(r'^action-grid(?P<action>/?\w*)/$', ActionGrid.as_view(), name='action_grid',
-        kwargs={'view_title': 'Grid with the list of performed actions'}),
+    # Event / Action. Namespace urls resolving test.
+    url(r'^action-', include('event_app.urls', namespace='action')),
 
     # Equipment
     url(r'^equipment-detail-(?P<equipment_id>\d+)/$', EquipmentDetail.as_view(), name='equipment_detail',

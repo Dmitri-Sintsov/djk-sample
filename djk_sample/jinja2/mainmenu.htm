@@ -38,10 +38,10 @@
 }] -%}
 {% endif %}
 {% do navs.extend([{
-    'url': tpl.url('action_list'),
+    'url': tpl.url('action:list'),
     'text': _('Log of performed actions'),
 }, {
-    'url': tpl.url('action_grid', action=''),
+    'url': tpl.url('action:grid', action=''),
     'text': _('Grid with performed actions'),
 }, {
     'url': tpl.url('club_list'),

@@ -10,16 +10,16 @@ for command in DjkSeleniumCommands.yield_command_names():
 class EventAppCommands(AutomationCommands):
 
     event_list_navigate = (
-        click_anchor_by_view, {'viewname': 'action_list'},
+        click_anchor_by_view, {'viewname': 'action:list'},
         click_anchor_by_view, (
-            'action_list',
+            'action:list',
             {},
             {
                 'page': 2,
             }
         ),
         click_anchor_by_view, (
-            'action_list',
+            'action:list',
             {},
             {
                 'list_filter': to_json({
@@ -28,7 +28,7 @@ class EventAppCommands(AutomationCommands):
             }
         ),
         click_anchor_by_view, (
-            'action_list',
+            'action:list',
             {},
             {
                 'list_filter': to_json({
