@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from django_jinja_knockout import tpl
 from django_jinja_knockout.viewmodels import vm_list
-from django_jinja_knockout.views import ModelFormActionsView
+from django_jinja_knockout.views import djk_get, ModelFormActionsView
 
 from .forms import UserPreferencesForm
 
 
-def renderer_test(request):
+def renderer_test(request, **kwargs):
+    # Test djk_get without decorator.
+    djk_get(request)
     renderer_child = tpl.Renderer(request, {
         'd': 4,
     })

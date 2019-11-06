@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django_jinja_knockout.utils.sdv import call_prop
 from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs, add_css_classes_to_dict
 from django_jinja_knockout.views import (
-    FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView,
-    BsTabsMixin, ContextDataMixin, NavsList
+    djk_get_decorator, BsTabsMixin, ContextDataMixin, NavsList,
+    FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView
 )
 
 from djk_sample.middleware import ContextMiddleware
@@ -14,9 +14,9 @@ from .models import Club, Equipment, Member
 from .forms import EquipmentDisplayForm, MemberDisplayForm, ClubFormWithInlineFormsets, ClubDisplayFormWithInlineFormsets
 
 
+@djk_get_decorator(view_title='Decorated main page title')
 def main_page(request, **kwargs):
-    if request.method == 'GET':
-        return render(request, 'main.htm')
+    return render(request, 'main.htm')
 
 
 class ClubNavsMixin(BsTabsMixin):

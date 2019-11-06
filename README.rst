@@ -201,6 +201,12 @@ recent versions of Chrome browser::
 
     DJK_WEBDRIVER='django_jinja_knockout.webdriver.headless_chrome.webdriver' python manage.py test
 
+Selenium test (Linux Chromium)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Linux Chromium usually is updated less often, providing more stable version of browser::
+
+    DJK_WEBDRIVER='django_jinja_knockout.webdriver.chromium.webdriver' python manage.py test
+
 Selenium tests (phantomjs, remote shell)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -27,7 +27,7 @@ JS_ERRORS_ALERT = DEBUG
 # Requires proper setup of Django email error logging.
 JS_ERRORS_LOGGING = not DEBUG
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
