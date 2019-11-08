@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django_jinja_knockout.utils.sdv import call_prop
 from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs, add_css_classes_to_dict
 from django_jinja_knockout.views import (
-    djk_get_decorator, BsTabsMixin, ContextDataMixin, NavsList,
+    djk_get_decorator, BsTabsMixin, NavsList,
     FormDetailView, InlineCreateView, InlineDetailView, InlineCrudView, ListSortingView
 )
 
@@ -102,11 +102,11 @@ class ClubDetail(ClubNavsMixin, InlineDetailView):
         }
 
 
-class ClubList(ContextDataMixin, ClubNavsMixin, ListSortingView):
+class ClubList(ClubNavsMixin, ListSortingView):
 
     model = Club
     allowed_sort_orders = '__all__'
-    extra_context_data = {
+    extra_context = {
         'format_local_date': format_local_date
     }
     highlight_mode = 'linearRows'

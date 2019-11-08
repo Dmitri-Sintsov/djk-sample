@@ -8,7 +8,7 @@ from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
 from django_jinja_knockout.query import FilteredRawQuerySet
-from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin, ContextDataMixin
+from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin
 from django_jinja_knockout.viewmodels import vm_list
 from django_jinja_knockout.utils.sdv import get_choice_str, nested_update
 
@@ -27,7 +27,7 @@ class SimpleClubGrid(KoGridView):
     allowed_sort_orders = '__all__'
 
 
-class SimpleClubGridDTL(ContextDataMixin, SimpleClubGrid):
+class SimpleClubGridDTL(SimpleClubGrid):
     template_name = 'club_grid.html'
     # Next line is not required, it's a feature check.
     preload_meta_list = True

@@ -1,9 +1,9 @@
-from django_jinja_knockout.views import ListSortingView, ContextDataMixin
+from django_jinja_knockout.views import ListSortingView
 
 from .models import Action
 
 
-class ActionList(ContextDataMixin, ListSortingView):
+class ActionList(ListSortingView):
     # Enabled always visible paginator links because there could be many pages of actions, potentially.
     always_visible_links = True
     model = Action
