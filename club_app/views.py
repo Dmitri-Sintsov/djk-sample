@@ -126,7 +126,7 @@ class ClubList(ClubNavsMixin, ListSortingView):
             obj.title
         )]
         # is_authenticated is not callable in Django 2.0.
-        if call_prop(ContextMiddleware.get_request().user.is_authenticated):
+        if call_prop(self.request.user.is_authenticated):
             links.append(format_html(
                 '<a href="{}"><span class="iconui iconui-edit"></span></a>',
                 reverse('club_update', kwargs={'club_id': obj.pk})

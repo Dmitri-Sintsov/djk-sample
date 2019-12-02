@@ -173,11 +173,10 @@ ClubDisplayEquipmentFormSet = ko_inlineformset_factory(
 
 class ClubMemberFormSetCls(BaseInlineFormSet):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def set_request(self, request):
+        self.request = request
         # Not a nice way to load widget data, but formset factories are a bit too inflexible.
         # todo: Load with AJAX calls can be implemented in cleaner way.
-        request = ContextMiddleware.get_request()
         self.related_members_qs = ListQuerySet(
             Member.objects.filter(
                 club__id=request.resolver_match.kwargs.get('club_id', None)
