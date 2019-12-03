@@ -43,7 +43,7 @@ Ubuntu
 
 Tested in Ubuntu 18.04 LTS::
 
-    sudo apt-get install git libxml2-dev libxslt-dev
+    sudo apt-get install git
     python3 -m venv djk_sample
     cd djk_sample
     source bin/activate
@@ -111,7 +111,7 @@ Mac OS X
 Use brew:
 
 * Install Python3 from https://brew.sh/
-* Follow Ubuntu instructions with the exception that ``libxml2-dev`` ``libxslt-dev`` are already installed.
+* Follow Ubuntu instructions.
 
 Unit tests
 ----------
