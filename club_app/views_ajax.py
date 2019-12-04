@@ -378,7 +378,7 @@ class MemberGrid(KoGridView):
         return self.__class__.model.objects.select_related('club').all()
 
 
-class ClubMemberGrid(FormatTitleMixin, MemberGrid):
+class ClubMemberGrid(MemberGrid):
 
     format_view_title = True
     grid_fields = [
