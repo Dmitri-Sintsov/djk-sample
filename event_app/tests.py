@@ -38,8 +38,8 @@ class EventAppCommands(AutomationCommands):
             }
         ),
         # Check the selection of one filter multiple choices in ListSortingView:
-        click_by_link_text, ('Sport club equipment',),
-        click_by_link_text, ('Sport club member',),
+        load_by_link_text, ('Sport club equipment',),
+        load_by_link_text, ('Sport club member',),
     )
 
     event_list_preview_member = (
