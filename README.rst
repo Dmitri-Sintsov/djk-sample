@@ -131,13 +131,13 @@ To use `Bootstrap 4`_ version::
 
     ./4bs.sh
 
-django-jinja-knockout version 0.7.0 release tests were performed with:
+django-jinja-knockout version 0.9.0 release tests were performed with:
 
-* Python 3.6.4 / Python 3.7.0b1
+* Python 3.6.9 / Python 3.8.0
 * Ubuntu Linux 18.04 LTS 64bit
-* Selenium 3.8.1
-* Google Chrome 64.0.3282.140 (Official Build) (64-bit)
-* ChromeDriver 2.35.528139 (47ead77cb35ad2a9a83248b292151462a66cd881)
+* Selenium 3.141.0
+* 78.0.3904.108 (Official Build) (64-bit)
+* ChromeDriver 77.0.3865.40 (f484704e052e0b556f8030b65b953dce96503217-refs/branch-heads/3865@{#442})
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -206,16 +206,6 @@ Selenium test (Linux Chromium)
 Linux Chromium usually is updated less often, providing more stable version of browser::
 
     DJK_WEBDRIVER='django_jinja_knockout.webdriver.chromium.webdriver' python manage.py test
-
-Selenium tests (phantomjs, remote shell)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Phantomjs became unsupported and outdated, so it's not a recommended way to run Selenium tests anymore, but one may try::
-
-    apt-get install nodejs nodejs-legacy npm
-    npm -g install phantomjs-prebuilt
-    DJK_WEBDRIVER='selenium.webdriver.phantomjs.webdriver' python manage.py test
-
 
 Tox tests
 ~~~~~~~~~
