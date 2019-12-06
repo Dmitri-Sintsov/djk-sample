@@ -52,6 +52,8 @@ class ClubEditMixin(ClubNavsMixin):
 
 class ClubCreate(ClubEditMixin, InlineCreateView):
 
+    view_title = 'Add new club'
+
     def get_bs_form_opts(self):
         return {
             'class': 'club',
@@ -86,6 +88,7 @@ class ClubUpdate(ClubEditMixin, InlineCrudView):
 
 class ClubDetail(ClubNavsMixin, InlineDetailView):
 
+    view_title = 'Detail for "{}"'
     format_view_title = True
     pk_url_kwarg = 'club_id'
     template_name = 'club_edit.htm'

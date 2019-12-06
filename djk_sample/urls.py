@@ -57,8 +57,7 @@ urlpatterns += [
     # Club
     url(r'^$', main_page, name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
-    url(r'^club-create/$', ClubCreate.as_view(), name='club_create',
-        kwargs={'view_title': 'Add new club'}),
+    url(r'^club-create/$', ClubCreate.as_view(), name='club_create'),
     url(r'^club-create-perms-check/$', ClubCreate.as_view(), name='club_create_perms_check',
         kwargs={'view_title': 'Add new club with Django permissions check', 'permission_required': 'club_app.add_club'}),
     url(r'^club-create-dtl/$', ClubCreateDTL.as_view(), name='club_create_dtl',
