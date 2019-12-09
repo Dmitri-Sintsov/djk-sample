@@ -1,5 +1,5 @@
 {% from 'bs_nav_items.htm' import bs_nav_items with context -%}
-{% if client_conf.userId != 0 %}
+{% if djk.client_conf.userId != 0 %}
 {% set navs = [{
     'url': tpl.url('account_email'),
     'text': _('Change E-mail'),

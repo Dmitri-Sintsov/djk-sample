@@ -3,7 +3,7 @@
 {% from 'ko_grid_body.htm' import ko_grid_body with context %}
 
 {# required for ForeignKeyGridWidget to work #}
-{% do custom_scripts.extend([
+{% do djk.custom_scripts.extend([
     'djk/js/formsets.js',
     'djk/js/grid.js',
 ]) -%}
