@@ -11,7 +11,7 @@
         'class': 'component',
         'data-event': 'click',
         'data-component-class': 'App.EditForm',
-        'data-component-options': tpl.to_json({'route': 'user_change', 'pkVal': request.user.pk}),
+        'data-component-options': tpl.to_json({'route': 'user_change', 'pkVal': djk.user.pk}),
     },
     'url': '#',
     'text': _('User settings'),
