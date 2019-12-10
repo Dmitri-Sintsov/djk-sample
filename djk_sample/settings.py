@@ -72,8 +72,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 ]
 
-# For simple cases it is enough to include original middleware (commented out).
+# Since v0.9.0 most of functionality except resolver_match and view permissions in urls.py
+# works without middleware. In such case comment out DJK_MIDDLEWARE and it's references.
 DJK_MIDDLEWARE = 'djk_sample.middleware.ContextMiddleware'
+# For simple cases it is enough to include original middleware (commented out).
 # DJK_MIDDLEWARE = 'django_jinja_knockout.middleware.ContextMiddleware'
 
 MIDDLEWARE = [
