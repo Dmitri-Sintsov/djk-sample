@@ -136,8 +136,10 @@ django-jinja-knockout version 0.9.0 release tests were performed with:
 * Python 3.6.9 / Python 3.8.0
 * Ubuntu Linux 18.04 LTS 64bit
 * Selenium 3.141.0
-* 78.0.3904.108 (Official Build) (64-bit)
+* Chrome 78.0.3904.108 (Official Build) (64-bit)
 * ChromeDriver 77.0.3865.40 (f484704e052e0b556f8030b65b953dce96503217-refs/branch-heads/3865@{#442})
+* Firefox 71.0 (64-bit)
+* geckodriver 0.26.0 (e9783a644016 2019-10-10 13:38 +0000)
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,7 +163,7 @@ Close ``Chrome`` window when the tests are complete. It should print the followi
 Selenium tests (Firefox, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Not every version of `Firefox ESR`_ runs Selenium tests successfully due to bugs / incompatibilities of `geckodriver`_,
-so it's not an recommended method to run interactive tests anymore, but you can try.
+so it's not an recommended method to run interactive tests anymore, but one may try.
 
 Selenium 3.0 or newer requires `geckodriver`_ to run with Firefox, which should be extracted to one of the ``PATH``
 directories or into ``$VIRTUAL_ENV/bin`` directory.
