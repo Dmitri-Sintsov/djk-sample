@@ -30,7 +30,7 @@
     {% endif -%}
 {% endcall -%}
 
-{% do djk.custom_scripts.append('djk/js/grid.js') -%}
+{% do djk.add_custom_scripts('djk/js/grid.js') -%}
 
 {% endblock main -%}
 

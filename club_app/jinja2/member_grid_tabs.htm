@@ -29,10 +29,10 @@
         }
     ) }}
 
-{% do djk.custom_scripts.extend([
+{% do djk.add_custom_scripts(
     'djk/js/grid.js',
     'js/member-grid.js',
-]) -%}
+) -%}
 
 {% endblock main %}
 
