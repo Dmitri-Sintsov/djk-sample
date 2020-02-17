@@ -2,7 +2,7 @@ from django.utils.html import format_html
 from django import forms
 from django.forms.models import BaseInlineFormSet
 
-from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget, PrefillWidget
+from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget, PrefillWidget, MultipleKeyGridWidget
 from django_jinja_knockout.forms import (
     RendererModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
     FormWithInlineFormsets, ko_inlineformset_factory
@@ -12,7 +12,7 @@ from django_jinja_knockout.tpl import format_html_attrs
 
 from djk_sample.middleware import ContextMiddleware
 from event_app.models import Action
-from .models import Profile, Manufacturer, Club, Equipment, Member
+from .models import Profile, Manufacturer, Club, Equipment, Member, Tag
 
 
 class ProfileForm(RendererModelForm):
@@ -31,6 +31,33 @@ class ManufacturerForm(RendererModelForm):
 
 class ClubForm(RendererModelForm):
 
+    def add_tag_set_checkbox(self):
+        self.fields['tag_set'] = forms.ModelMultipleChoiceField(
+            widget=forms.CheckboxSelectMultiple,
+            queryset=Tag.objects.all(),
+            required=False,
+        )
+        if self.instance.pk is not None:
+            self.fields['tag_set'].initial = self.instance.tag_set.values_list('id', flat=True)
+
+    def add_tag_set_fk_grid(self):
+        # https://kite.com/python/docs/django.forms.ModelMultipleChoiceField
+        # value = field.widget.value_from_datadict(self.data, self.files, self.add_prefix(name))
+        self.fields['tag_set'] = forms.ModelMultipleChoiceField(
+            widget=MultipleKeyGridWidget(grid_options={
+                'pageRoute': 'tag_fk_widget',
+            }),
+            queryset=Tag.objects.all(),
+            required=False,
+        )
+        if self.instance.pk is not None:
+            self.fields['tag_set'].initial = self.instance.tag_set.values_list('id', flat=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.add_tag_set_fk_grid()
+        # self.add_tag_set_checkbox()
+
     class Meta(RendererModelForm.Meta):
         model = Club
         fields = '__all__'
@@ -42,6 +69,8 @@ class ClubForm(RendererModelForm):
     def save(self, commit=True):
         action_type = Action.TYPE_CREATED if self.instance.pk is None else Action.TYPE_MODIFIED
         obj = super().save(commit=commit)
+        # Save reverse many to many 'tag_set' relation.
+        obj.tag_set.set(self.cleaned_data['tag_set'])
         if self.has_changed():
             ContextMiddleware().add_action(obj, action_type)
         return obj
@@ -64,7 +93,7 @@ class EquipmentForm(RendererModelForm):
         fields = '__all__'
         widgets = {
             'manufacturer': ForeignKeyGridWidget(model=Manufacturer, grid_options={
-                'pageRoute': 'manufacturer_fk_widget_grid',
+                'pageRoute': 'manufacturer_fk_widget',
             }),
             'category': forms.RadioSelect()
         }
@@ -87,14 +116,9 @@ class EquipmentDisplayForm(WidgetInstancesMixin, RendererModelForm, metaclass=Di
 
 class ClubEquipmentForm(EquipmentForm):
 
-    class Meta(EquipmentForm.Meta):
-        widgets = {
-            'club': forms.HiddenInput(),
-            'manufacturer': ForeignKeyGridWidget(model=Manufacturer, grid_options={
-                'pageRoute': 'manufacturer_fk_widget_grid',
-            }),
-            'category': forms.RadioSelect()
-        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['club'].widget = forms.HiddenInput()
 
 
 class MemberForm(RendererModelForm):
@@ -104,7 +128,7 @@ class MemberForm(RendererModelForm):
         fields = '__all__'
         widgets = {
             'profile': ForeignKeyGridWidget(model=Profile, grid_options={
-                'pageRoute': 'profile_fk_widget_grid',
+                'pageRoute': 'profile_fk_widget',
                 'dialogOptions': {'size': 'size-wide'},
             }),
             'club': ForeignKeyGridWidget(model=Club, grid_options={
@@ -129,6 +153,13 @@ class MemberForm(RendererModelForm):
         if self.has_changed():
             ContextMiddleware().add_action(obj, action_type)
         return obj
+
+
+class TagForm(RendererModelForm):
+
+    class Meta:
+        model = Tag
+        fields = ['name']
 
 
 class MemberDisplayForm(WidgetInstancesMixin, RendererModelForm, metaclass=DisplayModelMetaclass):

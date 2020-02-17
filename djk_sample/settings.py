@@ -132,7 +132,6 @@ TEMPLATES = []
 
 if len(DJANGO_JINJA_APPS) > 0:
     # Optional support for django_jinja package, may be removed in the future in case there is no updates for it.
-    import django_jinja
     TEMPLATES.append(
         {
             "BACKEND": "django_jinja.backend.Jinja2",

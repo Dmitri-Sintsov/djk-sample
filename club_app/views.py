@@ -41,8 +41,9 @@ class ClubNavsMixin(BsTabsMixin):
 class ClubEditMixin(ClubNavsMixin):
 
     client_routes = {
-        'manufacturer_fk_widget_grid',
-        'profile_fk_widget_grid'
+        'manufacturer_fk_widget',
+        'profile_fk_widget',
+        'tag_fk_widget',
     }
     template_name = 'club_edit.htm'
     form_with_inline_formsets = ClubFormWithInlineFormsets
@@ -150,7 +151,7 @@ class ClubListWithComponent(ClubList):
 
     client_routes = {
         'club_member_grid',
-        'profile_fk_widget_grid',
+        'profile_fk_widget',
     }
     template_name = 'club_list_with_component.htm'
     highlight_mode = 'cycleColumns'
@@ -175,7 +176,7 @@ class ClubListWithComponent(ClubList):
                         'pageRoute': 'club_member_grid',
                         'pageRouteKwargs': {'club_id': obj.pk},
                         'fkGridOptions': {
-                            'profile': 'profile_fk_widget_grid',
+                            'profile': 'profile_fk_widget',
                         }
                     }
                 }

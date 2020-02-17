@@ -12,10 +12,10 @@ from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMix
 from django_jinja_knockout.viewmodels import vm_list
 from django_jinja_knockout.utils.sdv import get_choice_str, nested_update
 
-from .models import Club, Manufacturer, Profile, Member, Equipment
+from .models import Club, Member, Equipment
 from .forms import (
     ClubForm, ClubFormWithInlineFormsets,
-    ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberForm
+    ManufacturerForm, ProfileForm, ClubEquipmentForm, MemberForm, TagForm
 )
 
 
@@ -46,8 +46,8 @@ class EditableClubGrid(KoGridInline, SimpleClubGrid):
         ('title', 'icontains')
     ]
     client_routes = {
-        'manufacturer_fk_widget_grid',
-        'profile_fk_widget_grid'
+        'manufacturer_fk_widget',
+        'profile_fk_widget'
     }
     enable_deletion = True
     form_with_inline_formsets = ClubFormWithInlineFormsets
@@ -183,9 +183,9 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
 
     template_name = 'club_grid_with_action_logging.htm'
     client_routes = {
-        'user_fk_widget_grid',
-        'manufacturer_fk_widget_grid',
-        'profile_fk_widget_grid',
+        'user_fk_widget',
+        'manufacturer_fk_widget',
+        'profile_fk_widget',
         'action:grid',
     }
     grid_options = {
@@ -201,7 +201,7 @@ class ClubEquipmentGrid(EditableClubGrid):
         # just for the test of global route injection.
         # 'equipment_grid',
         'club_grid_simple',
-        'manufacturer_fk_widget_grid',
+        'manufacturer_fk_widget',
     }
     template_name = 'club_equipment.htm'
     form = ClubForm
@@ -246,8 +246,7 @@ class ClubEquipmentGrid(EditableClubGrid):
         # Instantiate related EquipmentGrid to use it's .postprocess_qs() method
         # to update it's row via grid viewmodel 'prepend_rows' key value.
         equipment_grid = EquipmentGrid()
-        equipment_grid.request = self.request
-        equipment_grid.init_class()
+        equipment_grid.setup(self.request)
         return vm_list({
             'update_rows': self.postprocess_qs([club]),
             # return grid rows for client-side EquipmentGrid component .updatePage(),
@@ -283,7 +282,7 @@ class EquipmentGrid(KoGridView):
             'dialogOptions': {'size': 'size-wide'},
         }),
         ('manufacturer', {
-            'pageRoute': 'manufacturer_fk_widget_grid'
+            'pageRoute': 'manufacturer_fk_widget'
         }),
         ('manufacturer__direct_shipping', None),
         ('category', None)
@@ -304,7 +303,7 @@ class MemberGrid(KoGridView):
 
     client_routes = {
         'member_grid',
-        'profile_fk_widget_grid',
+        'profile_fk_widget',
         'club_grid_simple'
     }
     template_name = 'member_grid.htm'
@@ -363,7 +362,7 @@ class MemberGrid(KoGridView):
             'searchPlaceholder': 'Search for club or member profile',
             'fkGridOptions': {
                 'profile': {
-                    'pageRoute': 'profile_fk_widget_grid'
+                    'pageRoute': 'profile_fk_widget'
                 },
                 'club': {
                     'pageRoute': 'club_grid_simple',
@@ -415,7 +414,7 @@ class MemberGridTabs(MemberGrid):
 
     client_routes = {
         'action:grid',
-        'profile_fk_widget_grid'
+        'profile_fk_widget'
     }
     template_name = 'member_grid_tabs.htm'
     enable_deletion = True
@@ -531,7 +530,6 @@ class MemberGridCustomActions(MemberGrid):
 
 class ManufacturerFkWidgetGrid(KoGridView):
 
-    model = Manufacturer
     form = ManufacturerForm
     enable_deletion = True
     grid_fields = '__all__'
@@ -546,7 +544,6 @@ class ManufacturerFkWidgetGrid(KoGridView):
 
 class ProfileFkWidgetGrid(KoGridView):
 
-    model = Profile
     form = ProfileForm
     enable_deletion = True
     force_str_desc = True
@@ -556,3 +553,9 @@ class ProfileFkWidgetGrid(KoGridView):
         ('first_name', 'icontains'),
         ('last_name', 'icontains'),
     ]
+
+
+class TagFkWidgetGrid(KoGridView):
+
+    form = TagForm
+    grid_fields = ['name']

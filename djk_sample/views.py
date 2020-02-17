@@ -9,11 +9,11 @@ from .forms import UserPreferencesForm
 def renderer_test(request, **kwargs):
     # Test template_context without decorator.
     create_template_context(request)
-    renderer_child = tpl.Renderer(request, {
+    renderer_child = tpl.Renderer(request, context={
         'd': 4,
     })
     renderer_child.template = 'child.htm'
-    renderer_top = tpl.Renderer(request, {
+    renderer_top = tpl.Renderer(request, context={
         'a': 1,
         'b': 2,
         'child': renderer_child,

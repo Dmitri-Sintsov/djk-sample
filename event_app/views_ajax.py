@@ -57,7 +57,7 @@ class UserFkWidgetGrid(KoGridView):
 class ActionGrid(KoGridView):
 
     client_routes = {
-        'user_fk_widget_grid'
+        'user_fk_widget'
     }
     model = Action
     grid_fields = [
@@ -87,7 +87,7 @@ class ActionGrid(KoGridView):
         # Use fkGridOptions to setup allowed_filter_fields['performer'].
         'fkGridOptions': {
             'performer': {
-                'pageRoute': 'user_fk_widget_grid',
+                'pageRoute': 'user_fk_widget',
                 # Optional setting for BootstrapDialog:
                 'dialogOptions': {'size': 'size-wide'},
             }
@@ -99,7 +99,7 @@ class ActionGrid(KoGridView):
             ('performer', None),
             # Autodetect foreign key grid fkGridOptions, instead of explicitly specifying them in grid_options.
             # ('performer', {
-            #    'pageRoute': 'user_fk_widget_grid',
+            #    'pageRoute': 'user_fk_widget',
             #    # Optional setting for BootstrapDialog:
             #    'dialogOptions': {'size': 'size-wide'},
             # }),

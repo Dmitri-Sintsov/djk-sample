@@ -28,7 +28,7 @@ from club_app.views_ajax import (
     ClubGridWithVirtualField, ClubGridWithActionLogging,
     ClubEquipmentGrid, EquipmentGrid,
     MemberGrid, ClubMemberGrid, MemberGridTabs, MemberGridCustomActions,
-    ManufacturerFkWidgetGrid, ProfileFkWidgetGrid
+    ManufacturerFkWidgetGrid, ProfileFkWidgetGrid, TagFkWidgetGrid
 )
 from event_app.views_ajax import UserFkWidgetGrid
 
@@ -87,18 +87,22 @@ urlpatterns += [
         kwargs={'view_title': '{}'}),
 
     # Foreign key widgets.
-    url(r'^user-fk-widget-grid(?P<action>/?\w*)/$', UserFkWidgetGrid.as_view(),
-        name='user_fk_widget_grid',
+    url(r'^user-fk-widget(?P<action>/?\w*)/$', UserFkWidgetGrid.as_view(),
+        name='user_fk_widget',
         # kwargs={'ajax': True, 'permission_required': 'auth.change_user'}),
         kwargs={'ajax': True}),
-    url(r'^manufacturer-fk-widget-grid(?P<action>/?\w*)/$', ManufacturerFkWidgetGrid.as_view(),
-        name='manufacturer_fk_widget_grid',
+    url(r'^manufacturer-fk-widget(?P<action>/?\w*)/$', ManufacturerFkWidgetGrid.as_view(),
+        name='manufacturer_fk_widget',
         # kwargs={'ajax': True, 'permission_required': 'club_app.change_manufacturer'}),
         kwargs={'ajax': True}),
-    url(r'^profile-fk-widget-grid(?P<action>/?\w*)/$', ProfileFkWidgetGrid.as_view(),
-        name='profile_fk_widget_grid',
+    url(r'^profile-fk-widget(?P<action>/?\w*)/$', ProfileFkWidgetGrid.as_view(),
+        name='profile_fk_widget',
         # kwargs={'ajax': True, 'permission_required': 'club_app.change_profile'}),
         kwargs={'ajax': True}),
+    url(r'^tag-fk-widget(?P<action>/?\w*)/$', TagFkWidgetGrid.as_view(),
+        name='tag_fk_widget',
+        # kwargs={'ajax': True, 'permission_required': 'club_app.change_tag'}),
+        ),
 
     # AJAX grids.
     # Sport club.

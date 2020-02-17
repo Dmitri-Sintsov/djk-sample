@@ -91,6 +91,25 @@ class Club(models.Model):
         return ' › '.join(self.get_str_fields().values())
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=32, verbose_name='Tag')
+    clubs = models.ManyToManyField(Club, blank=True, verbose_name='Clubs')
+
+    class Meta:
+        ordering = ['name']
+
+    def get_str_fields(self, verbose=False):
+        str_fields = OrderedDict()
+        if verbose:
+            str_fields['clubs'] = [club.get_str_fields() for club in self.clubs.all()]
+        str_fields['name'] = self.name
+        return str_fields
+
+    def __str__(self):
+        str_fields = self.get_str_fields()
+        return str_dict(str_fields)
+
+
 class Equipment(models.Model):
     CATEGORY_RACKET = 0
     CATEGORY_BALL = 1
