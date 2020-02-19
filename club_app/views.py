@@ -1,7 +1,6 @@
 from django.utils.html import format_html, mark_safe
 from django.shortcuts import render
 
-from django_jinja_knockout.utils.sdv import call_prop
 from django_jinja_knockout.tpl import format_local_date, reverse, format_html_attrs, add_css_classes_to_dict
 from django_jinja_knockout.views import (
     template_context_decorator, BsTabsMixin, NavsList,
@@ -127,8 +126,7 @@ class ClubList(ClubNavsMixin, ListSortingView):
             reverse('club_detail', kwargs={'club_id': obj.pk}),
             obj.title
         )]
-        # is_authenticated is not callable in Django 2.0.
-        if call_prop(self.request.user.is_authenticated):
+        if self.request.user.is_authenticated:
             links.append(format_html(
                 '<a href="{}"><span class="iconui iconui-edit"></span></a>',
                 reverse('club_update', kwargs={'club_id': obj.pk})
