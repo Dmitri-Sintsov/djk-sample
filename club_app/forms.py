@@ -2,7 +2,7 @@ from django.utils.html import format_html
 from django import forms
 from django.forms.models import BaseInlineFormSet
 
-from django_jinja_knockout.widgets import DisplayText, ForeignKeyGridWidget, PrefillWidget, MultipleKeyGridWidget
+from django_jinja_knockout.widgets import DisplayText, PrefillWidget, ForeignKeyGridWidget, MultipleKeyGridWidget
 from django_jinja_knockout.forms import (
     RendererModelForm, WidgetInstancesMixin, DisplayModelMetaclass,
     FormWithInlineFormsets, ko_inlineformset_factory
@@ -51,7 +51,7 @@ class ClubForm(RendererModelForm):
             required=False,
         )
         if self.instance.pk is not None:
-            self.fields['tag_set'].initial = self.instance.tag_set.values_list('id', flat=True)
+            self.fields['tag_set'].initial = self.instance.tag_set.all()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -77,6 +77,15 @@ class ClubForm(RendererModelForm):
 
 
 class ClubDisplayForm(RendererModelForm, metaclass=DisplayModelMetaclass):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.tag_set.count() > 0:
+            self.fields['tag_set'] = forms.ModelMultipleChoiceField(
+                widget=DisplayText,
+                initial=self.instance.tag_set.all(),
+                queryset=Tag.objects.all(),
+            )
 
     class Meta(ClubForm.Meta):
         widgets = {
