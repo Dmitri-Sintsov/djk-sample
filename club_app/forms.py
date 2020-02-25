@@ -101,7 +101,7 @@ class EquipmentForm(RendererModelForm):
         model = Equipment
         fields = '__all__'
         widgets = {
-            'manufacturer': ForeignKeyGridWidget(model=Manufacturer, grid_options={
+            'manufacturer': ForeignKeyGridWidget(grid_options={
                 'pageRoute': 'manufacturer_fk_widget',
             }),
             'category': forms.RadioSelect()
@@ -136,11 +136,11 @@ class MemberForm(RendererModelForm):
         model = Member
         fields = '__all__'
         widgets = {
-            'profile': ForeignKeyGridWidget(model=Profile, grid_options={
+            'profile': ForeignKeyGridWidget(grid_options={
                 'pageRoute': 'profile_fk_widget',
                 'dialogOptions': {'size': 'size-wide'},
             }),
-            'club': ForeignKeyGridWidget(model=Club, grid_options={
+            'club': ForeignKeyGridWidget(grid_options={
                 'pageRoute': 'club_grid_simple',
             }),
             'plays': forms.RadioSelect(),
