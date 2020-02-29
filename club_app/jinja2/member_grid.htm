@@ -14,7 +14,7 @@ ko_grid(
 )
 }}
 
-{% do djk.add_custom_scripts(
+{% do page_context.add_custom_scripts(
     'djk/js/grid.js',
     'js/member-grid.js',
 ) -%}

@@ -260,6 +260,15 @@ STATICFILES_FINDERS = (
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+# List of global client routes that will be injected into every view (globally).
+# This is a good idea if some client-side route is frequently used by most of views.
+# Alternatively one can specify client route url names per view (see the documentation).
+# Second element of each tuple defines whether the client-side route should be available to anonymous users.
+DJK_CLIENT_ROUTES = {
+    ('user_change', True),
+    ('equipment_grid', True),
+}
+
 # Next setting is required so multiple Django instances running at the same host/IP with different ports
 # do not interfere each other (apollo13).
 hash_obj = hashlib.md5(BASE_DIR.encode('utf-8'))

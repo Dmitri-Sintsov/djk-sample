@@ -49,7 +49,7 @@
 
     {{ bs_tabs(tabs) }}
 
-{% do djk.add_custom_scripts(
+{% do page_context.add_custom_scripts(
     'djk/js/formsets.js',
     'djk/js/grid.js',
     'js/club-grid.js',

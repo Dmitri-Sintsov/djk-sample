@@ -1,14 +1,12 @@
 from django.shortcuts import render
 from django_jinja_knockout import tpl
 from django_jinja_knockout.viewmodels import vm_list
-from django_jinja_knockout.views import create_template_context, ModelFormActionsView
+from django_jinja_knockout.views import create_page_context, ModelFormActionsView
 
 from .forms import UserPreferencesForm
 
 
 def renderer_test(request, **kwargs):
-    # Test template_context without decorator.
-    create_template_context(request)
     renderer_child = tpl.Renderer(request, context={
         'd': 4,
     })
@@ -20,7 +18,11 @@ def renderer_test(request, **kwargs):
         'c': 3,
     })
     renderer_top.template = 'top.htm'
-    return render(request, 'renderer_test.htm', {'renderer_top': renderer_top})
+    return render(request, 'renderer_test.htm', {
+        # Test template_context without decorator.
+        'page_context': create_page_context(),
+        'renderer_top': renderer_top
+    })
 
 
 class UserChangeView(ModelFormActionsView):
