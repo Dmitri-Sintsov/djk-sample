@@ -52,10 +52,11 @@ class ClubAppCommands(AutomationCommands):
             'club_form_view',
             'club_base_info'
         )
-        yield from SportClubInventory(
+        sci = SportClubInventory(
             formset_idx=0,
             prefix='test'
-        ).set_parameters({
+        )
+        sci.set_parameters({
             'manufacturers': [
                 {
                     '_create_': True,
@@ -84,7 +85,10 @@ class ClubAppCommands(AutomationCommands):
                     ]
                 }
             ]
-        }).add_manufacturers()
+        })
+        yield from sci.add_club_tags()
+        yield from sci.remove_club_tags()
+        yield from sci.add_manufacturers()
         yield from SportClubMembers(
             formset_idx=0,
             prefix='test'

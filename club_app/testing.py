@@ -43,6 +43,35 @@ class SportClubInventory(FormPrefixMixin, AutomationCommands):
     def new_formset_form(self):
         yield relative_form_button_click, ('Add "Sport club equipment"',),
 
+    def add_club_tag(self, club_tag_name):
+        yield (
+            fk_widget_add_and_select, {
+                'fk_id': 'id_{}tag_set'.format(self.prefix),
+                'add_commands': (
+                    keys_by_id, ('id_name', club_tag_name),
+                ),
+                'select_commands': (
+                    grid_find_data_row, ({'Tag': club_tag_name},),
+                )
+            },
+        )
+
+    def remove_club_tag(self, club_tag_name):
+        yield (
+            'fk_widget_remove_value', (
+                'id_{}tag_set'.format(self.prefix),
+                club_tag_name,
+            ),
+        )
+
+    def add_club_tags(self):
+        for club_tag_name in ['Russia', 'Moscow', 'Yaroslavl']:
+            yield from self.add_club_tag(club_tag_name)
+
+    def remove_club_tags(self):
+        for club_tag_name in ['Moscow']:
+            yield from self.remove_club_tag(club_tag_name)
+
     def add_manufacturers(self):
         for key, manufacturer in enumerate(self._.manufacturers):
             is_last_key = key + 1 == len(self._.manufacturers)
