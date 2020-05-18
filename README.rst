@@ -41,7 +41,7 @@ Ubuntu
 
 .. highlight:: shell
 
-Tested in Ubuntu 18.04 LTS::
+Tested in Ubuntu 20.04 LTS::
 
     sudo apt-get install git
     python3 -m venv djk_sample
@@ -62,9 +62,9 @@ then::
 
     mkdir "$VIRTUAL_ENV/djk-sample/logs/"
     mkdir "$VIRTUAL_ENV/djk-sample/fixtures/"
-    python manage.py makemigrations club_app event_app
-    python manage.py migrate
-    python manage.py runserver
+    python3 manage.py makemigrations club_app event_app
+    python3 manage.py migrate
+    python3 manage.py runserver
 
 Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
 (not always stable) version of ``djk_ui``.
@@ -131,14 +131,14 @@ To use `Bootstrap 4`_ version::
 
     ./4bs.sh
 
-django-jinja-knockout version 0.9.0 release tests were performed with:
+django-jinja-knockout version 1.0.0 release tests were performed with:
 
-* Python 3.6.9 / Python 3.8.0
-* Ubuntu Linux 18.04 LTS 64bit
+* Python 3.8.2
+* Ubuntu Linux 20.04LTS 64bit
 * Selenium 3.141.0
-* Chrome 78.0.3904.108 (Official Build) (64-bit)
-* ChromeDriver 77.0.3865.40 (f484704e052e0b556f8030b65b953dce96503217-refs/branch-heads/3865@{#442})
-* Firefox 71.0 (64-bit)
+* Chrome 81.0.4044.138 (Official Build) (64-bit)
+* ChromeDriver 81.0.4044.138 (8c6c7ba89cc9453625af54f11fd83179e23450fa-refs/branch-heads/4044@{#999})
+* Firefox 76.0.1 (64-bit)
 * geckodriver 0.26.0 (e9783a644016 2019-10-10 13:38 +0000)
 
 Selenium tests (Chrome, interactive)
@@ -149,11 +149,11 @@ Preferable method of interactive running Selenium tests is to use recent version
 
 Install latest versions of `Chrome`_ / `ChromeDriver`_. Then run the following command::
 
-    DJK_WEBDRIVER='selenium.webdriver.chrome.webdriver' python manage.py test
+    DJK_WEBDRIVER='selenium.webdriver.chrome.webdriver' python3 manage.py test
 
 or, simply (will use default Selenium webdriver)::
 
-    python manage.py test
+    python3 manage.py test
 
 Close ``Chrome`` window when the tests are complete. It should print the following message in the console::
 
@@ -170,7 +170,7 @@ directories or into ``$VIRTUAL_ENV/bin`` directory.
 
 Run the tests with the following command::
 
-    DJK_WEBDRIVER='selenium.webdriver.firefox.webdriver' python manage.py test
+    DJK_WEBDRIVER='selenium.webdriver.firefox.webdriver' python3 manage.py test
 
 Selenium tests (Chrome, remote shell)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,13 +183,13 @@ to run tests in console this way::
 
     Xvfb :99 &
     export DISPLAY=:99
-    python manage.py test
+    python3 manage.py test
 
 or this way::
 
     apt-get instal xvfb
     export DJK_WEBDRIVER='selenium.webdriver.chrome.webdriver'
-    xvfb-run python manage.py test
+    xvfb-run python3 manage.py test
 
 See also:
 
@@ -201,13 +201,13 @@ Selenium tests (headless Chrome)
 Easiest way to run Selenium tests remotely is to use built-in headless Chrome driver. Headless mode is supported by
 recent versions of Chrome browser::
 
-    DJK_WEBDRIVER='django_jinja_knockout.webdriver.headless_chrome.webdriver' python manage.py test
+    DJK_WEBDRIVER='django_jinja_knockout.webdriver.headless_chrome.webdriver' python3 manage.py test
 
 Selenium test (Linux Chromium)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Linux Chromium usually is updated less often, providing more stable version of browser::
 
-    DJK_WEBDRIVER='django_jinja_knockout.webdriver.chromium.webdriver' python manage.py test
+    DJK_WEBDRIVER='django_jinja_knockout.webdriver.chromium.webdriver' python3 manage.py test
 
 Tox tests
 ~~~~~~~~~
