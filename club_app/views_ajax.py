@@ -202,6 +202,7 @@ class ClubEquipmentGrid(EditableClubGrid):
         # 'equipment_grid',
         'club_grid_simple',
         'manufacturer_fk_widget',
+        'tag_fk_widget',
     }
     template_name = 'club_equipment.htm'
     form = ClubForm
