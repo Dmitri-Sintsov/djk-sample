@@ -415,7 +415,8 @@ class MemberGridTabs(MemberGrid):
 
     client_routes = {
         'action:grid',
-        'profile_fk_widget'
+        'profile_fk_widget',
+        'user_fk_widget',
     }
     template_name = 'member_grid_tabs.htm'
     enable_deletion = True
