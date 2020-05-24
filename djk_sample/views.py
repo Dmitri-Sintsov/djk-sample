@@ -20,7 +20,7 @@ def renderer_test(request, **kwargs):
     renderer_top.template = 'top.htm'
     return render(request, 'renderer_test.htm', {
         # Test template_context without decorator.
-        'page_context': create_page_context(),
+        'page_context': create_page_context(request),
         'renderer_top': renderer_top
     })
 
