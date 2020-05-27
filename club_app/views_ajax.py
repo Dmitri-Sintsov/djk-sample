@@ -8,7 +8,7 @@ from django.template.defaultfilters import pluralize
 from django.db.models import Count
 
 from django_jinja_knockout.query import FilteredRawQuerySet
-from django_jinja_knockout.views import KoGridView, KoGridInline, FormatTitleMixin
+from django_jinja_knockout.views import KoGridView, KoGridInline, KoGridRelationView
 from django_jinja_knockout.viewmodels import vm_list
 from django_jinja_knockout.utils.sdv import get_choice_str, nested_update
 
@@ -557,7 +557,7 @@ class ProfileFkWidgetGrid(KoGridView):
     ]
 
 
-class TagFkWidgetGrid(KoGridView):
+class TagFkWidgetGrid(KoGridRelationView):
 
     form = TagForm
     grid_fields = ['name']

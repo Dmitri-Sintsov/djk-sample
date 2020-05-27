@@ -139,6 +139,8 @@ class MemberForm(RendererModelForm):
             'profile': ForeignKeyGridWidget(grid_options={
                 'pageRoute': 'profile_fk_widget',
                 'dialogOptions': {'size': 'size-wide'},
+                # Override default search field label (optional):
+                'searchPlaceholder': 'Search user profiles',
             }),
             'club': ForeignKeyGridWidget(grid_options={
                 'pageRoute': 'club_grid_simple',
