@@ -94,9 +94,9 @@
                 <div class="container-fluid">
                     <div class="navbar-header"><a class="navbar-brand" href="##" data-bind="text: name"></a></div>
                     <ul class="nav navbar-nav">
-                        <!-- ko foreach: choices -->
+                        <!-- ko foreach: {data: choices, as: 'filterChoice'} -->
                         <li data-bind="css: {active: is_active(), 'nav-item': true}">
-                            <a data-bind="css: {bold: is_active(), 'nav-link': true}, text: name, grid_filter_choice, click: onLoadFilter.bind($data)" name="#"></a>
+                            <a data-bind="css: {bold: is_active(), 'nav-link': true}, text: name, grid_filter_choice, click: onLoadFilter.bind(filterChoice)" name="#"></a>
                         </li>
                         <!-- /ko -->
                     </ul>
