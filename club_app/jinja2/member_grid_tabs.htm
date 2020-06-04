@@ -41,7 +41,7 @@
     {{ ko_grid_body() }}
 
     <script type="text/template" id="member_ko_grid_body">
-        <card-primary>
+        <card-primary data-bind="using: $root, as: 'grid'">
             <card-header data-bind="text: meta.verboseNamePlural"></card-header>
             <card-body>
                 <!-- ko if: meta.hasSearch() || gridFilters().length > 0 -->
@@ -50,7 +50,7 @@
                 <tpl t-id="ko_grid_table"></tpl>
                 <div class="default-padding">
                     <button
-                            data-bind="click: onChangeEndorsement.bind($data)" type="button" class="btn btn-warning">
+                            data-bind="click: onChangeEndorsement" type="button" class="btn btn-warning">
                         Change endorsement
                     </button>
                 </div>
