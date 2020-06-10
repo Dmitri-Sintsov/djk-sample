@@ -59,43 +59,57 @@ urlpatterns += [
     re_path(
         r'^$', main_page, name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
-    re_path(r'^club-create/$', ClubCreate.as_view(), name='club_create'),
-    re_path(
-        r'^club-create-perms-check/$', ClubCreate.as_view(), name='club_create_perms_check',
-        kwargs={'view_title': 'Add new club with Django permissions check', 'permission_required': 'club_app.add_club'}),
-    re_path(
-        r'^club-create-dtl/$', ClubCreateDTL.as_view(), name='club_create_dtl',
-        kwargs={'view_title': 'Add new club (Django Template Language)'}),
-    re_path(
-        r'^club-update-(?P<club_id>\d+)/$', ClubUpdate.as_view(), name='club_update',
-        kwargs={'view_title': 'Edit club "{}"'}),
-    re_path(
-        r'^club-detail-(?P<club_id>\d+)/$', ClubDetail.as_view(), name='club_detail',
-        kwargs={'view_title': '{}'}),
-    re_path(
-        r'^club-list/$', ClubList.as_view(), name='club_list',
-        kwargs={'view_title': 'List of sport clubs', 'allow_anonymous': True}),
-    re_path(
-        r'^club-list-with-component/$', ClubListWithComponent.as_view(), name='club_list_with_component',
-        kwargs={'view_title': 'List of sport clubs with their members as App.GridDialog component'}),
-    re_path(
-        r'^club-list-dtl/$', ClubListDTL.as_view(), name='club_list_dtl',
-        kwargs={'view_title': 'List of sport clubs (Django Template Language)', 'allow_anonymous': True}),
+    ClubCreate.url_path(name='club_create'),
+    # r'^club-create/$'
+    ClubCreate.url_path(
+        name='club_create_perms_check',
+        kwargs={'view_title': 'Add new club with Django permissions check', 'permission_required': 'club_app.add_club'}
+    ),
+    ClubCreateDTL.url_path(
+        name='club_create_dtl',
+        kwargs={'view_title': 'Add new club (Django Template Language)'}
+    ),
+    ClubUpdate.url_path(
+        name='club_update',
+        args=['club_id'],
+        kwargs={'view_title': 'Edit club "{}"'}
+    ),
+    ClubDetail.url_path(
+        name='club_detail',
+        args=['club_id'],
+        kwargs={'view_title': '{}'}
+    ),
+    # r'^club-detail-(?P<club_id>\d+)/$'
+    ClubList.url_path(
+        name='club_list',
+        kwargs={'view_title': 'List of sport clubs', 'allow_anonymous': True}
+    ),
+    ClubListWithComponent.url_path(
+        name='club_list_with_component',
+        kwargs={'view_title': 'List of sport clubs with their members as App.GridDialog component'}
+    ),
+    ClubListDTL.url_path(
+        name='club_list_dtl',
+        kwargs={'view_title': 'List of sport clubs (Django Template Language)', 'allow_anonymous': True}
+    ),
 
     # Event / Action. Namespace urls resolving test.
     re_path(r'^action-', include('event_app.urls', namespace='action')),
 
     # Equipment
-    re_path(
-        r'^equipment-detail-(?P<equipment_id>\d+)/$', EquipmentDetail.as_view(), name='equipment_detail',
-        kwargs={'view_title': '{}'}),
-
+    EquipmentDetail.url_path(
+        name='equipment_detail',
+        args=['equipment_id'],
+        kwargs={'view_title': '{}'}
+    ),
     EquipmentGrid.url_path('equipment_grid', kwargs={'view_title': 'Grid with the available equipment'}),
 
     # Member
-    re_path(
-        r'^member-detail-(?P<member_id>\d+)/$', MemberDetail.as_view(), name='member_detail',
-        kwargs={'view_title': '{}'}),
+    MemberDetail.url_path(
+        name='member_detail',
+        args=['member_id'],
+        kwargs={'view_title': '{}'}
+    ),
 
     # Foreign key widgets.
     UserFkWidgetGrid.url_path(
