@@ -16,6 +16,8 @@ from django.conf import settings
 from django.urls import include, re_path
 # from django.contrib import admin
 
+from django_jinja_knockout.urls import UrlPath
+
 from djk_sample.views import renderer_test, UserChangeView
 from club_app.views import (
     ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail,
@@ -53,42 +55,42 @@ urlpatterns += [
         r'^renderer-test/$', renderer_test, name='renderer_test',
         kwargs={'view_title': 'Renderer test', 'allow_anonymous': True}),
 
-    UserChangeView.url_path('user_change'),
+    UrlPath(UserChangeView)('user_change'),
 
     # Club
     re_path(
         r'^$', main_page, name='club_main_page',
         kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
-    ClubCreate.url_path(name='club_create'),
+    UrlPath(ClubCreate)(name='club_create'),
     # r'^club-create/$'
-    ClubCreate.url_path(
+    UrlPath(ClubCreate)(
         name='club_create_perms_check',
         kwargs={'view_title': 'Add new club with Django permissions check', 'permission_required': 'club_app.add_club'}
     ),
-    ClubCreateDTL.url_path(
+    UrlPath(ClubCreateDTL)(
         name='club_create_dtl',
         kwargs={'view_title': 'Add new club (Django Template Language)'}
     ),
-    ClubUpdate.url_path(
+    UrlPath(ClubUpdate)(
         name='club_update',
         args=['club_id'],
         kwargs={'view_title': 'Edit club "{}"'}
     ),
-    ClubDetail.url_path(
+    UrlPath(ClubDetail)(
         name='club_detail',
         args=['club_id'],
         kwargs={'view_title': '{}'}
     ),
     # r'^club-detail-(?P<club_id>\d+)/$'
-    ClubList.url_path(
+    UrlPath(ClubList)(
         name='club_list',
         kwargs={'view_title': 'List of sport clubs', 'allow_anonymous': True}
     ),
-    ClubListWithComponent.url_path(
+    UrlPath(ClubListWithComponent)(
         name='club_list_with_component',
         kwargs={'view_title': 'List of sport clubs with their members as App.GridDialog component'}
     ),
-    ClubListDTL.url_path(
+    UrlPath(ClubListDTL)(
         name='club_list_dtl',
         kwargs={'view_title': 'List of sport clubs (Django Template Language)', 'allow_anonymous': True}
     ),
@@ -97,85 +99,85 @@ urlpatterns += [
     re_path(r'^action-', include('event_app.urls', namespace='action')),
 
     # Equipment
-    EquipmentDetail.url_path(
+    UrlPath(EquipmentDetail)(
         name='equipment_detail',
         args=['equipment_id'],
         kwargs={'view_title': '{}'}
     ),
-    EquipmentGrid.url_path('equipment_grid', kwargs={'view_title': 'Grid with the available equipment'}),
+    UrlPath(EquipmentGrid)('equipment_grid', kwargs={'view_title': 'Grid with the available equipment'}),
 
     # Member
-    MemberDetail.url_path(
+    UrlPath(MemberDetail)(
         name='member_detail',
         args=['member_id'],
         kwargs={'view_title': '{}'}
     ),
 
     # Foreign key widgets.
-    UserFkWidgetGrid.url_path(
+    UrlPath(UserFkWidgetGrid)(
         name='user_fk_widget'
         # kwargs={'permission_required': 'auth.change_user'}),
     ),
-    ManufacturerFkWidgetGrid.url_path(
+    UrlPath(ManufacturerFkWidgetGrid)(
         name='manufacturer_fk_widget',
         # kwargs={'permission_required': 'club_app.change_manufacturer'}),
     ),
-    ProfileFkWidgetGrid.url_path(
+    UrlPath(ProfileFkWidgetGrid)(
         name='profile_fk_widget',
         # kwargs={'permission_required': 'club_app.change_profile'}),
     ),
-    TagFkWidgetGrid.url_path(
+    UrlPath(TagFkWidgetGrid)(
         name='tag_fk_widget',
         # kwargs={'permission_required': 'club_app.change_tag'}),
     ),
 
     # AJAX grids.
     # Sport club.
-    SimpleClubGrid.url_path(
+    UrlPath(SimpleClubGrid)(
         name='club_grid_simple',
         kwargs={'view_title': 'Simple club grid'},
     ),
-    SimpleClubGridDTL.url_path(
+    UrlPath(SimpleClubGridDTL)(
         name='club_grid_simple_dtl',
         kwargs={'view_title': 'Simple club grid (Django Template Language)'}
     ),
-    EditableClubGrid.url_path(
+    UrlPath(EditableClubGrid)(
         name='club_grid_editable',
         # kwargs={'view_title': 'Editable club grid', 'permission_required': 'club_app.change_club'}),
         kwargs={'view_title': 'Editable club grid'}
     ),
-    ClubGridRawQuery.url_path(
+    UrlPath(ClubGridRawQuery)(
         name='club_grid_raw_query',
         kwargs={'view_title': 'Club grid raw query'}
     ),
-    ClubGridWithVirtualField.url_path(
+    UrlPath(ClubGridWithVirtualField)(
         name='club_grid_with_virtual_field',
         kwargs={'view_title': 'Club grid with virtual field'}
     ),
-    ClubGridWithActionLogging.url_path(
+    UrlPath(ClubGridWithActionLogging)(
         name='club_grid_with_action_logging',
         kwargs={'view_title': 'Club grid with virtual field'}
     ),
-    ClubEquipmentGrid.url_path(
+    UrlPath(ClubEquipmentGrid)(
         name='club_equipment_grid',
         kwargs={'view_title': 'Club equipment grid'}
     ),
 
     # Sport club member.
-    MemberGrid.url_path(
+    UrlPath(MemberGrid)(
         name='member_grid',
         kwargs={'view_title': 'Club members grid'}
     ),
-    MemberGridTabs.url_path(
+    UrlPath(MemberGridTabs)(
         name='member_grid_tabs',
         kwargs={'view_title': 'Club members grid with custom layout'}
     ),
-    MemberGridCustomActions.url_path(
+    UrlPath(MemberGridCustomActions)(
         name='member_grid_custom_actions',
         kwargs={'view_title': 'Club members grid with custom actions'}
     ),
     # r'^member-grid-custom-actions(?P<action>/?\w*)/$'
-    ClubMemberGrid.url_path(
+    UrlPath(ClubMemberGrid)(
         name='club_member_grid',
         args=['club_id'],
         kwargs={'view_title': '"{}" members'}
