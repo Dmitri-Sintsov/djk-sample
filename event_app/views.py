@@ -25,6 +25,10 @@ class ActionList(ListSortingView):
     def get_allowed_filter_fields(self):
         allowed_filter_fields = {
             'action_type': None,
+            'id': {
+                'component_class': 'App.RangeFilter',
+            },
+            'date': None,
             'content_type': self.get_contenttype_filter(
                 ('club_app', 'club'),
                 ('club_app', 'equipment'),
