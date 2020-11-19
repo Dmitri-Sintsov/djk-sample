@@ -24,11 +24,11 @@ class ActionList(ListSortingView):
 
     def get_allowed_filter_fields(self):
         allowed_filter_fields = {
-            'action_type': None,
+            'action_type': {'template': 'bs_navs.htm'},
             'content_type': self.get_contenttype_filter(
                 ('club_app', 'club'),
                 ('club_app', 'equipment'),
                 ('club_app', 'member'),
-            )
+            ),
         }
         return allowed_filter_fields

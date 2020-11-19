@@ -112,7 +112,7 @@ class ClubList(ClubNavsMixin, ListSortingView):
     }
     highlight_mode = 'linearRows'
     allowed_filter_fields = {
-        'category': None,
+        'category': {},
     }
     grid_fields = [
         'title',
