@@ -7,8 +7,8 @@ python:
   - '3.8'
 env:
   matrix:
-    - TOXENV=py38-django-22-bs3
-    - TOXENV=py38-django-22-bs4
+    - TOXENV=py3.8-django-2.2-bs3
+    - TOXENV=py3.8-django-2.2-bs4
   global:
     - PIP_WHEEL_DIR=$HOME/.wheels
     - PIP_FIND_LINKS=file://$HOME/.wheels
