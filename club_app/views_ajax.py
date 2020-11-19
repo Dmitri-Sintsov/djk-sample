@@ -47,7 +47,8 @@ class EditableClubGrid(KoGridInline, SimpleClubGrid):
     ]
     client_routes = {
         'manufacturer_fk_widget',
-        'profile_fk_widget'
+        'profile_fk_widget',
+        'tag_fk_widget',
     }
     enable_deletion = True
     form_with_inline_formsets = ClubFormWithInlineFormsets

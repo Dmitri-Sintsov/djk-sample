@@ -1,4 +1,5 @@
 selenium>=3.4
 flake8>=3.5.0
 flake8-bugbear>=18.2.0
+pipdeptree
 git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
