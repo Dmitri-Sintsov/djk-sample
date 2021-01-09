@@ -7,17 +7,15 @@ from .forms import UserPreferencesForm
 
 
 def renderer_test(request, **kwargs):
-    renderer_child = tpl.Renderer(request, context={
+    renderer_child = tpl.Renderer(request, template='child.htm', context={
         'd': 4,
     })
-    renderer_child.template = 'child.htm'
-    renderer_top = tpl.Renderer(request, context={
+    renderer_top = tpl.Renderer(request, template='top.htm', context={
         'a': 1,
         'b': 2,
         'child': renderer_child,
         'c': 3,
     })
-    renderer_top.template = 'top.htm'
     return render(request, 'renderer_test.htm', {
         # Test template_context without decorator.
         'page_context': create_page_context(request),
