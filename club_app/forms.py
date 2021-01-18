@@ -190,7 +190,7 @@ class MemberDisplayForm(WidgetInstancesMixin, RendererModelForm, metaclass=Displ
                     'data-component-class': 'App.Dialog',
                     'data-event': 'click',
                     'data-component-options': {
-                        'title': '<b>Note for </b> <i>{}</i>'.format(self.instance.profile),
+                        'title': format_html('<b>Note for </b> <i>{}</i>', self.instance.profile),
                         'message': format_html('<div class="preformatted">{}</div>', self.instance.note),
                         'method': 'alert'
                     }

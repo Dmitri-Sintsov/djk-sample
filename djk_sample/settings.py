@@ -273,7 +273,7 @@ DJK_CLIENT_ROUTES = {
 # Next setting is required so multiple Django instances running at the same host/IP with different ports
 # do not interfere each other (apollo13).
 hash_obj = hashlib.md5(BASE_DIR.encode('utf-8'))
-SESSION_COOKIE_NAME = 'djk_sessionid_{}'.format(hash_obj.hexdigest())
+SESSION_COOKIE_NAME = f'djk_sessionid_{hash_obj.hexdigest()}'
 
 # As this is the test application, registration with SMTP confirmation is not supported.
 # Use:

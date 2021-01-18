@@ -26,9 +26,9 @@ class SportClub(FormPrefixMixin, AutomationCommands):
         if hasattr(self._, 'club'):
             yield (
                 keys_by_id,
-                ('id_{}title'.format(self.prefix), self._.club['title']),
-                ('id_{}foundation_date'.format(self.prefix), self._.club['foundation_date']),
-                'input_as_select_click', ('id_{}category_{}'.format(self.prefix, self._.club['category_id']),),
+                (f'id_{self.prefix}title', self._.club['title']),
+                (f'id_{self.prefix}foundation_date', self._.club['foundation_date']),
+                'input_as_select_click', (f'id_{self.prefix}category_{self._.club["category_id"]}',),
             )
 
 
@@ -46,7 +46,7 @@ class SportClubInventory(FormPrefixMixin, AutomationCommands):
     def add_club_tag(self, club_tag_name):
         yield (
             fk_widget_add_and_select, {
-                'fk_id': 'id_{}tag_set'.format(self.prefix),
+                'fk_id': f'id_{self.prefix}tag_set',
                 'add_commands': (
                     keys_by_id, ('id_name', club_tag_name),
                 ),
@@ -59,7 +59,7 @@ class SportClubInventory(FormPrefixMixin, AutomationCommands):
     def remove_club_tag(self, club_tag_name):
         yield (
             'fk_widget_remove_value', (
-                'id_{}tag_set'.format(self.prefix),
+                f'id_{self.prefix}tag_set',
                 club_tag_name,
             ),
         )
@@ -79,9 +79,9 @@ class SportClubInventory(FormPrefixMixin, AutomationCommands):
 
     def get_id_for_field(self, fieldname):
         if self.formset_idx is None:
-            return 'id_{}{}'.format(self.prefix, fieldname)
+            return f'id_{self.prefix}{fieldname}'
         else:
-            return 'id_{}equipment_set-{}-{}'.format(self.prefix, self.formset_idx, fieldname)
+            return f'id_{self.prefix}equipment_set-{self.formset_idx}-{fieldname}'
 
     def add_manufacturer(self, manufacturer, is_last_manufacturer):
         select_commands = (
@@ -138,7 +138,7 @@ class SportClubInventory(FormPrefixMixin, AutomationCommands):
                 self.get_id_for_field('inventory_name'), inventory['name']
             ),
             input_as_select_click, (
-                (self.get_id_for_field('category') + '_{}').format(inventory['category_id']),
+                f'%(id)s_{inventory["category_id"]}' % {'id': self.get_id_for_field("category")},
             ),
         )
 
@@ -179,7 +179,7 @@ class SportClubMembers(FormPrefixMixin, AutomationCommands):
         if member['_create_profile_']:
             yield (
                 fk_widget_add_and_select, (
-                    'id_{}member_set-{}-profile'.format(self.prefix, self.formset_idx),
+                    f'id_{self.prefix}member_set-{self.formset_idx}-profile',
                     (
                         keys_by_id,
                         ('id_first_name', member['first_name']),
@@ -192,7 +192,7 @@ class SportClubMembers(FormPrefixMixin, AutomationCommands):
             )
         else:
             yield (
-                fk_widget_click, ('id_{}member_set-{}-profile'.format(self.prefix, self.formset_idx),),
+                fk_widget_click, (f'id_{self.prefix}member_set-{self.formset_idx}-profile',),
             ) + select_commands + (
                 grid_select_current_row,
                 dialog_footer_button_click, ('Apply',),
@@ -200,17 +200,17 @@ class SportClubMembers(FormPrefixMixin, AutomationCommands):
             )
         yield (
             keys_by_id,
-            ('id_{}member_set-{}-last_visit'.format(self.prefix, self.formset_idx), member['last_visit']),
-            ('id_{}member_set-{}-note'.format(self.prefix, self.formset_idx), member['note']),
+            (f'id_{self.prefix}member_set-{self.formset_idx}-last_visit', member['last_visit']),
+            (f'id_{self.prefix}member_set-{self.formset_idx}-note', member['note']),
             input_as_select_click, (
-                'id_{}member_set-{}-plays_{}'.format(self.prefix, self.formset_idx, member['plays']),
+                f'id_{self.prefix}member_set-{self.formset_idx}-plays_{member["plays"]}',
             ),
             input_as_select_click, (
-                'id_{}member_set-{}-role_{}'.format(self.prefix, self.formset_idx, member['role']),
+                f'id_{self.prefix}member_set-{self.formset_idx}-role_{member["role"]}',
             ),
         )
         if member['is_endorsed']:
             yield (
-                by_id, ('id_{}member_set-{}-is_endorsed'.format(self.prefix, self.formset_idx),),
+                by_id, (f'id_{self.prefix}member_set-{self.formset_idx}-is_endorsed',),
                 click,
             )
