@@ -24,11 +24,14 @@ class ActionList(ListSortingView):
 
     def get_allowed_filter_fields(self):
         allowed_filter_fields = {
+            # Override default templates for filter fields:
             'action_type': {'template': 'bs_navs.htm'},
+            # Specify custom client-side Javascript component class to extend it's functionality:
             'id': {
                 'component_class': 'App.RangeFilter',
             },
-            'date': None,
+            'date': {},
+            # Generate widget choices for contenttypes framework:
             'content_type': self.get_contenttype_filter(
                 ('club_app', 'club'),
                 ('club_app', 'equipment'),
