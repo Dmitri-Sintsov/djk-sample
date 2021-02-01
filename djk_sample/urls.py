@@ -182,7 +182,8 @@ urlpatterns += [
         args=['club_id'],
         kwargs={'view_title': '"{}" members'}
     ),
-    # r'^club-member-grid-(?P<club_id>\w*)(?P<action>/?\w*)/$'
+    # todo: check path:
+    # re_path(r'^club-member-grid-(?P<club_id>\w*)(?P<action>/?\w*)/$', ClubMemberGrid.as_view(), name='club_member_grid'),
 ]
 
 js_info_dict = {

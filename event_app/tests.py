@@ -37,7 +37,30 @@ class EventAppCommands(AutomationCommands):
                 'page': 3,
             }
         ),
-        # Check the selection of one filter multiple choices in ListSortingView:
+        # Check the RangeFilter in ListSortingView:
+        rangefilter_by_id, ('id',),
+        click,
+        relative_by_class_name, ('input-to',),
+        all_keys, ('10',),
+        rangefilter_by_id, ('id',),
+        load_by_link_text, ('Apply', True),
+        rangefilter_by_id, ('date',),
+        click,
+        relative_by_class_name, ('input-from',),
+        all_keys, ('Not a date',),
+        rangefilter_by_id, ('date',),
+        load_by_link_text, ('Apply', True),
+        rangefilter_by_id, ('date',),
+        click,
+        relative_by_class_name, ('input-from',),
+        all_keys, ('2010-02-01 17:37:13',),
+        rangefilter_by_id, ('date',),
+        load_by_link_text, ('Apply', True),
+        rangefilter_by_id, ('id',),
+        load_by_link_text, ('Remove selection', True),
+        rangefilter_by_id, ('date',),
+        load_by_link_text, ('Remove selection', True),
+        # Check the selection of ChoicesFilter multiple choices in ListSortingView:
         load_by_link_text, ('Sport club equipment',),
         load_by_link_text, ('Sport club member',),
     )
