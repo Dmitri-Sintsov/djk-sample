@@ -25,4 +25,8 @@ jobs:
       run: |
         echo Version of Python used to run the tests.
         python3 --version
+        echo Version of Chrome used to run the tests.
+        google-chrome --version
+        echo Version of Chrome driver used to run the tests.
+        chromeDriver -v
         python3 -m tox -r -e py${{ matrix.python }}-django-${{ matrix.django }}-bs${{ matrix.bootstrap }}
