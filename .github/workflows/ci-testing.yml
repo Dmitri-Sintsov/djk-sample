@@ -28,5 +28,5 @@ jobs:
         echo Version of Chrome used to run the tests.
         google-chrome --version
         echo Version of Chrome driver used to run the tests.
-        chromeDriver -v
+        chromedriver --version
         python3 -m tox -r -e py${{ matrix.python }}-django-${{ matrix.django }}-bs${{ matrix.bootstrap }}
