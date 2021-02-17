@@ -23,10 +23,15 @@ jobs:
         python3 -m pip install -U pip wheel tox tox-pyenv setuptools pysqlite3 --user
     - name: Test with tox
       run: |
-        echo Version of Python used to run the tests.
+        echo Environment used to run the tests
+        echo Kernel version
+        uname -a
+        echo System version
+        lsb_release -a
+        echo Python version
         python3 --version
-        echo Version of Chrome used to run the tests.
+        echo Chrome version
         google-chrome --version
-        echo Version of Chrome driver used to run the tests.
+        echo Chrome driver version
         chromedriver --version
         python3 -m tox -r -e py${{ matrix.python }}-django-${{ matrix.django }}-bs${{ matrix.bootstrap }}
