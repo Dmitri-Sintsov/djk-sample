@@ -8,7 +8,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 from django_jinja_knockout.tpl import format_local_date, str_dict
-from django_jinja_knockout.admin import empty_value_display
+from django.contrib.admin import site
 
 from djk_sample.middleware import ContextMiddleware
 
@@ -82,7 +82,7 @@ class Action(models.Model):
             (
                 'content_object',
                 self.content_object.get_str_fields() if hasattr(self.content_object, 'get_str_fields') else
-                (empty_value_display if self.content_object is None else str(self.content_object))
+                (site.empty_value_display if self.content_object is None else str(self.content_object))
             )
         ])
 
