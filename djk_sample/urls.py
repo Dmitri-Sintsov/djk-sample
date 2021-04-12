@@ -88,7 +88,7 @@ urlpatterns += [
     ),
     UrlPath(ClubListWithComponent)(
         name='club_list_with_component',
-        kwargs={'view_title': 'List of sport clubs with their members as App.GridDialog component'}
+        kwargs={'view_title': 'List of sport clubs with their members as GridDialog component'}
     ),
     UrlPath(ClubListDTL)(
         name='club_list_dtl',

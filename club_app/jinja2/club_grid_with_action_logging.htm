@@ -6,7 +6,7 @@
 
     {{ ko_grid(
         grid_options={
-            'classPath': 'App.ko.ClubGrid',
+            'classPath': 'ClubGrid',
             'pageRoute': 'club_grid_with_action_logging',
             'defaultOrderBy': {'foundation_date': '-'},
         },
@@ -27,9 +27,7 @@
         }
     ) }}
 
-{% do page_context.add_custom_scripts(
-    'djk/js/formsets.js',
-    'djk/js/grid.js',
+{% do page_context.set_custom_scripts(
     'js/club-grid.js',
 ) -%}
 

@@ -28,7 +28,7 @@ class ActionList(ListSortingView):
             'action_type': {'template': 'bs_navs.htm'},
             # Specify custom client-side Javascript component class to extend it's functionality:
             'id': {
-                'component_class': 'App.RangeFilter',
+                'component_class': 'ListRangeFilter',
             },
             'date': {},
             # Generate widget choices for contenttypes framework:

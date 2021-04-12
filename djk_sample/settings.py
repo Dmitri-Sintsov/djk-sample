@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'sites' is required by allauth
     'django.contrib.sites',
+    'django_deno',
 ] + DJANGO_JINJA_APPS + [
     'djk_ui',
     'django_jinja_knockout',
@@ -307,3 +308,6 @@ FIXTURE_DIRS = (
 )
 
 random.seed(timezone.now().timestamp())
+
+DENO_ENABLE = True
+DENO_DEBUG = True

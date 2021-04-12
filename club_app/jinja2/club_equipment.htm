@@ -10,7 +10,7 @@
     {% set html %}
     {{ ko_grid(
         grid_options={
-            'classPath': 'App.ko.ClubGrid',
+            'classPath': 'ClubGrid',
             'pageRoute': 'club_equipment_grid',
         },
         dom_attrs={
@@ -49,9 +49,7 @@
 
     {{ bs_tabs(tabs) }}
 
-{% do page_context.add_custom_scripts(
-    'djk/js/formsets.js',
-    'djk/js/grid.js',
+{% do page_context.set_custom_scripts(
     'js/club-grid.js',
 ) -%}
 

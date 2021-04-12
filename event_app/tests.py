@@ -83,9 +83,9 @@ class EventAppCommands(AutomationCommands):
     def grid_interaction_club_actions(self):
         yield [
             click_anchor_by_view, ('club_grid_with_action_logging', {'action': ''}),
-            component_by_classpath, ('App.ko.ClubGrid',),
+            component_by_classpath, ('ClubGrid',),
             grid_search_substring, ('Yaro',),
-            component_by_classpath, ('App.ko.ClubGrid',),
+            component_by_classpath, ('ClubGrid',),
             relative_button_click, ('Add',),
         ]
         yield from SportClub(
@@ -147,7 +147,7 @@ class EventAppCommands(AutomationCommands):
             dialog_footer_button_click, ('OK',),
             wait_until_dialog_closes,
             close_current_window,
-            component_by_classpath, ('App.ko.Grid',),
+            component_by_classpath, ('Grid',),
             grid_pagination_action, ('Highlight mode',),
             grid_pagination_action, ('Highlight mode',),
             grid_pagination_action, ('Rows per page',),
@@ -155,7 +155,7 @@ class EventAppCommands(AutomationCommands):
             dialog_input_range_right, (3,),
             dialog_footer_button_click, ('Ok',),
             wait_until_dialog_closes,
-            component_by_classpath, ('App.ko.Grid',),
+            component_by_classpath, ('Grid',),
             # Commented out, because xpath cannot match outerHTML.
             # grid_find_data_row, ({'Related object': '<a href="/equipment-detail-5/" target="_blank">Sport club equipment</a>'},),
             component_relative_by_xpath, (

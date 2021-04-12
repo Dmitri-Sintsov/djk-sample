@@ -1,3 +1,14 @@
+'use rollup'
+
+import { inherit } from '../djk/js/dash.js';
+import { TabPane } from '../djk/js/tabpane.js';
+import { Actions } from '../djk/js/actions.vm.js';
+import { GridActions } from '../djk/js/grid/actions.vm.js';
+import { Grid } from '../djk/js/grid.js';
+import { globalIoc } from '../djk/js/ioc.js';
+import { startApp } from '../djk/js/document.js';
+
+
 /**
  * This code is partially shared between these templates / class-based views
  *
@@ -5,9 +16,9 @@
  * 'club_equipment.htm' / club_app.views_ajax.ClubEquipmentGrid
  *
  */
-App.ClubGridActions = function(options) {
-    $.inherit(App.GridActions.prototype, this);
-    $.inherit(App.Actions.prototype, this);
+function ClubGridActions(options) {
+    inherit(GridActions.prototype, this);
+    inherit(Actions.prototype, this);
     this.init(options);
 };
 
@@ -50,30 +61,36 @@ App.ClubGridActions = function(options) {
         var equipmentGridView = viewModel.equipment_grid_view;
         delete viewModel.equipment_grid_view;
         this.grid.updatePage(viewModel);
-        // Get client-side class of EquipmentGrid component by id (instance of App.ko.Grid or derived class).
+        // Get client-side class of EquipmentGrid component by id (instance of Grid or derived class).
         var equipmentGrid = $('#equipment_grid').component();
         if (equipmentGrid !== null) {
-            // Update rows of MemberGrid component (instance of App.ko.Grid or derived class).
+            // Update rows of MemberGrid component (instance of Grid or derived class).
             equipmentGrid.updatePage(equipmentGridView);
             // Highlight equipment tab so the user will know it has updated list page.
-            App.TabPane().highlight('#equipment_tab');
+            TabPane().highlight('#equipment_tab');
             // Switch to equipment grid tab to show equipment changes.
             // window.location.hash = '#equipment_tab';
         }
     };
 
-})(App.ClubGridActions.prototype);
+})(ClubGridActions.prototype);
 
 
-App.ko.ClubGrid = function(options) {
-    $.inherit(App.ko.Grid.prototype, this);
+function ClubGrid(options) {
+    inherit(Grid.prototype, this);
     this.init(options);
 };
 
 (function(ClubGrid) {
 
     ClubGrid.iocGridActions = function(options) {
-        return new App.ClubGridActions(options);
+        return new ClubGridActions(options);
     };
 
-})(App.ko.ClubGrid.prototype);
+})(ClubGrid.prototype);
+
+globalIoc.add('ClubGrid', function(options) {
+    return new ClubGrid(options);
+});
+
+startApp();

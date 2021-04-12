@@ -187,7 +187,7 @@ class MemberDisplayForm(WidgetInstancesMixin, RendererModelForm, metaclass=Displ
                 '<button {attrs}>Read</button>',
                 attrs={
                     'class': 'component btn btn-info',
-                    'data-component-class': 'App.Dialog',
+                    'data-component-class': 'Dialog',
                     'data-event': 'click',
                     'data-component-options': {
                         'title': format_html('<b>Note for </b> <i>{}</i>', self.instance.profile),

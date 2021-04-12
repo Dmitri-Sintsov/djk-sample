@@ -44,7 +44,7 @@ class DjkSampleCommands(AutomationCommands):
 
     def user_preferences(self):
         yield (
-            component_by_classpath, ('App.EditForm',),
+            component_by_classpath, ('EditForm',),
             click,
             to_top_bootstrap_dialog,
             keys_by_id,

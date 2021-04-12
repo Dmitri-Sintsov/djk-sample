@@ -190,7 +190,7 @@ class ClubAppCommands(AutomationCommands):
 
     browse_preloaded_dtl_grid = (
         click_anchor_by_view, ('club_grid_simple_dtl', {'action': ''}),
-        component_by_classpath, ('App.ko.Grid',),
+        component_by_classpath, ('Grid',),
         # Test JOINed field queries.
         grid_order_by, ('Foundation date',),
         grid_find_data_row, ({'Title': 'Yaroslavl Bears'},),
@@ -199,7 +199,7 @@ class ClubAppCommands(AutomationCommands):
     # Check query.FilteredRawQuery usage with KoGridView.
     browse_grid_with_raw_query = (
         click_anchor_by_view, ('club_grid_raw_query', {'action': ''}),
-        component_by_classpath, ('App.ko.Grid',),
+        component_by_classpath, ('Grid',),
         # Test JOINed field queries.
         grid_order_by, ('First name',),
         grid_goto_page, ('2',),
@@ -215,7 +215,7 @@ class ClubAppCommands(AutomationCommands):
     def grid_interaction_club_equipment(self):
         yield (
             click_anchor_by_view, ('club_equipment_grid', {'action': ''}),
-            component_by_classpath, ('App.ko.ClubGrid',),
+            component_by_classpath, ('ClubGrid',),
             grid_find_data_row, ({'Title': 'Broadway Singers'},),
             grid_row_iconui_action, ('Add club equipment',),
         )
@@ -248,7 +248,7 @@ class ClubAppCommands(AutomationCommands):
     # Check grid with overridden filter choices templates.
     grid_custom_layout = (
         click_anchor_by_view, ('member_grid_tabs', {'action': ''}),
-        component_by_classpath, ('App.ko.MemberGrid',),
+        component_by_classpath, ('MemberGrid',),
         grid_tabs_filter_choices, ('Plays sport', ['Table tennis', 'Another sport']),
     )
 
@@ -295,7 +295,7 @@ class ClubAppCommands(AutomationCommands):
     manual_component_invocation = (
         # Check manual component invocation. Issued twice to check component re-instantiation.
         find_anchor_by_view, ('club_member_grid', {'club_id': 1, 'action': ''},),
-        relative_by_xpath, ('following::button[@data-component-class="App.GridDialog"]',),
+        relative_by_xpath, ('following::button[@data-component-class="GridDialog"]',),
         click,
         to_top_bootstrap_dialog,
         dialog_is_component,

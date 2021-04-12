@@ -187,11 +187,12 @@ class ClubGridWithActionLogging(ClubGridWithVirtualField, EditableClubGrid):
         'user_fk_widget',
         'manufacturer_fk_widget',
         'profile_fk_widget',
+        'tag_fk_widget',
         'action:grid',
     }
     grid_options = {
-        # Note: 'classPath' is not required for standard App.ko.Grid.
-        'classPath': 'App.ko.ClubGrid',
+        # Note: 'classPath' is not required for standard Grid.
+        'classPath': 'ClubGrid',
     }
 
 
@@ -359,8 +360,8 @@ class MemberGrid(KoGridView):
     @classmethod
     def get_grid_options(cls):
         return {
-            # Note: 'classPath' is not required for standard App.ko.Grid.
-            'classPath': 'App.ko.MemberGrid',
+            # Note: 'classPath' is not required for standard Grid.
+            'classPath': 'MemberGrid',
             'searchPlaceholder': 'Search for club or member profile',
             'fkGridOptions': {
                 'profile': {

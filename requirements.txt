@@ -1,4 +1,5 @@
 django-allauth
 git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
+git+https://github.com/Dmitri-Sintsov/django-deno.git
 # django-jinja-knockout
 

@@ -1,7 +1,19 @@
-'use strict';
+'use rollup'
 
-App.ko.MemberGridRow = function(options) {
-    $.inherit(App.ko.GridRow.prototype, this);
+import { inherit } from '../djk/js/dash.js';
+import { Dialog } from '../djk/js/dialog.js';
+import { ActionTemplateDialog } from '../djk/js/modelform.js';
+import { ui } from '../djk/js/ui.js';
+import { Actions } from '../djk/js/actions.vm.js';
+import { GridActions } from '../djk/js/grid/actions.vm.js';
+import { GridRow } from '../djk/js/grid/row.js';
+import { Grid } from '../djk/js/grid.js';
+
+import { globalIoc } from '../djk/js/ioc.js';
+import { startApp } from '../djk/js/document.js';
+
+function MemberGridRow(options) {
+    inherit(GridRow.prototype, this);
     this.init(options);
 };
 
@@ -16,11 +28,11 @@ App.ko.MemberGridRow = function(options) {
             // Display field value as bootstrap label.
             var types = ['success', 'info', 'primary'];
             displayValue = $('<span>', {
-                'class': App.ui.labelClass + ' preformatted'
+                'class': ui.labelClass + ' preformatted'
             })
             .text(displayValue)
             .addClass(
-                App.ui.labelClass + '-' + (this.values[field] < types.length ? types[this.values[field]] : 'info')
+                ui.labelClass + '-' + (this.values[field] < types.length ? types[this.values[field]] : 'info')
             );
             break;
         case 'note':
@@ -64,12 +76,12 @@ App.ko.MemberGridRow = function(options) {
         return true;
     };
 
-})(App.ko.MemberGridRow.prototype);
+})(MemberGridRow.prototype);
 
 
-App.MemberGridActions = function(options) {
-    $.inherit(App.GridActions.prototype, this);
-    $.inherit(App.Actions.prototype, this);
+function MemberGridActions(options) {
+    inherit(GridActions.prototype, this);
+    inherit(Actions.prototype, this);
     this.init(options);
 };
 
@@ -96,7 +108,7 @@ App.MemberGridActions = function(options) {
             };
         }
         // this.grid.updateMeta(viewModel.meta);
-        new App.Dialog(vm).alert();
+        new Dialog(vm).alert();
     };
 
     MemberGridActions.callback_quick_endorse = function(viewModel) {
@@ -109,7 +121,7 @@ App.MemberGridActions = function(options) {
 
     // Client-side invocation of the action.
     MemberGridActions.perform_edit_note = function(queryArgs, ajaxCallback) {
-        var actionDialog = new App.ActionTemplateDialog({
+        var actionDialog = new ActionTemplateDialog({
             template: 'member_note_form',
             owner: this.grid,
             meta: {
@@ -124,22 +136,22 @@ App.MemberGridActions = function(options) {
         this.grid.updatePage(viewModel);
     };
 
-})(App.MemberGridActions.prototype);
+})(MemberGridActions.prototype);
 
 
-App.ko.MemberGrid = function(options) {
-    $.inherit(App.ko.Grid.prototype, this);
+function MemberGrid(options) {
+    inherit(Grid.prototype, this);
     this.init(options);
 };
 
 (function(MemberGrid) {
 
     MemberGrid.iocRow = function(options) {
-        return new App.ko.MemberGridRow(options);
+        return new MemberGridRow(options);
     };
 
     MemberGrid.iocGridActions = function(options) {
-        return new App.MemberGridActions(options);
+        return new MemberGridActions(options);
     };
 
     MemberGrid.getEndorsedMemberIds = function() {
@@ -155,4 +167,10 @@ App.ko.MemberGrid = function(options) {
         this.actions.perform('endorse_members');
     };
 
-})(App.ko.MemberGrid.prototype);
+})(MemberGrid.prototype);
+
+globalIoc.add('MemberGrid', function(options) {
+    return new MemberGrid(options);
+});
+
+startApp();

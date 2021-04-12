@@ -168,7 +168,7 @@ class ClubListWithComponent(ClubList):
             attrs={
                 'class': 'component btn btn-sm btn-light',
                 'data-event': 'click',
-                'data-component-class': 'App.GridDialog',
+                'data-component-class': 'GridDialog',
                 'data-component-options': {
                     'filterOptions': {
                         'pageRoute': 'club_member_grid',
