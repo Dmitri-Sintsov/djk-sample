@@ -4,8 +4,8 @@ import { inherit } from '../djk/js/dash.js';
 import { Dialog } from '../djk/js/dialog.js';
 import { ActionTemplateDialog } from '../djk/js/modelform.js';
 import { ui } from '../djk/js/ui.js';
-import { Actions } from '../djk/js/actions.vm.js';
-import { GridActions } from '../djk/js/grid/actions.vm.js';
+import { Actions } from '../djk/js/actions.js';
+import { GridActions } from '../djk/js/grid/actions.js';
 import { GridRow } from '../djk/js/grid/row.js';
 import { Grid } from '../djk/js/grid.js';
 
