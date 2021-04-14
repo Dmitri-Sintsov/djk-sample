@@ -310,4 +310,4 @@ FIXTURE_DIRS = (
 random.seed(timezone.now().timestamp())
 
 DENO_ENABLE = True
-DENO_DEBUG = True
+DENO_DEBUG = False
