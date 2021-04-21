@@ -44,19 +44,20 @@ Ubuntu
 Tested in Ubuntu 20.04 LTS::
 
     sudo apt-get install git
-    python3 -m venv djk_sample
-    cd djk_sample
+    python3 -m venv djk-sample
+    cd djk-sample
     source bin/activate
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
+	python3 -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
-    python3 -m pip install -U -r requirements-bs3.txt
+    python3 -m pip install -U -r requirements/bs3.txt
 
 To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
-    python3 -m pip install -U -r requirements-bs4.txt
+    python3 -m pip install -U -r requirements/bs4.txt
 
 then::
 
@@ -69,33 +70,37 @@ then::
 Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
 (not always stable) version of ``djk_ui``.
 
+Install Deno (optional)::
+
+    curl -fsSL https://deno.land/x/install/install.sh | sh
+    export DENO_INSTALL=$HOME/.deno
+
+
 Windows
 ~~~~~~~
 
 Windows x64 (x86 is similar but needs 32-bit versions of Python package wheels).
 
-* Download and install Python 3.4, 3.5 or 3.6 (download and install KB2999226 in case Python 3.5 installation freezes).
+* Download and install Python 3.6, 3.7, 3.8 or 3.9.
 * Make sure ``python.exe`` / ``pip3.exe`` are in your `PATH`.
-* Download appropriate lxml wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml for example:
-
-  * ``lxml-4.1.0-cp36-cp36m-win_amd64.whl`` for Python 3.6 64 bit
 
 Then issue the following commands::
 
-    python -m venv djk_sample
-    cd djk_sample
-    Scripts\activate.bat
-    git clone https://github.com/Dmitri-Sintsov/djk-sample.git
-    pip3 install --use-wheel --no-index lxml-4.1.0-cp36-cp36m-win_amd64.whl
+    python -m venv djk-sample
     cd djk-sample
+    Scripts\activate.bat
+	python -m pip install -U pip
+    git clone https://github.com/Dmitri-Sintsov/djk-sample.git
+    cd djk-sample
+	python -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
-    python -m pip install -U -r requirements-bs3.txt
+    python -m pip install -U -r requirements\bs3.txt
 
 To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
-    python -m pip install -U -r requirements-bs4.txt
+    python -m pip install -U -r requirements\bs4.txt
 
 then::
 
@@ -105,6 +110,19 @@ then::
     python manage.py migrate
     python manage.py runserver
 
+Shell scripts ``3bs.cmd`` and ``4bs.cmd`` allow to switch the Bootstrap version on the fly, using the development
+(not always stable) version of ``djk_ui``.
+
+Install Deno (optional)
+
+Run PowerShell then invoke::
+
+    iwr https://deno.land/x/install/install.ps1 -useb | iex
+
+    set DENO_INSTALL=%userprofile%\.deno
+
+environment variable.
+
 Mac OS X
 ~~~~~~~~
 
@@ -112,6 +130,10 @@ Use brew:
 
 * Install Python3 from https://brew.sh/
 * Follow Ubuntu instructions.
+
+Install Deno (optional)::
+
+    brew install deno
 
 Unit tests
 ----------

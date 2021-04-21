@@ -1,5 +1,0 @@
-django-allauth
-git+https://github.com/Dmitri-Sintsov/djk-bootstrap3.git@v1.0.0
-git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
-# django-jinja-knockout
-
