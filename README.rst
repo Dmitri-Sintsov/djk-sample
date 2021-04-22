@@ -49,7 +49,7 @@ Tested in Ubuntu 20.04 LTS::
     source bin/activate
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
-	python3 -m pip install -U -r requirements.txt
+    python3 -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
@@ -89,10 +89,10 @@ Then issue the following commands::
     python -m venv djk-sample
     cd djk-sample
     Scripts\activate.bat
-	python -m pip install -U pip
+    python -m pip install -U pip
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
-	python -m pip install -U -r requirements.txt
+    python -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
