@@ -28,6 +28,6 @@ install:
     - pip install -U pip
     - pip wheel coveralls tox
     - pip install coveralls tox
-    - pip install -r dev-requirements.txt
+    - pip install -r requirements/dev.txt
 script:
   - tox -e $TOXENV
