@@ -1,16 +1,16 @@
 'use rollup'
 
-import { inherit } from '../djk/js/dash.js';
-import { Dialog } from '../djk/js/dialog.js';
-import { ActionTemplateDialog } from '../djk/js/modelform.js';
-import { ui } from '../djk/js/ui.js';
-import { Actions } from '../djk/js/actions.js';
-import { GridActions } from '../djk/js/grid/actions.js';
-import { GridRow } from '../djk/js/grid/row.js';
-import { Grid } from '../djk/js/grid.js';
+import { inherit } from '../../djk/js/dash.js';
+import { Dialog } from '../../djk/js/dialog.js';
+import { ActionTemplateDialog } from '../../djk/js/modelform.js';
+import { ui } from '../../djk/js/ui.js';
+import { Actions } from '../../djk/js/actions.js';
+import { GridActions } from '../../djk/js/grid/actions.js';
+import { GridRow } from '../../djk/js/grid/row.js';
+import { Grid } from '../../djk/js/grid.js';
 
-import { globalIoc } from '../djk/js/ioc.js';
-import { startApp } from '../djk/js/document.js';
+import { globalIoc } from '../../djk/js/ioc.js';
+import { startApp } from '../../djk/js/document.js';
 
 function MemberGridRow(options) {
     inherit(GridRow.prototype, this);

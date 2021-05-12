@@ -235,7 +235,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-# Use django_jinja_knockout app.js / middleware.py to detect timezone from browser.
+# Use django_jinja_knockout document.js / middleware.py to detect timezone from browser.
 USE_JS_TIMEZONE = True
 
 USE_I18N = True
@@ -261,6 +261,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+DJK_DEFAULT_SCRIPTS = ['sample/js/app.js']
 
 # List of global client routes that will be injected into every view (globally).
 # This is a good idea if some client-side route is frequently used by most of views.
