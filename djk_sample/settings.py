@@ -264,6 +264,23 @@ STATICFILES_FINDERS = (
 
 DJK_DEFAULT_SCRIPTS = ['sample/js/app.js']
 
+DENO_ROLLUP_ENTRY_POINTS = {
+    'sample/js/app.js': 'djk',
+    'sample/js/club-grid.js': 'djk',
+    'sample/js/member-grid.js': 'djk',
+}
+
+DENO_ROLLUP_BUNDLES = {
+    'djk': {
+        'writeEntryPoint': 'sample/js/app.js',
+        'matches': [
+            'djk/js/*',
+            'djk/js/lib/*',
+        ],
+        'virtualEntryPoints': True,
+    }
+}
+
 # List of global client routes that will be injected into every view (globally).
 # This is a good idea if some client-side route is frequently used by most of views.
 # Alternatively one can specify client route url names per view (see the documentation).
