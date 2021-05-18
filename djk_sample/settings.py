@@ -264,17 +264,18 @@ STATICFILES_FINDERS = (
 
 DJK_DEFAULT_SCRIPTS = ['sample/js/app.js']
 
-DENO_ROLLUP_ENTRY_POINTS = {
-    'sample/js/app.js': 'djk',
-    'sample/js/club-grid.js': 'djk',
-    'sample/js/member-grid.js': 'djk',
-}
+DENO_ROLLUP_ENTRY_POINTS = [
+    'sample/js/app.js',
+    'sample/js/club-grid.js',
+    'sample/js/member-grid.js',
+]
 
 DENO_ROLLUP_BUNDLES = {
     'djk': {
         'writeEntryPoint': 'sample/js/app.js',
         'matches': [
             'djk/js/*',
+            'djk/js/grid/*',
             'djk/js/lib/*',
         ],
         'virtualEntryPoints': True,
