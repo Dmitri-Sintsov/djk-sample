@@ -278,7 +278,7 @@ DENO_ROLLUP_BUNDLES = {
             'djk/js/grid/*',
             'djk/js/lib/*',
         ],
-        'virtualEntryPoints': True,
+        'virtualEntryPoints': 'matches',
     }
 }
 
