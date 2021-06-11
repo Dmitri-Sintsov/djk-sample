@@ -275,11 +275,13 @@ DENO_ROLLUP_BUNDLES = {
         'writeEntryPoint': 'sample/js/app.js',
         'matches': [
             'djk/js/*',
-            'djk/js/grid/*',
             'djk/js/lib/*',
+            'djk/js/grid/*',
         ],
+        'excludes': [],
         'virtualEntryPoints': 'matches',
-    }
+        'virtualEntryPointsExcludes': 'excludes',
+    },
 }
 
 # List of global client routes that will be injected into every view (globally).
