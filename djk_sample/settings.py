@@ -333,3 +333,4 @@ random.seed(timezone.now().timestamp())
 
 DENO_ENABLE = True
 DENO_DEBUG = False
+DENO_RELOAD = False
