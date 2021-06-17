@@ -284,6 +284,10 @@ DENO_ROLLUP_BUNDLES = {
     },
 }
 
+DENO_ROLLUP_COLLECT_OPTIONS = {
+    'terser': True,
+}
+
 # List of global client routes that will be injected into every view (globally).
 # This is a good idea if some client-side route is frequently used by most of views.
 # Alternatively one can specify client route url names per view (see the documentation).
