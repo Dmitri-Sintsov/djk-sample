@@ -284,7 +284,10 @@ DENO_ROLLUP_BUNDLES = {
     },
 }
 
+DJK_JS_MODULE_TYPE = 'systemjs-module'
+
 DENO_ROLLUP_COLLECT_OPTIONS = {
+    'moduleFormat': 'system',
     'terser': True,
 }
 
