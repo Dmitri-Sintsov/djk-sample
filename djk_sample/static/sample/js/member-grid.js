@@ -88,9 +88,9 @@ function MemberGridActions(options) {
 (function(MemberGridActions) {
 
     // Generates data for AJAX call.
-    MemberGridActions.queryargs_endorse_members = function(options) {
-        options['member_ids'] = JSON.stringify(this.grid.getEndorsedMemberIds());
-        return options;
+    MemberGridActions.queryargs_endorse_members = function(queryArgs) {
+        queryArgs['member_ids'] = JSON.stringify(this.grid.getEndorsedMemberIds());
+        return queryArgs;
     };
 
     MemberGridActions.callback_endorse_members = function(viewModel) {
