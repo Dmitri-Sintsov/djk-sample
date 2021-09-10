@@ -1,6 +1,7 @@
 import random
 import hashlib
 from django.utils import timezone
+import django_jinja_knockout
 # from django.utils.version import get_version
 # from distutils.version import LooseVersion
 
@@ -232,6 +233,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+# For manage.py compilemessages to work correctly:
+LOCALE_PATHS = [ os.path.join(django_jinja_knockout.__path__[0], 'locale'), ]
 
 TIME_ZONE = 'UTC'
 

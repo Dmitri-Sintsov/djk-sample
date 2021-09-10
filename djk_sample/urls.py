@@ -188,7 +188,7 @@ urlpatterns += [
 
 js_info_dict = {
     'domain': 'djangojs',
-    'packages': ('djk_sample',),
+    'packages': ['django_jinja_knockout', 'djk_sample'],
 }
 
 try:

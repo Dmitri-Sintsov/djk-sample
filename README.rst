@@ -65,6 +65,7 @@ then::
     mkdir "$VIRTUAL_ENV/djk-sample/fixtures/"
     python3 manage.py makemigrations club_app event_app
     python3 manage.py migrate
+    python3 manage.py compilemessages
     python3 manage.py runserver
 
 Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
@@ -108,6 +109,7 @@ then::
     mkdir "%VIRTUAL_ENV%\djk-sample\fixtures"
     python manage.py makemigrations club_app event_app
     python manage.py migrate
+    python manage.py compilemessages
     python manage.py runserver
 
 Shell scripts ``3bs.cmd`` and ``4bs.cmd`` allow to switch the Bootstrap version on the fly, using the development
