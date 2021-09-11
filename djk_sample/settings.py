@@ -235,7 +235,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 # For manage.py compilemessages to work correctly:
-LOCALE_PATHS = [ os.path.join(django_jinja_knockout.__path__[0], 'locale'), ]
+LOCALE_PATHS = [os.path.join(django_jinja_knockout.__path__[0], 'locale')]
 
 TIME_ZONE = 'UTC'
 
