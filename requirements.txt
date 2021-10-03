@@ -1,5 +1,6 @@
 django-allauth
-git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
+# For the beta Version
+# git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
 git+https://github.com/Dmitri-Sintsov/django-deno.git
-# django-jinja-knockout
+django-jinja-knockout~=1.1.0
 

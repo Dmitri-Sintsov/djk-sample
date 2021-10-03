@@ -145,7 +145,7 @@ Selenium tests
 
 Inside project virtual environment install selenium 3.4 or newer::
 
-    pip3 install -r dev-requirements.txt
+    pip3 install -r ./requirements/dev.txt
 
 To use `Bootstrap 3`_ version::
 
