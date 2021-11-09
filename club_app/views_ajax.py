@@ -176,7 +176,7 @@ class ClubGridWithVirtualField(SimpleClubGrid):
             str_fields = {}
         # Add formatted display of virtual field.
         is_plural = pluralize(row['exists_days'], arg='days')
-        str_fields['exists_days'] = f'{row["exists_days"]} %s' % 'day' if is_plural == '' else is_plural
+        str_fields['exists_days'] = f'{row["exists_days"]} %s' % ('day' if is_plural == '' else is_plural)
         return str_fields
 
 
