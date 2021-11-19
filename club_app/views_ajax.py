@@ -58,9 +58,9 @@ class ClubGridRawQuery(SimpleClubGrid):
 
     template_name = 'cbv_grid_breadcrumbs.htm'
     grid_fields = [
-        'first_name',
-        'last_name',
-        'role',
+        {'field': 'first_name', 'name': 'First name'},
+        {'field': 'last_name', 'name': 'Last name'},
+        {'field': 'role', 'name': 'Role'},
         'title',
         'category',
         'foundation_date',
@@ -78,16 +78,6 @@ class ClubGridRawQuery(SimpleClubGrid):
             return 'Sport clubs and their members'
         else:
             return super().get_model_meta(key)
-
-    def get_field_verbose_name(self, field_name):
-        if field_name == 'first_name':
-            return 'First name'
-        elif field_name == 'last_name':
-            return 'Last name'
-        elif field_name == 'role':
-            return 'Role'
-        else:
-            return super().get_field_verbose_name(field_name)
 
     def get_field_validator(self, fieldname):
         if fieldname == 'role':
@@ -127,22 +117,14 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         'title',
         'category',
         'foundation_date',
-        'total_members',
-        'exists_days'
+        # Annotated field
+        {'field': 'total_members', 'name': 'Total members'},
+        # Virtual field
+        {'field': 'exists_days', 'name': 'Days since foundation'},
     ]
 
     def get_base_queryset(self):
         return super().get_base_queryset().annotate(total_members=Count('member'))
-
-    def get_field_verbose_name(self, field_name):
-        if field_name == 'exists_days':
-            # Add virtual field.
-            return 'Days since foundation'
-        elif field_name == 'total_members':
-            # Add annotated field.
-            return 'Total members'
-        else:
-            return super().get_field_verbose_name(field_name)
 
     def get_related_fields(self, query_fields=None):
         query_fields = super().get_related_fields(query_fields)
