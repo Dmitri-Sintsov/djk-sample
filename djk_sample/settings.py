@@ -289,17 +289,11 @@ DENO_ROLLUP_BUNDLES = {
 }
 
 # Do not forget to re-run collectrollup management command after changing rollup.js bundles module type:
-DJK_JS_MODULE_TYPE = 'module' if DEBUG else 'systemjs-module'
-
-# Map of rollup.js output module type to html script tag module type:
-DENO_OUTPUT_MODULE_FORMATS = {
-    'module': 'es',
-    'systemjs-module': 'system',
-}
+DENO_OUTPUT_MODULE_TYPE = 'module' if DEBUG else 'systemjs-module'
+DJK_JS_MODULE_TYPE = DENO_OUTPUT_MODULE_TYPE
 
 # Run $VIRTUAL_ENV/djk-sample/cherry_django.py to check validity of collectrollup command output.
 DENO_ROLLUP_COLLECT_OPTIONS = {
-    'moduleFormat': DENO_OUTPUT_MODULE_FORMATS[DJK_JS_MODULE_TYPE],
     'terser': True,
 }
 
