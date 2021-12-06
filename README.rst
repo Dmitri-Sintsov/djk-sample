@@ -51,19 +51,19 @@ Tested in Ubuntu 20.04 LTS::
     cd djk-sample
     python3 -m pip install -U -r requirements.txt
 
-To use the current stable `Bootstrap 3`_ version of ``djk_ui`` (pypi version)::
+To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
     python3 -m pip install -U -r requirements/bs3.txt
 
-To use the current stable `Bootstrap 4`_ version of ``djk_ui`` (pypi version)::
+To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
     python3 -m pip install -U -r requirements/bs4.txt
 
-To use the development `Bootstrap 3`_ version (github)::
+To use the development `Bootstrap 3`_ version::
 
     ./3bs.sh
 
-To use the development `Bootstrap 4`_ version (github)::
+To use the development `Bootstrap 4`_ version::
 
     ./4bs.sh
 
@@ -111,11 +111,11 @@ To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
     python -m pip install -U -r requirements\bs4.txt
 
-To use the development `Bootstrap 3`_ version (github)::
+To use the development `Bootstrap 3`_ version::
 
     3bs.cmd
 
-To use the development `Bootstrap 4`_ version (github)::
+To use the development `Bootstrap 4`_ version::
 
     4bs.cmd
 
