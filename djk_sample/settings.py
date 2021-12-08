@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sample_secret_key_for_ci!do_not_use_in_production!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'true').lower() in ('true', '1', 'on', 'yes', 't')
+CHERRYPY_STATIC = os.environ.get('CHERRYPY_STATIC', 'false').lower() in ('true', '1', 'on', 'yes', 't')
 
 JS_ERRORS_ALERT = DEBUG
 # Requires proper setup of Django email error logging.

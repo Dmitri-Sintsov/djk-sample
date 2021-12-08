@@ -61,11 +61,11 @@ To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
 To use the development `Bootstrap 3`_ version::
 
-    ./3bs.sh
+    ./cli/3bs.sh
 
 To use the development `Bootstrap 4`_ version::
 
-    ./4bs.sh
+    ./cli/4bs.sh
 
 then::
 
@@ -76,7 +76,7 @@ then::
     python3 manage.py compilemessages
     python3 manage.py runserver
 
-Shell scripts ``3bs.sh`` and ``4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
+Shell scripts ``cli/3bs.sh`` and ``cli/4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
 (not always stable) version of ``djk_ui``.
 
 Install Deno (optional)::
@@ -113,11 +113,11 @@ To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
 To use the development `Bootstrap 3`_ version::
 
-    3bs.cmd
+    cli\3bs.cmd
 
 To use the development `Bootstrap 4`_ version::
 
-    4bs.cmd
+    cli\4bs.cmd
 
 then::
 
@@ -128,7 +128,7 @@ then::
     python manage.py compilemessages
     python manage.py runserver
 
-Shell scripts ``3bs.cmd`` and ``4bs.cmd`` allow to switch the Bootstrap version on the fly, using the development
+Shell scripts ``cli\3bs.cmd`` and ``cli\4bs.cmd`` allow to switch the Bootstrap version on the fly, using the development
 (not always stable) version of ``djk_ui``.
 
 Install Deno (optional)
@@ -165,11 +165,11 @@ Inside project virtual environment install selenium 3.4 or newer::
 
 To use `Bootstrap 3`_ version::
 
-    ./3bs.sh
+    ./cli/3bs.sh
 
 To use `Bootstrap 4`_ version::
 
-    ./4bs.sh
+    ./cli/4bs.sh
 
 django-jinja-knockout version 1.0.0 release tests were performed with:
 

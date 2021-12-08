@@ -49,7 +49,7 @@ class DjangoApplication:
             'server.socket_timeout': 60,
         })
 
-        if settings.DEBUG:
+        if settings.CHERRYPY_STATIC:
             # Do not forget to run ./manage.py collectstatic
             self.mount_static(settings.STATIC_URL, settings.STATIC_ROOT)
 
