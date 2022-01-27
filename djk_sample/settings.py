@@ -41,14 +41,22 @@ DJK_APPS = [
     'event_app',
 ]
 
+OPTIONAL_APPS = []
+
+try:
+    import django_deno
+    OPTIONAL_APPS.append('django_deno')
+except ImportError:
+    pass
+
 try:
     import django_jinja
-    DJANGO_JINJA_APPS = [
+    OPTIONAL_APPS += [
         'django_jinja',
         'django_jinja.contrib._humanize',
     ]
 except ImportError:
-    DJANGO_JINJA_APPS = []
+    pass
 
 # Order of installed apps is important for Django Template loader to find 'djk_sample/templates/base.html'
 # before original allauth 'base.html' is found, when allauth DTL templates are used instead of built-in
@@ -56,26 +64,25 @@ except ImportError:
 #
 # For the same reason, djk_ui app is included before django_jinja_knockout, to make it possible to override
 # any of django_jinja_knockout template / macro.
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # 'sites' is required by allauth
-    'django.contrib.sites',
-    'django_deno',
-] + DJANGO_JINJA_APPS + [
-    'djk_ui',
-    'django_jinja_knockout',
-    'django_jinja_knockout._allauth',
-] + DJK_APPS + [
-    'allauth',
-    'allauth.account',
-    # Required for socialaccount template tag library despite we do not use social login
-    'allauth.socialaccount',
-]
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        # 'sites' is required by allauth
+        'django.contrib.sites',
+    ] + OPTIONAL_APPS + [
+        'djk_ui',
+        'django_jinja_knockout',
+        'django_jinja_knockout._allauth',
+    ] + DJK_APPS + [
+        'allauth',
+        'allauth.account',
+        # Required for socialaccount template tag library despite we do not use social login
+        'allauth.socialaccount',
+    ]
 
 # Since v0.9.0 most of functionality except resolver_match and view permissions in urls.py
 # works without middleware. In such case comment out DJK_MIDDLEWARE and it's references.
@@ -135,7 +142,7 @@ ROOT_URLCONF = 'djk_sample.urls'
 
 TEMPLATES = []
 
-if len(DJANGO_JINJA_APPS) > 0:
+if 'django_jinja' in OPTIONAL_APPS:
     # Optional support for django_jinja package, may be removed in the future in case there is no updates for it.
     TEMPLATES.append(
         {
@@ -270,34 +277,42 @@ STATICFILES_FINDERS = (
 
 DJK_DEFAULT_SCRIPTS = ['sample/js/app.js']
 
-DENO_ROLLUP_ENTRY_POINTS = [
-    'sample/js/app.js',
-    'sample/js/club-grid.js',
-    'sample/js/member-grid.js',
-]
+if 'django_deno' in OPTIONAL_APPS:
 
-DENO_ROLLUP_BUNDLES = {
-    'djk': {
-        'writeEntryPoint': 'sample/js/app.js',
-        'matches': [
-            'djk/js/*',
-            'djk/js/lib/*',
-            'djk/js/grid/*',
-        ],
-        'excludes': [],
-        'virtualEntryPoints': 'matches',
-        'virtualEntryPointsExcludes': 'excludes',
-    },
-}
+    DENO_ENABLE = True
+    DENO_DEBUG = False
+    DENO_RELOAD = False
 
-# Do not forget to re-run collectrollup management command after changing rollup.js bundles module type:
-DENO_OUTPUT_MODULE_TYPE = 'module' if DEBUG else 'systemjs-module'
-DJK_JS_MODULE_TYPE = DENO_OUTPUT_MODULE_TYPE
+    DENO_ROLLUP_ENTRY_POINTS = [
+        'sample/js/app.js',
+        'sample/js/club-grid.js',
+        'sample/js/member-grid.js',
+    ]
 
-# Run $VIRTUAL_ENV/djk-sample/cherry_django.py to check validity of collectrollup command output.
-DENO_ROLLUP_COLLECT_OPTIONS = {
-    'terser': True,
-}
+    DENO_ROLLUP_BUNDLES = {
+        'djk': {
+            'writeEntryPoint': 'sample/js/app.js',
+            'matches': [
+                'djk/js/*',
+                'djk/js/lib/*',
+                'djk/js/grid/*',
+            ],
+            'excludes': [],
+            'virtualEntryPoints': 'matches',
+            'virtualEntryPointsExcludes': 'excludes',
+        },
+    }
+
+    # Run $VIRTUAL_ENV/djk-sample/cherry_django.py to check validity of collectrollup command output.
+    DENO_ROLLUP_COLLECT_OPTIONS = {
+        'terser': True,
+    }
+    # Do not forget to re-run collectrollup management command after changing rollup.js bundles module type:
+    DENO_OUTPUT_MODULE_TYPE = 'module' if DEBUG else 'systemjs-module'
+    DJK_JS_MODULE_TYPE = DENO_OUTPUT_MODULE_TYPE
+else:
+    DJK_JS_MODULE_TYPE = 'module'
+
 
 # List of global client routes that will be injected into every view (globally).
 # This is a good idea if some client-side route is frequently used by most of views.
@@ -345,7 +360,3 @@ FIXTURE_DIRS = (
 )
 
 random.seed(timezone.now().timestamp())
-
-DENO_ENABLE = True
-DENO_DEBUG = False
-DENO_RELOAD = False
