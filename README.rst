@@ -6,12 +6,18 @@ djk-sample
 .. _Bootstrap 4: https://github.com/Dmitri-Sintsov/djk-bootstrap4
 .. _Chrome: https://www.google.com/chrome/
 .. _ChromeDriver: https://sites.google.com/a/chromium.org/chromedriver/
+.. _cherry_django.sh: https://github.com/Dmitri-Sintsov/djk-sample/blob/master/cli/cherry_django.sh
 .. _Firefox ESR: https://www.mozilla.org/en-US/firefox/organizations/
 .. _fixtures_order: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=fixtures_order&utf8=%E2%9C%93
 .. _geckodriver: https://github.com/mozilla/geckodriver/releases
+.. _django_deno: https://github.com/Dmitri-Sintsov/django-deno
+.. _deno rollup: https://deno.land/x/drollup
+.. _settings.py: https://github.com/Dmitri-Sintsov/djk-sample/blob/master/djk_sample/settings.py
+.. _system.js: https://github.com/systemjs/systemjs
 .. _dump_data: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=dump_data&utf8=%E2%9C%93
 .. _has_fixture: https://github.com/Dmitri-Sintsov/djk-sample/search?l=Python&q=has_fixture&utf8=%E2%9C%93
 .. _djk_sample/tests.py: https://github.com/Dmitri-Sintsov/djk-sample/blob/master/djk_sample/tests.py
+.. _terser: https://github.com/terser/terser
 
 
 Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sintsov/django-jinja-knockout
@@ -152,6 +158,44 @@ Use brew:
 Install Deno (optional)::
 
     brew install deno
+
+deno rollup bundle
+------------------
+Since django-jinja-knockout v2, `django_deno`_ could be used to generate / run Javascript bundle.
+
+`django_deno`_ dependence is optional and is required only to run with old browsers (eg. IE11)
+or to create minimized production mode bundle.
+
+`deno rollup`_ and `system.js`_ are used internally to create / load the production mode bundle.
+
+* Use ``manage.py runrollup`` command to debug with old browsers (eg. IE11)
+* Use ``manage.py collectrollup`` command to create minimized bundle, compatible to old browsers
+* Use ``cli/cherry_django.sh`` to test generated bundle locally (emulation of production).
+
+It's also possible to generate es6 minimized bundle to use with modern browsers (no IE11), with the following
+``DENO_OUTPUT_MODULE_TYPE`` value in `settings.py`_::
+
+    DENO_OUTPUT_MODULE_TYPE = 'module'
+
+To automatically create the production Javascript bundle::
+
+    ./cli/collectrollup.sh
+
+To run test server after the bundle has been created::
+
+    ./cli/cherry_django.sh
+
+`terser`_ is used to minimize the bundle. To create non-minimized bundle, one may turn off terser in `settings.py`_::
+
+    DENO_ROLLUP_COLLECT_OPTIONS = {
+        'terser': False,
+    }
+
+``DJANGO_DEBUG`` and ``CHERRYPY_STATIC`` environment variables are used by `settings.py`_ to select the debug /
+production version of Javascript code, for example in the deno production script `cherry_django.sh`_::
+
+    DJANGO_DEBUG='False'
+    CHERRYPY_STATIC='True'
 
 Unit tests
 ----------

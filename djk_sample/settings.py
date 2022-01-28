@@ -277,6 +277,8 @@ STATICFILES_FINDERS = (
 
 DJK_DEFAULT_SCRIPTS = ['sample/js/app.js']
 
+# django_deno dependence is optional and is required only to run with old browsers (eg. IE11)
+# or to create minimized production mode bundle.
 if 'django_deno' in OPTIONAL_APPS:
 
     DENO_ENABLE = True
