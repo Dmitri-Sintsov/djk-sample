@@ -27,8 +27,9 @@ Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sints
 
 .. image:: https://img.shields.io/travis/Dmitri-Sintsov/djk-sample.svg?style=flat
     :target: https://travis-ci.org/Dmitri-Sintsov/djk-sample
-
-.. image:: http://www.icoph.org/img/ic-youtube.png
+..
+   https://iconarchive.com/show/android-lollipop-icons-by-dtafalonso/Youtube-icon.html
+.. image:: https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/24/Youtube-icon.png
     :alt: Watch selenium tests recorded videos.
     :target: https://www.youtube.com/channel/UCZTrByxVSXdyW0z3e3qjTsQ
 
