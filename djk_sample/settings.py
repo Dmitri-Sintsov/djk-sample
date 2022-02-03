@@ -284,6 +284,7 @@ if 'django_deno' in OPTIONAL_APPS:
     DENO_ENABLE = True
     DENO_DEBUG = False
     DENO_RELOAD = False
+    DENO_CHECK_LOCK_FILE = True
 
     DENO_ROLLUP_ENTRY_POINTS = [
         'sample/js/app.js',
