@@ -45,6 +45,7 @@ OPTIONAL_APPS = []
 
 try:
     import django_deno
+    # django_deno is an optional Javascript module bundler, not required to run in modern browsers
     OPTIONAL_APPS.append('django_deno')
 except ImportError:
     pass
@@ -306,7 +307,7 @@ if 'django_deno' in OPTIONAL_APPS:
         },
     }
 
-    # Run $VIRTUAL_ENV/djk-sample/cherry_django.py to check validity of collectrollup command output.
+    # Run $VIRTUAL_ENV/djk-sample/cherry_django.py to check the validity of collectrollup command output bundle.
     DENO_ROLLUP_COLLECT_OPTIONS = {
         'terser': True,
     }
