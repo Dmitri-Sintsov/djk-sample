@@ -12,6 +12,8 @@ import { Grid } from '../../djk/js/grid.js';
 import { globalIoc } from '../../djk/js/ioc.js';
 import { startApp } from '../../djk/js/document.js';
 
+import { Url } from '../../djk/js/url.js';
+
 function MemberGridRow(options) {
     inherit(GridRow.prototype, this);
     this.init(options);
@@ -145,6 +147,11 @@ function MemberGrid(options) {
 };
 
 (function(MemberGrid) {
+
+    // An example to use outer module Url() call in knockout bindings:
+    MemberGrid.getUrl = function(route, kwargs) {
+        return Url(route, kwargs);
+    };
 
     MemberGrid.iocRow = function(options) {
         return new MemberGridRow(options);
