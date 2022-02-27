@@ -4,7 +4,7 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 pyenv init -
-# pyenv install 3.9.0
+# pyenv install 3.10.0
 echo Version of Python installed in the python:latest-browsers image.
 python3 --version
 # export PATH="$(pyenv root)/versions/3.9.0/bin/:$PATH"
