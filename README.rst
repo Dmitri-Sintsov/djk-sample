@@ -24,9 +24,6 @@ Sample Django project for django-jinja-knockout: https://github.com/Dmitri-Sints
 
 .. image:: https://circleci.com/gh/Dmitri-Sintsov/djk-sample.svg?style=shield
     :target: https://circleci.com/gh/Dmitri-Sintsov/djk-sample
-
-.. image:: https://img.shields.io/travis/Dmitri-Sintsov/djk-sample.svg?style=flat
-    :target: https://travis-ci.org/Dmitri-Sintsov/djk-sample
 ..
    https://iconarchive.com/show/android-lollipop-icons-by-dtafalonso/Youtube-icon.html
 .. image:: https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/24/Youtube-icon.png
