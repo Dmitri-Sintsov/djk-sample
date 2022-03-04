@@ -433,9 +433,20 @@ class MemberGridCustomActions(MemberGrid):
                 'endorse_members': {},
             },
             'click': {
+                'edit_form': {
+                    'cells': [
+                        'profile',
+                        'club',
+                        'plays',
+                        'role',
+                        'last_visit',
+                        'is_endorsed',
+                    ],
+                },
                 'edit_note': {
                     'localName': _('Edit member note'),
                     'css': 'btn-warning',
+                    'cells': ['note', 'is_endorsed',]
                 },
             },
             'iconui': {

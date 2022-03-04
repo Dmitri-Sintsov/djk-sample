@@ -256,30 +256,48 @@ class ClubAppCommands(AutomationCommands):
     # 'click' type action 'change' with server-side ModelForm and
     # 'click' type action 'Edit member note' with client-side underscore.js / knockout.js form.
     def grid_custom_actions(self):
-        note_text = 'Chinese player with ultra-fast reaction and speed. Participated in many tournaments.'
+        note_text = {
+            '07/15/2015 11:25 a.m.': 'Chinese player with ultra-fast reaction and speed. Participated in many tournaments.',
+            '11/27/2016 7:27 p.m.': 'Fast agile player',
+        }
         yield (
             click_anchor_by_view, ('member_grid_custom_actions', {'action': ''}),
             component_by_id, ('member_grid',),
+
             grid_find_data_row, ({'Last visit time': '11/23/2016 2:47 p.m.'},),
             grid_row_iconui_action, ('Quick disendorsement',),
+
+            # cell action with multiple action choices via ActionsMenuDialog
             grid_find_data_row, ({'Last visit time': '11/27/2016 7:27 p.m.'},),
             # phantomjs does not allow to click TR, thus we are selecting suitable TD.
-            grid_row_relative_by_xpath, ('.//td[@data-caption="Sportsman"]',),
+            grid_row_relative_by_xpath, ('.//td[@data-caption="Endorsed"]',),
             click,
             # screenshot, ('grid_custom_actions',),
             dialog_body_button_click, ('Change',),
             to_top_bootstrap_dialog,
             input_as_select_click, ('id_plays_2',),
             dialog_footer_button_click, ('Save',),
+
+            # single cell action
+            grid_find_data_row, ({'Last visit time': '11/27/2016 7:27 p.m.'},),
+            grid_row_relative_by_xpath, ('.//td[@data-caption="Note"]',),
+            click,
+            keys_by_id, ('id_note', note_text['11/27/2016 7:27 p.m.']),
+            dialog_footer_button_click, ('Edit member note',),
+            component_relative_by_xpath, ('.//button[@data-content={}]', note_text['11/27/2016 7:27 p.m.']),
+            click,
+
+            # cell action with multiple action choices via ActionsMenuDialog
             grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.'},),
-            grid_row_relative_by_xpath, ('.//td[@data-caption="Sportsman"]',),
+            grid_row_relative_by_xpath, ('.//td[@data-caption="Endorsed"]',),
             click,
             dialog_body_button_click, ('Edit member note',),
             to_top_bootstrap_dialog,
-            keys_by_id, ('id_note', note_text),
+            keys_by_id, ('id_note', note_text['07/15/2015 11:25 a.m.']),
             dialog_footer_button_click, ('Edit member note',),
-            component_relative_by_xpath, ('.//button[@data-content={}]', note_text),
+            component_relative_by_xpath, ('.//button[@data-content={}]', note_text['07/15/2015 11:25 a.m.']),
             click,
+
             grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.'},),
             grid_row_relative_by_xpath, ('.//input[@type="checkbox"]',),
             click,
