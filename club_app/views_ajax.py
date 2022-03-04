@@ -120,17 +120,11 @@ class ClubGridWithVirtualField(SimpleClubGrid):
         # Annotated field
         {'field': 'total_members', 'name': 'Total members'},
         # Virtual field
-        {'field': 'exists_days', 'name': 'Days since foundation'},
+        {'field': 'exists_days', 'name': 'Days since foundation', 'virtual': True},
     ]
 
     def get_base_queryset(self):
         return super().get_base_queryset().annotate(total_members=Count('member'))
-
-    def get_related_fields(self, query_fields=None):
-        query_fields = super().get_related_fields(query_fields)
-        # Remove virtual field from queryset values().
-        query_fields.remove('exists_days')
-        return query_fields
 
     def get_model_fields(self):
         model_fields = copy(super().get_model_fields())
