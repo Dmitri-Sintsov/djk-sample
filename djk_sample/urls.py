@@ -182,7 +182,7 @@ urlpatterns += [
         args=['club_id'],
         kwargs={'view_title': '"{}" members'}
     ),
-    # todo: check path:
+    # UrlPath generated path:
     # re_path(r'^club-member-grid-(?P<club_id>\w*)(?P<action>/?\w*)/$', ClubMemberGrid.as_view(), name='club_member_grid'),
 ]
 
