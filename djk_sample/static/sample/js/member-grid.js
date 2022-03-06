@@ -9,7 +9,7 @@ import { GridActions } from '../../djk/js/grid/actions.js';
 import { GridRow } from '../../djk/js/grid/row.js';
 import { Grid } from '../../djk/js/grid.js';
 
-import { globalIoc } from '../../djk/js/ioc.js';
+import { componentIoc } from '../../djk/js/ioc.js';
 import { startApp } from '../../djk/js/document.js';
 
 import { Url } from '../../djk/js/url.js';
@@ -176,7 +176,7 @@ function MemberGrid(options) {
 
 })(MemberGrid.prototype);
 
-globalIoc.add('MemberGrid', function(options) {
+componentIoc.add('MemberGrid', function(options) {
     return new MemberGrid(options);
 });
 

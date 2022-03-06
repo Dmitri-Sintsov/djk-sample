@@ -5,7 +5,7 @@ import { TabPane } from '../../djk/js/tabpane.js';
 import { Actions } from '../../djk/js/actions.js';
 import { GridActions } from '../../djk/js/grid/actions.js';
 import { Grid } from '../../djk/js/grid.js';
-import { globalIoc } from '../../djk/js/ioc.js';
+import { componentIoc } from '../../djk/js/ioc.js';
 import { startApp } from '../../djk/js/document.js';
 
 
@@ -89,7 +89,7 @@ function ClubGrid(options) {
 
 })(ClubGrid.prototype);
 
-globalIoc.add('ClubGrid', function(options) {
+componentIoc.add('ClubGrid', function(options) {
     return new ClubGrid(options);
 });
 
