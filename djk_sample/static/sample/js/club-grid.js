@@ -1,5 +1,3 @@
-'use rollup'
-
 import { inherit } from '../../djk/js/dash.js';
 import { TabPane } from '../../djk/js/tabpane.js';
 import { Actions } from '../../djk/js/actions.js';

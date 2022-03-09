@@ -1,5 +1,3 @@
-'use rollup'
-
 import { inherit } from '../../djk/js/dash.js';
 import { Dialog } from '../../djk/js/dialog.js';
 import { ActionTemplateDialog } from '../../djk/js/modelform.js';
