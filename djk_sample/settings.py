@@ -284,6 +284,7 @@ if 'django_deno' in OPTIONAL_APPS:
 
     DENO_ENABLE = True
     DENO_DEBUG = False
+    DENO_USE_VENDOR = True
     DENO_RELOAD = False
     DENO_CHECK_LOCK_FILE = True
 
