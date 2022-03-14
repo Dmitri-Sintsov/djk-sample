@@ -61,9 +61,17 @@ To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
     python3 -m pip install -U -r requirements/bs3.txt
 
+or::
+
+    python3 -m pip install -U wheel/djk_bootstrap3-2.0.0-py2.py3-none-any.whl
+
 To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
     python3 -m pip install -U -r requirements/bs4.txt
+
+or::
+
+    python3 -m pip install -U wheel/djk_bootstrap4-2.0.0-py2.py3-none-any.whl
 
 To use the development `Bootstrap 3`_ version::
 
