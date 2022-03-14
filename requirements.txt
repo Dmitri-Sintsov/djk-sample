@@ -1,3 +1,2 @@
 django-allauth
-django-jinja-knockout
-
+django-jinja-knockout==2.0.0

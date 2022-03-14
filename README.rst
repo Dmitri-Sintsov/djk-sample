@@ -53,6 +53,8 @@ Tested in Ubuntu 20.04 LTS::
     source bin/activate
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
+    # Uncomment next line to use v2.0.0 instead of development version:
+    # git checkout tags/v2.0.0
     python3 -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
@@ -105,6 +107,8 @@ Then issue the following commands::
     python -m pip install -U pip
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
+    rem Uncomment next line to use v2.0.0 instead of development version:
+    rem git checkout tags/v2.0.0
     python -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
