@@ -231,7 +231,7 @@ To use `Bootstrap 4`_ version::
 * Ubuntu 20.04.4 LTS
 * Python 3.10.2
 * Google Chrome 98.0.4758.102
-* ChromeDriver 98.0.4758.102 (273bf7ac8c909cde36982d27f66f3c70846a3718-refs/branch-heads/4758@{#1151})
+* ChromeDriver 98.0.4758.102 (273bf7ac8c909cde36982d27f66f3c70846a3718-refs/branch-heads/4758 at {#1151})
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
