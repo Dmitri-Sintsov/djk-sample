@@ -225,15 +225,13 @@ To use `Bootstrap 4`_ version::
 
     ./cli/4bs.sh
 
-django-jinja-knockout version 1.0.0 release tests were performed with:
+``django-jinja-knockout`` version 2.0.0 release tests were performed with:
 
-* Python 3.8.2
-* Ubuntu Linux 20.04LTS 64bit
-* Selenium 3.141.0
-* Chrome 81.0.4044.138 (Official Build) (64-bit)
-* ChromeDriver 81.0.4044.138 (8c6c7ba89cc9453625af54f11fd83179e23450fa-refs/branch-heads/4044@{#999})
-* Firefox 76.0.1 (64-bit)
-* geckodriver 0.26.0 (e9783a644016 2019-10-10 13:38 +0000)
+* Linux fv-az341-704 5.11.0-1028-azure #31~20.04.2-Ubuntu SMP Tue Jan 18 08:46:15 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+* Ubuntu 20.04.4 LTS
+* Python 3.10.2
+* Google Chrome 98.0.4758.102
+* ChromeDriver 98.0.4758.102 (273bf7ac8c909cde36982d27f66f3c70846a3718-refs/branch-heads/4758@{#1151})
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
