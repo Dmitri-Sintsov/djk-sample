@@ -1,7 +1,8 @@
 {% from 'bs_nav_items.htm' import bs_nav_items with context -%}
 {% if request.user.is_authenticated %}
+{# Check url() Jinja2 extension / tpl.url() template context #}
 {% set navs = [{
-    'url': tpl.url('account_email'),
+    'url': url('account_email'),
     'text': _('Change E-mail'),
 }, {
     'url': tpl.url('account_logout'),
