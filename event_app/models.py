@@ -3,12 +3,13 @@ from collections import OrderedDict
 from django.utils import timezone
 from django.db import models
 from django.db import transaction
+from django.contrib.admin import site
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
+from django_jinja_knockout.obj_dict import ObjDict
 from django_jinja_knockout.tpl import format_local_date, str_dict
-from django.contrib.admin import site
 
 from djk_sample.middleware import ContextMiddleware
 
@@ -29,6 +30,26 @@ def user__get_str_fields(self):
 # Monkey patch User model to support .get_str_fields(), used by ModelFormActionsView / KoGridView.
 # It's not required, just serves an example and improves User interface.
 User.get_str_fields = user__get_str_fields
+
+
+class ActionObjDict(ObjDict):
+
+    def can_view_field(self, field_name=None):
+        return self.request_user is None or self.request_user == self.obj.performer or self.request_user.is_superuser
+
+    def get_str_fields(self):
+        return OrderedDict([
+            ('performer', self.obj.performer.username),
+            ('date', format_local_date(self.obj.date) if self.can_view_field() else site.empty_value_display),
+            ('action_type', self.obj.get_action_type_display()),
+            ('content_type', str(self.obj.content_type)),
+            (
+                'content_object',
+                site.empty_value_display
+                if self.obj.content_object is None
+                else ObjDict(obj=self.obj.content_object, request_user=self.request_user).get_description()
+            )
+        ])
 
 
 class Action(models.Model):
@@ -54,6 +75,7 @@ class Action(models.Model):
         verbose_name = 'Action'
         verbose_name_plural = 'Actions'
         ordering = ('-date',)
+        obj_dict_cls = ActionObjDict
 
     def save(self, *args, **kwargs):
         if self.pk is None:
@@ -74,17 +96,7 @@ class Action(models.Model):
         self.save()
 
     def get_str_fields(self):
-        return OrderedDict([
-            ('performer', self.performer.username),
-            ('date', format_local_date(self.date)),
-            ('action_type', self.get_action_type_display()),
-            ('content_type', str(self.content_type)),
-            (
-                'content_object',
-                self.content_object.get_str_fields() if hasattr(self.content_object, 'get_str_fields') else
-                (site.empty_value_display if self.content_object is None else str(self.content_object))
-            )
-        ])
+        return ObjDict.from_obj(obj=self).get_str_fields()
 
     def __str__(self):
         str_fields = self.get_str_fields()
