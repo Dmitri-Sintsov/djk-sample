@@ -8,6 +8,25 @@
 
 {% set card_types = ['default', 'primary', 'success', 'info', 'warning', 'danger', 'secondary', 'light', 'dark',] -%}
 
+<ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link">Before form</a></li>
+    <li class="nav-item">
+        <form-inline>
+            <div class="form-group">
+                <input class="form-control" id="example-text-input-inline" type="text" placeholder="input.form-control">
+            </div>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox">
+                    .checkbox input[type="checkbox"]
+                </label>
+            </div>
+            <button class="btn btn-default" type="submit">Submit</button>
+        </form-inline>
+    </li>
+    <li class="nav-item"><a class="nav-link">After form</a></li>
+</ul>
+
 <navbar-default>
     {% for card_type in card_types -%}
     <card-{{ card_type }}>
