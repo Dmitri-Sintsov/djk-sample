@@ -6,7 +6,7 @@
 <i class="fa fa-clock-o"></i>
 <i class="fa fa-font-awesome"></i>
 
-{% set card_types = ['default', 'primary', 'success', 'info', 'warning', 'danger', 'secondary', 'light', 'dark',] -%}
+{% set card_types = ['default', 'primary', 'success', 'info', 'warning', 'danger', 'secondary', 'light', 'dark', 'type'] -%}
 
 <ul class="nav nav-tabs">
     <li class="nav-item"><a class="nav-link">Before form</a></li>
@@ -29,7 +29,7 @@
 
 <navbar-default>
     {% for card_type in card_types -%}
-    <card-{{ card_type }}>
+    <card-{{ card_type }} {% if card_type == "type" %}type="default"{% endif -%}>
         <card-header>
             <card-title>{{ card_type|capitalize }} card title</card-title>
         </card-header>
