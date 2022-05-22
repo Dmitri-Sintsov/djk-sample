@@ -48,6 +48,8 @@ class EventAppCommands(AutomationCommands):
         click,
         relative_by_classname, ('input-from',),
         all_keys, ('Not a date',),
+        # Blur calendar, so it will not prevent from 'Apply' button click:
+        blur_active_element,
         rangefilter_by_fieldname, ('date',),
         load_by_link_text, ('Apply', True),
         rangefilter_by_fieldname, ('date',),

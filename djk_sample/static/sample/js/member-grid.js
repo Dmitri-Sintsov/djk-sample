@@ -19,7 +19,7 @@ function MemberGridRow(options) {
 
 (function(MemberGridRow) {
 
-    MemberGridRow.useInitClient = true;
+    MemberGridRow.useInitClient = 2;
 
     MemberGridRow.display = function(field) {
         var displayValue = this._super._call('display', field);
@@ -41,11 +41,12 @@ function MemberGridRow(options) {
             if (this.values[field] !== '') {
                 displayValue = $('<button>', {
                     'class': 'btn btn-info',
-                    'data-content': this.values[field],
-                    'data-toggle': 'popover',
-                    'data-html': false,
-                    'data-trigger': 'click',
-                    'data-placement': 'bottom',
+                    'bs-data': '',
+                    'bs-content': this.values[field],
+                    'bs-toggle': 'popover',
+                    'bs-html': false,
+                    'bs-trigger': 'click',
+                    'bs-placement': 'bottom',
                     'title': gridColumnOrder.name,
                 }).text('Full text');
             }

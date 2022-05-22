@@ -284,7 +284,7 @@ class ClubAppCommands(AutomationCommands):
             click,
             keys_by_id, ('id_note', note_text['11/27/2016 7:27 p.m.']),
             dialog_footer_button_click, ('Edit member note',),
-            component_relative_by_xpath, ('.//button[@data-content={}]', note_text['11/27/2016 7:27 p.m.']),
+            component_relative_by_xpath, ('.//button[@bs-content={}]', note_text['11/27/2016 7:27 p.m.']),
             click,
 
             # cell action with multiple action choices via ActionsMenuDialog
@@ -295,7 +295,7 @@ class ClubAppCommands(AutomationCommands):
             to_top_bootstrap_dialog,
             keys_by_id, ('id_note', note_text['07/15/2015 11:25 a.m.']),
             dialog_footer_button_click, ('Edit member note',),
-            component_relative_by_xpath, ('.//button[@data-content={}]', note_text['07/15/2015 11:25 a.m.']),
+            component_relative_by_xpath, ('.//button[@bs-content={}]', note_text['07/15/2015 11:25 a.m.']),
             click,
 
             grid_find_data_row, ({'Last visit time': '07/15/2015 11:25 a.m.'},),

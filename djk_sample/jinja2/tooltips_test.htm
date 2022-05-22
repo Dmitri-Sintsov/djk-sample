@@ -1,0 +1,47 @@
+{% extends 'base.htm' %}
+
+{% block main %}
+<script id="content_popover_template" type="text/html">
+<div>
+    <b>Hello, world!</b>
+    <i>Just a test</i>
+</div>
+</script>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link component" data-component-class="Dialog" data-component-options='{"title": "Hello, world!", "message": "Should close opened popovers"}' data-event="click">Sample dialog test</a>
+    </li>
+    <li class="nav-item">
+        <form is="form-inline">
+            <form-group>
+                <input class="form-control" id="input-inline-tooltip" bs-data bs-toggle="tooltip" type="text" title="Testing tooltip title" bs-html="false" placeholder="input-inline-tooltip">
+            </form-group>
+            <form-group>
+                <input class="form-control" id="input-inline-content-popover" bs-data bs-toggle="popover" type="text" data-content-template="content_popover_template" placeholder="Click to display content_popover_template">
+            </form-group>
+            <form-group>
+                <input class="form-control" id="input-inline-closable-popover" type="text" placeholder="input-inline-closable-popover">
+            </form-group>
+            <form-group>
+                <input class="form-control" id="input-inline-button-popover" type="text" placeholder="input-inline-button-popover">
+            </form-group>
+            <form-group>
+                <input class="form-control" id="input-tooltip-error" type="text" placeholder="input-tooltip-error">
+            </form-group>
+            <form-group>
+                <input class="form-control" id="input-popover-error" type="text" placeholder="input-popover-error">
+            </form-group>
+            <form-group>
+                <button class="btn btn-primary" type="button" id="update_popover_button">Update popover test</button>
+                <button class="btn btn-warning" type="button" id="empty_popover_button">Empty popover test</button>
+                <button class="btn btn-info" type="button" id="dispose_popovers_button">Dispose popovers test</button>
+                <button class="btn btn-success" type="submit">Submit</button>
+            </form-group>
+        </form>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link">After &lt;form-inline&gt; test</a>
+    </li>
+</ul>
+{% endblock main %}

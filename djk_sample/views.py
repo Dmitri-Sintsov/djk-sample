@@ -17,9 +17,18 @@ def renderer_test(request, **kwargs):
         'c': 3,
     })
     return render(request, 'renderer_test.htm', {
-        # Test template_context without decorator.
-        'page_context': create_page_context(request),
         'renderer_top': renderer_top
+    })
+
+
+def tooltips_test(request, **kwargs):
+    page_context = create_page_context(request)
+    page_context.set_custom_scripts(
+        'sample/js/tooltips-test.js',
+    )
+    # Test template_context without decorator.
+    return render(request, 'tooltips_test.htm', {
+        'page_context': page_context,
     })
 
 

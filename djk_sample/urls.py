@@ -18,7 +18,7 @@ from django.urls import include, re_path
 
 from django_jinja_knockout.urls import UrlPath
 
-from djk_sample.views import renderer_test, UserChangeView
+from djk_sample.views import renderer_test, tooltips_test, UserChangeView
 from club_app.views import (
     ClubCreate, ClubCreateDTL, ClubUpdate, ClubDetail,
     ClubList, ClubListWithComponent, ClubListDTL,
@@ -53,14 +53,21 @@ else:
 urlpatterns += [
     re_path(
         r'^renderer-test/$', renderer_test, name='renderer_test',
-        kwargs={'view_title': 'Renderer test', 'allow_anonymous': True}),
+        kwargs={'view_title': 'Renderer test', 'allow_anonymous': True}
+    ),
+
+    re_path(
+        r'^tooltips-test/$', tooltips_test, name='tooltips_test',
+        kwargs={'view_title': 'Tooltips test', 'allow_anonymous': True}
+    ),
 
     UrlPath(UserChangeView)('user_change'),
 
     # Club
     re_path(
         r'^$', main_page, name='club_main_page',
-        kwargs={'view_title': 'Main page', 'allow_anonymous': True}),
+        kwargs={'view_title': 'Main page', 'allow_anonymous': True}
+    ),
     UrlPath(ClubCreate)(name='club_create'),
     # r'^club-create/$'
     UrlPath(ClubCreate)(

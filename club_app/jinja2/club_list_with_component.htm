@@ -12,15 +12,15 @@
     {% if has_filters -%}
         {% for field in view.allowed_filter_fields -%}
             <div class="alert alert-secondary">
-                <div class="badge badge-primary">Demonstration of bs_navs</div>
+                <badge-primary>Demonstration of bs_navs</badge-primary>
             </div>
             {{ bs_navs(**view.get_filter_kwargs(field)) }}
             <div class="alert alert-light">
-                <div class="badge badge-info">Demonstration of bs_breadcrumbs</div>
+                <badge-info>Demonstration of bs_breadcrumbs</badge-info>
             </div>
             {{ bs_breadcrumbs(**view.get_filter_kwargs(field)) }}
             <div class="alert alert-dark">
-                <div class="badge badge-success">Demonstration of bs_dropdown</div>
+                <badge-success>Demonstration of bs_dropdown</badge-success>
             </div>
             {{ bs_dropdown(**view.get_filter_kwargs(field)) }}
         {% endfor -%}

@@ -4,6 +4,7 @@ djk-sample
 
 .. _Bootstrap 3: https://github.com/Dmitri-Sintsov/djk-bootstrap3
 .. _Bootstrap 4: https://github.com/Dmitri-Sintsov/djk-bootstrap4
+.. _Bootstrap 5: https://github.com/Dmitri-Sintsov/djk-bootstrap5
 .. _Chrome: https://www.google.com/chrome/
 .. _ChromeDriver: https://sites.google.com/a/chromium.org/chromedriver/
 .. _cherry_django.sh: https://github.com/Dmitri-Sintsov/djk-sample/blob/master/cli/cherry_django.sh
@@ -81,6 +82,10 @@ To use the development `Bootstrap 4`_ version::
 
     ./cli/4bs.sh
 
+To use the development `Bootstrap 5`_ version::
+
+    ./cli/5bs.sh
+
 then::
 
     mkdir "$VIRTUAL_ENV/djk-sample/logs/"
@@ -90,7 +95,7 @@ then::
     python3 manage.py compilemessages
     python3 manage.py runserver
 
-Shell scripts ``cli/3bs.sh`` and ``cli/4bs.sh`` allow to switch the Bootstrap version on the fly, using the development
+Shell scripts ``cli/3bs.sh`` / ``cli/4bs.sh`` / ``cli/5bs.sh`` allow to switch the Bootstrap version on the fly, using the development
 (not always stable) version of ``djk_ui``.
 
 Install Deno (optional)::
@@ -135,6 +140,10 @@ To use the development `Bootstrap 4`_ version::
 
     cli\4bs.cmd
 
+To use the development `Bootstrap 5`_ version::
+
+    cli\5bs.cmd
+
 then::
 
     mkdir "%VIRTUAL_ENV%\djk-sample\logs"
@@ -144,7 +153,7 @@ then::
     python manage.py compilemessages
     python manage.py runserver
 
-Shell scripts ``cli\3bs.cmd`` and ``cli\4bs.cmd`` allow to switch the Bootstrap version on the fly, using the development
+Shell scripts ``cli\3bs.cmd`` / ``cli\4bs.cmd`` / ``cli\5bs.cmd`` allow to switch the Bootstrap version on the fly, using the development
 (not always stable) version of ``djk_ui``.
 
 Install Deno (optional)
@@ -224,6 +233,10 @@ To use `Bootstrap 3`_ version::
 To use `Bootstrap 4`_ version::
 
     ./cli/4bs.sh
+
+To use `Bootstrap 5`_ version::
+
+    ./cli/5bs.sh
 
 ``django-jinja-knockout`` version 2.0.0 release tests were performed with:
 

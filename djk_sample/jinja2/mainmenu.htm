@@ -1,7 +1,8 @@
 {% from 'bs_nav_items.htm' import bs_nav_items with context -%}
 {% if request.user.is_authenticated %}
 {# Check url() Jinja2 extension / tpl.url() template context #}
-{% set navs = [{
+{% set navs = [
+{
     'url': url('account_email'),
     'text': _('Change E-mail'),
 }, {
@@ -27,9 +28,13 @@
     'text': _('Add sport club (Django Template Language)'),
 }] -%}
 {% else %}
-{% set navs = [{
+{% set navs = [
+{
     'url': tpl.url('renderer_test'),
     'text': _('Renderer test'),
+}, {
+    'url': tpl.url('tooltips_test'),
+    'text': _('Tooltips test'),
 }, {
     'url': tpl.url('account_login'),
     'text': _('Sign In'),
@@ -38,7 +43,8 @@
     'text': _('Sign Up'),
 }] -%}
 {% endif %}
-{% do navs.extend([{
+{% do navs.extend([
+{
     'url': tpl.url('action:list'),
     'text': _('Log of performed actions'),
 }, {
