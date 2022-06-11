@@ -54,8 +54,8 @@ Tested in Ubuntu 20.04 LTS::
     source bin/activate
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
-    # Uncomment next line to use v2.0.0 instead of development version:
-    # git checkout tags/v2.0.0
+    # Uncomment next line to use v2.1.0 instead of development version:
+    # git checkout tags/v2.1.0
     python3 -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
@@ -64,7 +64,7 @@ To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
 or::
 
-    python3 -m pip install -U wheel/djk_bootstrap3-2.0.0-py2.py3-none-any.whl
+    python3 -m pip install -U wheel/djk_bootstrap3-2.1.0-py2.py3-none-any.whl
 
 To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
@@ -72,7 +72,7 @@ To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
 or::
 
-    python3 -m pip install -U wheel/djk_bootstrap4-2.0.0-py2.py3-none-any.whl
+    python3 -m pip install -U wheel/djk_bootstrap4-2.1.0-py2.py3-none-any.whl
 
 To use the development `Bootstrap 3`_ version::
 
@@ -120,8 +120,8 @@ Then issue the following commands::
     python -m pip install -U pip
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
-    rem Uncomment next line to use v2.0.0 instead of development version:
-    rem git checkout tags/v2.0.0
+    rem Uncomment next line to use v2.1.0 instead of development version:
+    rem git checkout tags/v2.1.0
     python -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
@@ -238,13 +238,13 @@ To use `Bootstrap 5`_ version::
 
     ./cli/5bs.sh
 
-``django-jinja-knockout`` version 2.0.0 release tests were performed with:
+``django-jinja-knockout`` version 2.1.0 release tests were performed with:
 
-* Linux fv-az341-704 5.11.0-1028-azure #31~20.04.2-Ubuntu SMP Tue Jan 18 08:46:15 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+* Linux fv-az121-918 5.13.0-1025-azure #29~20.04.1-Ubuntu SMP Thu May 19 14:50:45 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
 * Ubuntu 20.04.4 LTS
-* Python 3.10.2
-* Google Chrome 98.0.4758.102
-* ChromeDriver 98.0.4758.102 (273bf7ac8c909cde36982d27f66f3c70846a3718-refs/branch-heads/4758 at {#1151})
+* Python 3.10.4
+* Google Chrome 102.0.5005.61
+* ChromeDriver 102.0.5005.61 (0e59bcc00cc4985ce39ad31c150065f159d95ad3-refs/branch-heads/5005@{#819})
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
