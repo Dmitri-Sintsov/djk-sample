@@ -1,0 +1,1 @@
+https://github.com/Dmitri-Sintsov/django-jinja-knockout/blob/master/wheel/django_deno-0.1.2-py2.py3-none-any.whl?raw=true

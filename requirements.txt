@@ -1,3 +1,2 @@
 django-allauth
 django-jinja-knockout==2.1.0
-https://github.com/Dmitri-Sintsov/django-jinja-knockout/blob/master/wheel/django_deno-0.1.2-py2.py3-none-any.whl?raw=true
