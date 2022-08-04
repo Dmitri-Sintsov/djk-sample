@@ -11,14 +11,14 @@ jobs:
       - checkout
       - run: |
           .circleci/env.sh
-          python3 -m tox -r -e py3.10-django-4.0-bs3
+          python3 -m tox -r -e py3.10-django-4.1-bs3
   "bootstrap4":
     <<: *defaults
     steps:
       - checkout
       - run: |
           .circleci/env.sh
-          python3 -m tox -r -e py3.10-django-4.0-bs4
+          python3 -m tox -r -e py3.10-django-4.1-bs4
 workflows:
   version: 2
   all_steps:
