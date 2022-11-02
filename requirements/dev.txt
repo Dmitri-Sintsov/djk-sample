@@ -4,6 +4,6 @@ flake8>=3.5.0
 flake8-bugbear>=18.2.0
 cherrypy>=18.6.1
 pipdeptree
-git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
-git+https://github.com/Dmitri-Sintsov/django-deno.git
+django-jinja-knockout @ git+https://github.com/Dmitri-Sintsov/django-jinja-knockout.git
+django-deno @ git+https://github.com/Dmitri-Sintsov/django-deno.git
 
