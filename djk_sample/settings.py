@@ -241,7 +241,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
-
+# See also DatetimeWidget.formatFixes in /static/djk/js/document.js
 LANGUAGE_CODE = 'en-us'
 
 # For manage.py compilemessages to work correctly:
