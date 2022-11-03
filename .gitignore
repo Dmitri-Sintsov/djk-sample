@@ -5,4 +5,4 @@ __pycache__/
 *.pyc
 migrations/
 *.sqlite3
-
+todo.txt

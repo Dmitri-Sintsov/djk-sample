@@ -135,5 +135,3 @@
 // import './lib/locale/zh-hk.js';
 // import './lib/locale/zh-mo.js';
 // import './lib/locale/zh-tw.js';
-
-import './lib/bootstrap-datetimepicker.min.js';
