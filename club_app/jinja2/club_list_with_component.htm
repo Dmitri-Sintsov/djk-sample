@@ -8,7 +8,12 @@
 
 {% block main -%}
 
-{% call(has_filters, has_pagination) bs_list(view, object_list, is_paginated, page_obj) -%}
+{% call(has_header, has_filters, has_pagination) bs_list(view, object_list, is_paginated, page_obj) -%}
+    {% if has_header -%}
+    <card-header>
+        <card-title>{{ view.get_heading() }} <i>(with component)</i></card-title>
+    </card-header>
+    {% endif -%}
     {% if has_filters -%}
         {% for field in view.allowed_filter_fields -%}
             <div class="alert alert-secondary">
