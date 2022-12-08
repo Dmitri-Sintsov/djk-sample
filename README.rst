@@ -109,7 +109,7 @@ Windows
 
 Windows x64 (x86 is similar but needs 32-bit versions of Python package wheels).
 
-* Download and install Python 3.6, 3.7, 3.8 or 3.9.
+* Download and install Python 3.9 / 3.10 / 3.11.
 * Make sure ``python.exe`` / ``pip3.exe`` are in your `PATH`.
 
 Then issue the following commands::
