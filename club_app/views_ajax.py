@@ -206,8 +206,10 @@ class ClubEquipmentGrid(EditableClubGrid):
             })
         equipment_form = ClubEquipmentForm(initial={'club': club.pk})
         # Generate equipment_form viewmodel
-        vms = self.vm_form(
-            equipment_form, form_action='save_equipment'
+        vms = self.ioc_vm_form(
+            form=equipment_form
+        )(
+            form_action='save_equipment'
         )
         return vms
 
