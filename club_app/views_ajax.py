@@ -524,7 +524,6 @@ class MemberGridCustomActions(MemberGrid):
 class ManufacturerFkWidgetGrid(KoGridView):
 
     form = ManufacturerForm
-    enable_deletion = True
     grid_fields = '__all__'
     allowed_sort_orders = '__all__'
     allowed_filter_fields = OrderedDict([
@@ -533,6 +532,10 @@ class ManufacturerFkWidgetGrid(KoGridView):
     search_fields = [
         ('company_name', 'icontains'),
     ]
+
+    # Set built-in 'delete' / 'delete_confirmed' rights according to auth backend.
+    def get_enable_deletion(self):
+        return self.request.user.has_perm('club_app.delete_manufacturer')
 
 
 class ProfileFkWidgetGrid(KoGridView):
