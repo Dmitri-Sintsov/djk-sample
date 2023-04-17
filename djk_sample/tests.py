@@ -64,6 +64,7 @@ class DjkSampleCommands(AutomationCommands):
             relative_url, ('/',),
             click_anchor_by_view, {'viewname': 'renderer_test'},
             click_anchor_by_view, {'viewname': 'tooltips_test'},
+            click_anchor_by_view, {'viewname': 'icon_test'},
         )
         if not self.testcase.has_fixture('new_user_registered'):
             yield from self.register_new_user()

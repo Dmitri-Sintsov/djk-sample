@@ -1,0 +1,12 @@
+{% extends 'base.htm' %}
+
+{% block main %}
+<div class="component" data-component-class="IconTest">
+    <div style="font-size: 1.5rem" data-bind="foreach: iconUi">
+        <badge-light>
+            <span class="iconui" data-bind="css: 'iconui-' + $data"></span>
+            <span data-bind="text: $data"></span>
+        </badge-light>
+    </div>
+</div>
+{% endblock main -%}

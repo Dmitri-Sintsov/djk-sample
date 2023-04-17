@@ -34,6 +34,17 @@ def tooltips_test(request, **kwargs):
     })
 
 
+def icon_test(request, **kwargs):
+    page_context = create_page_context(request)
+    page_context.set_custom_scripts(
+        'sample/js/icon-test.js',
+    )
+    # Test template_context without decorator.
+    return render(request, 'icon_test.htm', {
+        'page_context': page_context,
+    })
+
+
 class UserChangeFormViewmodel(FormViewmodel):
 
     def get_action_local_name(self):

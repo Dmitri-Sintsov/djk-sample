@@ -1,12 +1,6 @@
 {% extends 'base.htm' %}
 
 {% block main %}
-<script id="content_popover_template" type="text/html">
-<div>
-    <b>Hello, world!</b>
-    <i>Just a test</i>
-</div>
-</script>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -45,3 +39,12 @@
     </li>
 </ul>
 {% endblock main %}
+
+{% block bottom_scripts -%}
+<script id="content_popover_template" type="text/html">
+<div>
+    <b>Hello, world!</b>
+    <i>Just a test</i>
+</div>
+</script>
+{% endblock bottom_scripts -%}
