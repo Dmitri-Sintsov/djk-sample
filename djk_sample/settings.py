@@ -291,7 +291,9 @@ if 'django_deno' in OPTIONAL_APPS:
     DENO_ROLLUP_ENTRY_POINTS = [
         'sample/js/app.js',
         'sample/js/club-grid.js',
+        'sample/js/icon-test.js',
         'sample/js/member-grid.js',
+        'sample/js/tooltips-grid.js',
     ]
 
     DENO_ROLLUP_BUNDLES = {
