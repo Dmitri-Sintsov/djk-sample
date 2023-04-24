@@ -54,8 +54,8 @@ Tested in Ubuntu 20.04 LTS::
     source bin/activate
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
-    # Uncomment next line to use v2.1.0 instead of development version:
-    # git checkout tags/v2.1.0
+    # Uncomment next line to use v2.2.0 instead of development version:
+    # git checkout tags/v2.2.0
     python3 -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
@@ -64,7 +64,7 @@ To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
 
 or::
 
-    python3 -m pip install -U wheel/djk_bootstrap3-2.1.0-py2.py3-none-any.whl
+    python3 -m pip install -U wheel/djk_bootstrap3-2.2.0-py2.py3-none-any.whl
 
 To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
@@ -72,7 +72,7 @@ To use the current stable `Bootstrap 4`_ version of ``djk_ui``::
 
 or::
 
-    python3 -m pip install -U wheel/djk_bootstrap4-2.1.0-py2.py3-none-any.whl
+    python3 -m pip install -U wheel/djk_bootstrap4-2.2.0-py2.py3-none-any.whl
 
 To use the development `Bootstrap 3`_ version::
 
@@ -120,8 +120,8 @@ Then issue the following commands::
     python -m pip install -U pip
     git clone https://github.com/Dmitri-Sintsov/djk-sample.git
     cd djk-sample
-    rem Uncomment next line to use v2.1.0 instead of development version:
-    rem git checkout tags/v2.1.0
+    rem Uncomment next line to use v2.2.0 instead of development version:
+    rem git checkout tags/v2.2.0
     python -m pip install -U -r requirements.txt
 
 To use the current stable `Bootstrap 3`_ version of ``djk_ui``::
@@ -238,13 +238,13 @@ To use `Bootstrap 5`_ version::
 
     ./cli/5bs.sh
 
-``django-jinja-knockout`` version 2.1.0 release tests were performed with:
+``django-jinja-knockout`` version 2.2.0 release tests were performed with:
 
-* Linux fv-az121-918 5.13.0-1025-azure #29~20.04.1-Ubuntu SMP Thu May 19 14:50:45 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
-* Ubuntu 20.04.4 LTS
-* Python 3.10.4
-* Google Chrome 102.0.5005.61
-* ChromeDriver 102.0.5005.61 (0e59bcc00cc4985ce39ad31c150065f159d95ad3-refs/branch-heads/5005@{#819})
+* Linux fv-az247-370 5.15.0-1035-azure #42-Ubuntu SMP Tue Feb 28 19:41:23 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+* Ubuntu 22.04.2 LTS
+* Python 3.11.3
+* Google Chrome 112.0.5615.121
+* ChromeDriver 112.0.5615.49 (bd2a7bcb881c11e8cfe3078709382934e3916914-refs/branch-heads/5615@{#936})
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
