@@ -92,6 +92,7 @@ then::
     mkdir "$VIRTUAL_ENV/djk-sample/fixtures/"
     python3 manage.py makemigrations club_app event_app
     python3 manage.py migrate
+    apt install gettext
     python3 manage.py compilemessages
     python3 manage.py runserver
 
@@ -160,11 +161,11 @@ Install Deno (optional)
 
 Run PowerShell then invoke::
 
-    iwr https://deno.land/x/install/install.ps1 -useb | iex
+    irm https://deno.land/install.ps1 | iex
 
     set DENO_INSTALL=%userprofile%\.deno
 
-environment variable.
+set the environment variable.
 
 Mac OS X
 ~~~~~~~~
@@ -224,7 +225,7 @@ Selenium tests
 
 Inside project virtual environment install selenium 3.4 or newer::
 
-    pip3 install -r ./requirements/dev.txt
+    pip3 install -r ./requirements/test.txt
 
 To use `Bootstrap 3`_ version::
 
