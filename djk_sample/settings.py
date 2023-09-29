@@ -99,8 +99,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    DJK_MIDDLEWARE,
 ]
+
+try:
+    import allauth.account.middleware
+    # django-allauth >=0.56
+    MIDDLEWARE.append('allauth.account.middleware.AccountMiddleware')
+except ModuleNotFoundError:
+    pass
+
+MIDDLEWARE.append(DJK_MIDDLEWARE)
+
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
