@@ -85,7 +85,7 @@ except ImportError:
         'allauth.socialaccount',
     ]
 
-# Since v0.9.0 most of functionality except resolver_match and view permissions in urls.py
+# Since v0.9.0 most of the functionality except resolver_match and view permissions in urls.py
 # works without middleware. In such case comment out DJK_MIDDLEWARE and it's references.
 DJK_MIDDLEWARE = 'djk_sample.middleware.ContextMiddleware'
 # For simple cases it is enough to include original middleware (commented out).
@@ -99,17 +99,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    DJK_MIDDLEWARE
 ]
-
-try:
-    import allauth.account.middleware
-    # django-allauth >=0.56
-    MIDDLEWARE.append('allauth.account.middleware.AccountMiddleware')
-except ModuleNotFoundError:
-    pass
-
-MIDDLEWARE.append(DJK_MIDDLEWARE)
-
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
