@@ -20,6 +20,4 @@ google-chrome --version
 echo Chrome driver version
 chromedriver --version
 # https://stackoverflow.com/questions/27849412/permissionerror-with-pip3
-python3 -m pip install -U pip wheel tox tox-pyenv setuptools --user
-# https://stackoverflow.com/a/69832716
-python3 -m pip install pysqlite3 --no-cache-dir --no-binary=pysqlite3 --user
+python3 -m pip install -U pip wheel tox tox-pyenv setuptools pysqlite3-binary --user
