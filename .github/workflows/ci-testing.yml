@@ -20,7 +20,7 @@ jobs:
         python-version: ${{ matrix.python }}
     - name: Install dependencies # https://github.com/tox-dev/tox-pyenv/issues/21
       run: |
-        python3 -m pip install -U pip wheel tox\<4 tox-pyenv setuptools pysqlite3 --user
+        python3 -m pip install -U pip wheel tox\<4 tox-pyenv setuptools pysqlite3-binary --user
     - name: Test with tox
       run: |
         echo Environment used to run the tests
