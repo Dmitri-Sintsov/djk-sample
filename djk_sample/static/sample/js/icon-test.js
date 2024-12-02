@@ -3,6 +3,10 @@
 import { componentIoc } from '../../djk/js/ioc.js';
 import { startApp } from '../../djk/js/document.js';
 
+// Uncomment to check collectrollup / runrollup TypeScript support.
+import { greet } from './test.ts';
+greet("Maddison", new Date());
+
 function IconTest(options) {
 } void function(IconTest) {
 

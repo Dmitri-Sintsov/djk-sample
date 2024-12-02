@@ -1,5 +1,6 @@
 import random
 import hashlib
+
 from django.utils import timezone
 import django_jinja_knockout
 # from django.utils.version import get_version
@@ -30,6 +31,11 @@ CHERRYPY_STATIC = os.environ.get('CHERRYPY_STATIC', 'false').lower() in TRUE_STR
 JS_ERRORS_ALERT = DEBUG
 # Requires proper setup of Django email error logging.
 JS_ERRORS_LOGGING = not DEBUG
+
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".ts", True)
+    mimetypes.add_type("application/javascript", ".tsx", True)
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -277,15 +283,18 @@ STATICFILES_FINDERS = (
 
 DJK_DEFAULT_SCRIPTS = ['sample/js/app.js']
 
-# django_deno dependence is optional and is required only to run with old browsers (eg. IE11)
+# django_deno dependence is optional and is required only to run with old browsers (e.g. IE11)
 # or to create minimized production mode bundle.
 if 'django_deno' in OPTIONAL_APPS:
 
     DENO_ENABLE = True
     DENO_DEBUG = False
-    DENO_USE_VENDOR = True
+    # https://github.com/Dmitri-Sintsov/django-deno/blob/main/django_deno/deno/.vscode/launch.json
+    DENO_DEBUG_EXTERNAL = False
+    DENO_NO_REMOTE = True
     DENO_RELOAD = False
     DENO_CHECK_LOCK_FILE = True
+    DENO_USE_COMPILED_BINARY = True
 
     DENO_ROLLUP_ENTRY_POINTS = [
         'sample/js/app.js',
@@ -311,8 +320,15 @@ if 'django_deno' in OPTIONAL_APPS:
 
     # Run $VIRTUAL_ENV/djk-sample/cherry_django.py to check the validity of collectrollup command output bundle.
     DENO_ROLLUP_COLLECT_OPTIONS = {
+        'sucrase': True,
+        'swc': False,
         'terser': True,
     }
+
+    DENO_SYNTHETIC_NAMED_EXPORTS = {
+        # 'document.js': 'ActionTemplateDialog, Actions, Dialog, Grid, GridActions, GridRow, globalIoc, inherit, ui, TabPane',
+    }
+
     # Do not forget to re-run collectrollup management command after changing rollup.js bundles module type:
     DENO_OUTPUT_MODULE_TYPE = 'module' if DEBUG else 'systemjs-module'
     DJK_JS_MODULE_TYPE = DENO_OUTPUT_MODULE_TYPE
@@ -321,7 +337,7 @@ else:
 
 
 # List of global client routes that will be injected into every view (globally).
-# This is a good idea if some client-side route is frequently used by most of views.
+# This is a good idea if some client-side route is frequently used by most views.
 # Alternatively one can specify client route url names per view (see the documentation).
 # Second element of each tuple defines whether the client-side route should be available to anonymous users.
 DJK_CLIENT_ROUTES = {
