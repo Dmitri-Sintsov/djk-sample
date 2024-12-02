@@ -306,11 +306,13 @@ if 'django_deno' in OPTIONAL_APPS:
 
     DENO_ROLLUP_BUNDLES = {
         'djk': {
+            # 'useGlobStar': False,
             'writeEntryPoint': 'sample/js/app.js',
             'matches': [
-                'djk/js/*',
-                'djk/js/lib/*',
-                'djk/js/grid/*',
+                'djk/js/**',
+                # 'djk/js/*',
+                # 'djk/js/lib/*',
+                # 'djk/js/grid/*',
             ],
             'excludes': [],
             'virtualEntryPoints': 'matches',
