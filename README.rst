@@ -241,11 +241,11 @@ To use `Bootstrap 5`_ version::
 
 ``django-jinja-knockout`` version 2.2.1 release tests were performed with:
 
-* Linux fv-az1393-635 6.2.0-1018-azure #18~22.04.1-Ubuntu SMP Tue Nov 21 19:25:02 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
-* Ubuntu 22.04.3 LTS
-* Python 3.12.0
-* Google Chrome 119.0.6045.199
-* ChromeDriver 119.0.6045.105 (38c72552c5e15ba9b3117c0967a0fd105072d7c6-refs/branch-heads/6045@{#1103})
+* Linux fv-az1787-568 6.11.0-1012-azure #12~24.04.1-Ubuntu SMP Mon Mar 10 19:00:39 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+* Ubuntu 24.04.2 LTS
+* Python 3.13.3
+* Google Chrome 135.0.7049.114
+* ChromeDriver 135.0.7049.114 (63fd8a7d9d09e41ba37b84386c85d5f249f848f7-refs/branch-heads/7049@{#2175})
 
 Selenium tests (Chrome, interactive)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
